@@ -15,6 +15,16 @@ yarn run serve
 yarn run build
 ```
 
+###  Compiles and hot-reloads for development on electron app
+```
+yarn serve:electron
+```
+
+### Compiles and minifies for production electron app
+```
+yarn build:electron
+```
+
 ### Lints and fixes files
 ```
 yarn run lint
