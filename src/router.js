@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import productsRoutes from "./modules/products/routes";
 import storesRoutes from "./modules/stores/routes";
 
 Vue.use(Router);
@@ -14,6 +15,7 @@ const appRoutes = [
 ];
 
 const routes = appRoutes.concat(
+  productsRoutes,
   storesRoutes,
 );
 
