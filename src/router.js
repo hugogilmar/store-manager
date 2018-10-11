@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import storesRoutes from "./modules/stores/routes";
 
 Vue.use(Router);
 
@@ -13,6 +14,7 @@ const appRoutes = [
 ];
 
 const routes = appRoutes.concat(
+  storesRoutes,
 );
 
 export default new Router({
