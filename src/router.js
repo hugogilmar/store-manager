@@ -4,6 +4,17 @@ import Home from "./views/Home.vue";
 
 Vue.use(Router);
 
+const appRoutes = [
+  {
+    path: "/",
+    name: "home",
+    component: Home
+  }
+];
+
+const routes = appRoutes.concat(
+);
+
 export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
