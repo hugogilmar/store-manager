@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import productsRoutes from "./modules/products/routes";
+import productCategoriesRoutes from "./modules/product_categories/routes";
 import storesRoutes from "./modules/stores/routes";
 
 Vue.use(Router);
@@ -16,6 +17,7 @@ const appRoutes = [
 
 const routes = appRoutes.concat(
   productsRoutes,
+  productCategoriesRoutes,
   storesRoutes,
 );
 
@@ -38,4 +40,5 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/About.vue")
     }
   ]
+  routes: routes
 });
