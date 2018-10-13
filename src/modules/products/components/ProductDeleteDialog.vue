@@ -14,7 +14,6 @@
       >
         <v-icon>delete</v-icon>
       </v-btn>
-
       <v-card>
         <v-card-title
           class="headline grey lighten-2"
@@ -26,9 +25,7 @@
         <v-card-text>
           {{ $t('dialog.delete.message', { entity: $tc('entities.product', 1) }) }}
         </v-card-text>
-
         <v-divider></v-divider>
-
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
