@@ -3,8 +3,8 @@
     <v-text-field
       v-model="store.name"
       :rules="rules.name"
-      :counter="10"
-      :label="$t('productCategory.name')"
+      :counter="48"
+      :label="$t('store.name')"
       required
     ></v-text-field>
     <v-btn
@@ -34,7 +34,7 @@
         rules: {
           name: [
             v => !!v || 'Name is required',
-            v => (v && v.length <= 10) || 'Name must be less than 10 characters'
+            v => (v && v.length <= 48) || 'Name must be less than 48 characters'
           ]
         }
       }
@@ -46,10 +46,10 @@
             name: this.store.name
           })
           .then(function (response) {
-            // todo
+            self.store = response.data;
           })
           .catch(function (error) {
-            // todo
+            self.valid = false;
           });
         } else {
           this.valid = false;

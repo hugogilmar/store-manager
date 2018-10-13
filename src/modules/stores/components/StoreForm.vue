@@ -4,7 +4,7 @@
       v-model="store.name"
       :rules="rules.name"
       :counter="48"
-      :label="$t('productCategory.name')"
+      :label="$t('store.name')"
       required
     ></v-text-field>
     <v-btn
