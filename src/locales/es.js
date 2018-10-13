@@ -7,7 +7,9 @@ const translations = {
       products: 'Productos',
       productCategories: 'Categorías de productos',
       stores: 'Comercios',
-      paymentMethods: 'Métodos de pago'
+      paymentMethods: 'Métodos de pago',
+      employees: 'Empleados',
+      orders: 'Órdenes'
     },
     label: {
       save: 'Guardar',
@@ -18,6 +20,9 @@ const translations = {
       edit: 'Editar',
       delete: 'Eliminar',
       back: 'Regresar'
+    },
+    alert: {
+      empty: 'No hay registros que mostrar. Cree un nuevo registro dando clic al botón "+"'
     },
     header: {
       new: 'Nuevo %{entity}',
@@ -34,17 +39,21 @@ const translations = {
       product: 'producto | productos',
       productCategory: 'categoría | categorías',
       store: 'comercio | comercios',
-      paymentMethod: 'método de pago | métodos de pago'
+      paymentMethod: 'método de pago | métodos de pago',
+      employee: 'empleado | empleados',
+      order: 'órden | órdenes'
     },
     product: {
       name: 'Nombre',
       code: 'Código',
       price: 'Precio',
       specialPrice: 'Precio de promoción',
-      productCategory: 'Categoría'
+      productCategory: 'Categoría',
+      store: 'Comercio'
     },
     productCategory: {
-      name: 'Nombre'
+      name: 'Nombre',
+      code: 'Código'
     },
     store: {
       name: 'Nombre'
@@ -56,6 +65,11 @@ const translations = {
     employee: {
       name: 'Nombre',
       store: 'Comercio'
+    },
+    order: {
+      store: 'Comercio',
+      date: 'Fecha',
+      number: 'Número'
     }
   }
 }

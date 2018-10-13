@@ -34,6 +34,15 @@
       item-value="id"
       required
     ></v-select>
+    <v-select
+      v-model="product.storeId"
+      :items="stores"
+      :rules="[v => !!v || 'Item is required']"
+      :label="$t('product.store')"
+      item-text="name"
+      item-value="id"
+      required
+    ></v-select>
     <v-btn
       color="primary"
       :disabled="!valid"
@@ -56,6 +65,7 @@
       return {
         valid: true,
         product_categories: [],
+        stores: [],
         product: {
           name: '',
           code: '',
@@ -79,6 +89,7 @@
     },
     created () {
       this.getProductCategories();
+      this.getStores();
       this.getProduct();
     },
     methods: {
@@ -91,6 +102,17 @@
         })
         .catch(function (error) {
           self.product_categories = [];
+        });
+      },
+      getStores () {
+        let self = this;
+
+        this.$axios.get('/stores')
+        .then(function (response) {
+          self.stores = response.data;
+        })
+        .catch(function (error) {
+          self.stores = [];
         });
       },
       getProduct () {
@@ -115,7 +137,8 @@
             code: this.product.code,
             price: this.product.price,
             specialPrice: this.product.specialPrice,
-            productCategoryId: this.product.productCategoryId
+            productCategoryId: this.product.productCategoryId,
+            storeId: this.product.storeId
           })
           .then(function (response) {
             self.product = response.data;
