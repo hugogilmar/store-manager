@@ -71,6 +71,11 @@ export default {
           icon: 'person',
           title: this.$t('navigation.employees'),
           path: '/employees'
+        },
+        {
+          icon: 'list',
+          title: this.$t('navigation.orders'),
+          path: '/orders'
         }
       ],
       miniVariant: false,
