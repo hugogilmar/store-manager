@@ -25,7 +25,7 @@ const translations = {
       empty: 'No hay registros que mostrar. Cree un nuevo registro dando clic al botón "+"'
     },
     header: {
-      new: 'Nuevo %{entity}',
+      new: 'Crear %{entity}',
       edit: 'Editar %{entity}',
       list: 'Lista de %{entity}'
     },
@@ -67,9 +67,10 @@ const translations = {
       store: 'Comercio'
     },
     order: {
-      store: 'Comercio',
       date: 'Fecha',
-      number: 'Número'
+      number: 'Número',
+      store: 'Comercio',
+      employee: 'Empleado'
     }
   }
 }

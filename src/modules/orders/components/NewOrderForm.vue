@@ -31,11 +31,26 @@
         locale="es-MX"
         @input="menu = false"
       >
-        <v-spacer></v-spacer>
-        <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
-        <v-btn flat color="primary" @click="">OK</v-btn>
       </v-date-picker>
       </v-menu>
+      <v-select
+        v-model="order.storeId"
+        :items="stores"
+        :rules="[v => !!v || 'Item is required']"
+        :label="$t('order.store')"
+        item-text="name"
+        item-value="id"
+        required
+      ></v-select>
+      <v-select
+        v-model="order.employeeId"
+        :items="employees"
+        :rules="[v => !!v || 'Item is required']"
+        :label="$t('order.employee')"
+        item-text="name"
+        item-value="id"
+        required
+      ></v-select>
     <v-btn
       color="primary"
       :disabled="!valid"
@@ -58,9 +73,13 @@
       return {
         valid: true,
         menu: false,
+        stores: [],
+        employees: [],
         order: {
           number: '',
-          date: ''
+          date: '',
+          storeId: '',
+          employeeId: ''
         },
         rules: {
           name: [
@@ -70,7 +89,33 @@
         }
       }
     },
+    created () {
+      this.getStores();
+      this.getEmployees();
+    },
     methods: {
+      getStores () {
+        let self = this;
+
+        this.$axios.get('/stores')
+        .then(function (response) {
+          self.stores = response.data;
+        })
+        .catch(function (error) {
+          self.stores = [];
+        });
+      },
+      getEmployees () {
+        let self = this;
+
+        this.$axios.get('/employees')
+        .then(function (response) {
+          self.employees = response.data;
+        })
+        .catch(function (error) {
+          self.employees = [];
+        });
+      },
       submit () {
         let self = this;
 
