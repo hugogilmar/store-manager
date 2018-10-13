@@ -1,10 +1,17 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-text-field
-      v-model="product_category.name"
+      v-model="productCategory.name"
       :rules="rules.name"
       :counter="48"
       :label="$t('productCategory.name')"
+      required
+    ></v-text-field>
+    <v-text-field
+      v-model="productCategory.code"
+      :rules="rules.code"
+      :counter="10"
+      :label="$t('productCategory.code')"
       required
     ></v-text-field>
     <v-btn
@@ -28,13 +35,17 @@
     data () {
       return {
         valid: true,
-        product_category: {
+        productCategory: {
           name: ''
         },
         rules: {
           name: [
             v => !!v || 'Name is required',
             v => (v && v.length <= 48) || 'Name must be less than 48 characters'
+          ],
+          code: [
+            v => !!v || 'Code is required',
+            v => (v && v.length <= 10) || 'Code must be less than 48 characters'
           ]
         }
       }
@@ -49,10 +60,10 @@
 
         this.$axios.get(`/product_categories/${productCategoryId}`)
         .then(function (response) {
-          self.product_category = response.data;
+          self.productCategory = response.data;
         })
         .catch(function (error) {
-          self.product_category = {};
+          self.productCategory = {};
         });
       },
       submit () {
@@ -61,10 +72,11 @@
 
         if (this.$refs.form.validate()) {
           this.$axios.put(`/product_categories/${productCategoryId}`, {
-            name: this.product_category.name
+            name: this.productCategory.name,
+            code: this.productCategory.code
           })
           .then(function (response) {
-            self.product_category = response.data;
+            self.productCategory = response.data;
           })
           .catch(function (error) {
             self.valid = false;

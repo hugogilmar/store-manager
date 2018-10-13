@@ -1,14 +1,14 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-text-field
-      v-model="payment_method.name"
+      v-model="paymentMethod.name"
       :rules="rules.name"
       :counter="48"
       :label="$t('paymentMethod.name')"
       required
     ></v-text-field>
     <v-text-field
-      v-model="payment_method.code"
+      v-model="paymentMethod.code"
       :rules="rules.code"
       :counter="10"
       :label="$t('paymentMethod.code')"
@@ -35,7 +35,7 @@
     data () {
       return {
         valid: true,
-        payment_method: {
+        paymentMethod: {
           name: '',
           code: ''
         },
@@ -53,16 +53,18 @@
     },
     methods: {
       submit () {
+        let self = this;
+
         if (this.$refs.form.validate()) {
           this.$axios.post('/payment_methods', {
-            name: this.payment_method.name,
-            code: this.payment_method.code
+            name: this.paymentMethod.name,
+            code: this.paymentMethod.code
           })
           .then(function (response) {
-            // todo
+            self.paymentMethod = response.data;
           })
           .catch(function (error) {
-            // todo
+            self.valid = false;
           });
         } else {
           this.valid = false;
