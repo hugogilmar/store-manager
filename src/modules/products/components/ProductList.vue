@@ -1,5 +1,12 @@
 <template>
   <v-list>
+    <v-alert
+      :value="true"
+      type="info"
+      v-if="products.length == 0"
+    >
+      {{ $t('alert.empty') }}
+    </v-alert>
     <v-list-tile
       v-for="product in products"
       :key="product.id"
@@ -9,11 +16,9 @@
       <v-list-tile-action>
         <v-icon>star</v-icon>
       </v-list-tile-action>
-
       <v-list-tile-content>
         <v-list-tile-title v-text="product.name"></v-list-tile-title>
       </v-list-tile-content>
-
       <v-list-tile-avatar v-if="product.avatar">
         <img :src="product.avatar">
       </v-list-tile-avatar>
