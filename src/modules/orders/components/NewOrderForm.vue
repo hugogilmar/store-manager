@@ -50,6 +50,7 @@
         item-text="name"
         item-value="id"
         required
+        v-if="employees.length > 0"
       ></v-select>
     <v-btn
       color="primary"
@@ -78,8 +79,8 @@
         order: {
           number: '',
           date: '',
-          storeId: '',
-          employeeId: ''
+          storeId: 0,
+          employeeId: 0
         },
         rules: {
           name: [
@@ -91,7 +92,16 @@
     },
     created () {
       this.getStores();
-      this.getEmployees();
+    },
+    computed: {
+      storeId() {
+        return this.order.storeId;
+      }
+    },
+    watch: {
+      storeId() {
+        this.getEmployees(this.storeId);
+      }
     },
     methods: {
       getStores () {
@@ -105,10 +115,18 @@
           self.stores = [];
         });
       },
-      getEmployees () {
+      getEmployees (storeId) {
         let self = this;
 
-        this.$axios.get('/employees')
+        this.$axios.get('/employees', {
+          params: {
+            filter: {
+              where: {
+                storeId: storeId
+              }
+            }
+          }
+        })
         .then(function (response) {
           self.employees = response.data;
         })
