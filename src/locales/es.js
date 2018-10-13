@@ -52,6 +52,10 @@ const translations = {
     paymentMethod: {
       name: 'Nombre',
       code: 'Código'
+    },
+    employee: {
+      name: 'Nombre',
+      store: 'Comercio'
     }
   }
 }

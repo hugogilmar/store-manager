@@ -5,6 +5,7 @@ import productsRoutes from "./modules/products/routes";
 import productCategoriesRoutes from "./modules/product_categories/routes";
 import storesRoutes from "./modules/stores/routes";
 import paymentMethodsRoutes from "./modules/payment_methods/routes";
+import employeesRoutes from "./modules/employees/routes";
 
 Vue.use(Router);
 
@@ -21,6 +22,8 @@ const routes = appRoutes.concat(
   productCategoriesRoutes,
   storesRoutes,
   paymentMethodsRoutes
+  paymentMethodsRoutes,
+  employeesRoutes,
 );
 
 export default new Router({
