@@ -67,7 +67,8 @@
       submit () {
         if (this.$refs.form.validate()) {
           this.$axios.post('/employees', {
-            name: this.employee.name
+            name: this.employee.name,
+            storeId: this.employee.storeId
           })
           .then(function (response) {
             self.employee = response.data;

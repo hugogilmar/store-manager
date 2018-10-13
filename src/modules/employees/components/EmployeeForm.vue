@@ -83,7 +83,8 @@
 
         if (this.$refs.form.validate()) {
           this.$axios.put(`/employees/${employeeId}`, {
-            name: this.employee.name
+            name: this.employee.name,
+            storeId: this.employee.storeId
           })
           .then(function (response) {
             self.employee = response.data;
