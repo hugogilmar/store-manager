@@ -71,7 +71,8 @@
           code: '',
           price: 0.0,
           specialPrice: 0.0,
-          productCategoryId: null
+          productCategoryId: 0,
+          storeId: 0
         },
         rules: {
           name: [
