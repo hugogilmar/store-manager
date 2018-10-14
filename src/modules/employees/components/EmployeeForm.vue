@@ -50,11 +50,19 @@
         }
       }
     },
+    props: [
+      'employeeId'
+    ],
     created () {
       this.getStores();
-      this.getEmployee();
+      if (this.getEmployeeId()) {
+        this.getEmployee();
+      }
     },
     methods: {
+      getEmployeeId () {
+        return this.employeeId
+      },
       getStores () {
         let self = this;
 
@@ -78,27 +86,53 @@
           self.employee = {};
         });
       },
-      submit () {
+      createEmployee () {
         let self = this;
-        let employeeId = this.$route.params.id;
+
+        this.$axios.post('/employees', {
+          name: this.employee.name,
+          storeId: this.employee.storeId
+        })
+        .then(function (response) {
+          self.employee = response.data;
+          self.editEmployee(self.employee.id);
+        })
+        .catch(function (error) {
+          self.valid = false;
+        });
+      },
+      updateEmployee (employeeId) {
+        let self = this;
+
+        this.$axios.put(`/employees/${employeeId}`, {
+          name: this.employee.name,
+          storeId: this.employee.storeId
+        })
+        .then(function (response) {
+          self.employee = response.data;
+        })
+        .catch(function (error) {
+          self.valid = false;
+        });
+      },
+      submit () {
+        let employeeId = this.getEmployeeId();
 
         if (this.$refs.form.validate()) {
-          this.$axios.put(`/employees/${employeeId}`, {
-            name: this.employee.name,
-            storeId: this.employee.storeId
-          })
-          .then(function (response) {
-            self.employee = response.data;
-          })
-          .catch(function (error) {
-            self.valid = false;
-          });
+          if (employeeId) {
+            this.updateEmployee(employeeId);
+          } else {
+            this.createEmployee();
+          }
         } else {
           this.valid = false;
         }
       },
       clear () {
         this.$refs.form.reset();
+      },
+      editEmployee: function (employeeId) {
+        this.$router.push({ path: `/employees/${employeeId}` });
       }
     }
   };
