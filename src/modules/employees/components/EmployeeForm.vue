@@ -61,7 +61,7 @@
     },
     methods: {
       getEmployeeId () {
-        return this.employeeId
+        return this.employeeId;
       },
       getStores () {
         let self = this;
@@ -76,7 +76,7 @@
       },
       getEmployee () {
         let self = this;
-        let employeeId = this.$route.params.id;
+        let employeeId = this.getEmployeeId();
 
         this.$axios.get(`/employees/${employeeId}`)
         .then(function (response) {
