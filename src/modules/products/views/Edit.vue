@@ -3,7 +3,7 @@
     <v-subheader>{{ $t('header.edit', { entity: $tc('entities.product', 1) }) }}</v-subheader>
     <v-container fluid>
       <v-slide-y-transition mode="out-in">
-        <product-form />
+        <product-form v-bind:product-id="productId" />
       </v-slide-y-transition>
       <product-delete-dialog />
     </v-container>
@@ -19,9 +19,9 @@
       'product-form': ProductForm,
       'product-delete-dialog': ProductDeleteDialog
     },
-    data () {
-      return {
-        dialog: false
+    computed: {
+      productId () {
+        return this.$route.params.id;
       }
     }
   }
