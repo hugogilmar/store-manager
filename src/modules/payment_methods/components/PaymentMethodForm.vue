@@ -51,13 +51,21 @@
         }
       }
     },
+    props: [
+      'paymentMethodId'
+    ],
     created () {
-      this.getPaymentMethod();
+      if (this.getPaymentMethodId()) {
+        this.getPaymentMethod();
+      }
     },
     methods: {
+      getPaymentMethodId () {
+        return this.paymentMethodId;
+      },
       getPaymentMethod () {
         let self = this;
-        let paymentMethodId = this.$route.params.id;
+        let paymentMethodId = this.getPaymentMethodId();
 
         this.$axios.get(`/payment_methods/${paymentMethodId}`)
         .then(function (response) {
@@ -67,26 +75,54 @@
           self.paymentMethod = {};
         });
       },
+      createPaymentMethod () {
+        let self = this;
+
+        this.$axios.post('/payment_methods', {
+          name: this.paymentMethod.name,
+          code: this.paymentMethod.code
+        })
+        .then(function (response) {
+          self.paymentMethod = response.data;
+          self.editPaymentMethod(self.paymentMethod.id);
+        })
+        .catch(function (error) {
+          self.valid = false;
+        });
+      },
+      updatePaymentMethod (paymentMethodId) {
+        let self = this;
+
+        this.$axios.put(`/payment_methods/${paymentMethodId}`, {
+          name: this.paymentMethod.name,
+          code: this.paymentMethod.code
+        })
+        .then(function (response) {
+          self.paymentMethod = response.data;
+        })
+        .catch(function (error) {
+          self.valid = false;
+        });
+      },
       submit () {
         let self = this;
-        let paymentMethodId = this.$route.params.id;
+        let paymentMethodId = this.getPaymentMethodId();
 
         if (this.$refs.form.validate()) {
-          this.$axios.put(`/payment_methods/${paymentMethodId}`, {
-            name: this.paymentMethod.name
-          })
-          .then(function (response) {
-            self.paymentMethod = response.data;
-          })
-          .catch(function (error) {
-            self.valid = false;
-          });
+          if (paymentMethodId) {
+            this.updatePaymentMethod(paymentMethodId);
+          } else {
+            this.createPaymentMethod();
+          }
         } else {
           this.valid = false;
         }
       },
       clear () {
         this.$refs.form.reset();
+      },
+      editPaymentMethod: function (paymentMethodId) {
+        this.$router.push({ path: `/payment_methods/${paymentMethodId}` });
       }
     }
   };
