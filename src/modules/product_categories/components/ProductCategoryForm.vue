@@ -45,18 +45,27 @@
           ],
           code: [
             v => !!v || 'Code is required',
-            v => (v && v.length <= 10) || 'Code must be less than 48 characters'
+            v => (v && v.length <= 10) || 'Code must be less than 10 characters'
           ]
         }
       }
     },
+    props: [
+      'productCategoryId'
+    ],
     created () {
-      this.getProductCategory();
+      let productCategoryId = this.getProductCategoryId();
+
+      if (productCategoryId) {
+        this.getProductCategory(productCategoryId);
+      }
     },
     methods: {
-      getProductCategory () {
+      getProductCategoryId () {
+        return this.productCategoryId;
+      },
+      getProductCategory (productCategoryId) {
         let self = this;
-        let productCategoryId = this.$route.params.id;
 
         this.$axios.get(`/product_categories/${productCategoryId}`)
         .then(function (response) {
@@ -66,27 +75,54 @@
           self.productCategory = {};
         });
       },
+      createProductCategory () {
+        let self = this;
+
+        this.$axios.post('/product_categories', {
+          name: this.productCategory.name,
+          code: this.productCategory.code
+        })
+        .then(function (response) {
+          self.productCategory = response.data;
+          self.editProductCategory(self.productCategory.id);
+        })
+        .catch(function (error) {
+          self.valid = false;
+        });
+      },
+      updateProductCategory (productCategoryId) {
+        let self = this;
+
+        this.$axios.put(`/product_categories/${productCategoryId}`, {
+          name: this.productCategory.name,
+          code: this.productCategory.code
+        })
+        .then(function (response) {
+          self.productCategory = response.data;
+        })
+        .catch(function (error) {
+          self.valid = false;
+        });
+      },
       submit () {
         let self = this;
-        let productCategoryId = this.$route.params.id;
+        let productCategoryId = this.getProductCategoryId();
 
         if (this.$refs.form.validate()) {
-          this.$axios.put(`/product_categories/${productCategoryId}`, {
-            name: this.productCategory.name,
-            code: this.productCategory.code
-          })
-          .then(function (response) {
-            self.productCategory = response.data;
-          })
-          .catch(function (error) {
-            self.valid = false;
-          });
+          if (productCategoryId) {
+            this.updateProductCategory(productCategoryId);
+          } else {
+            this.createProductCategory();
+          }
         } else {
           this.valid = false;
         }
       },
       clear () {
         this.$refs.form.reset();
+      },
+      editProductCategory: function (productCategoryId) {
+        this.$router.push({ path: `/product_categories/${productCategoryId}` });
       }
     }
   };

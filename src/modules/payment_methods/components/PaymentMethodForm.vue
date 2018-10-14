@@ -55,7 +55,7 @@
       'paymentMethodId'
     ],
     created () {
-      let paymentMethodId = this.getPaymentMethodId()
+      let paymentMethodId = this.getPaymentMethodId();
 
       if (paymentMethodId) {
         this.getPaymentMethod(paymentMethodId);
