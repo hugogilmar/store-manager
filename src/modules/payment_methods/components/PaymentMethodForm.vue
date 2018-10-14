@@ -55,17 +55,18 @@
       'paymentMethodId'
     ],
     created () {
-      if (this.getPaymentMethodId()) {
-        this.getPaymentMethod();
+      let paymentMethodId = this.getPaymentMethodId()
+
+      if (paymentMethodId) {
+        this.getPaymentMethod(paymentMethodId);
       }
     },
     methods: {
       getPaymentMethodId () {
         return this.paymentMethodId;
       },
-      getPaymentMethod () {
+      getPaymentMethod (paymentMethodId) {
         let self = this;
-        let paymentMethodId = this.getPaymentMethodId();
 
         this.$axios.get(`/payment_methods/${paymentMethodId}`)
         .then(function (response) {

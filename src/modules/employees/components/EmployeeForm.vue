@@ -54,9 +54,11 @@
       'employeeId'
     ],
     created () {
+      let employeeId = this.getEmployeeId();
+
       this.getStores();
-      if (this.getEmployeeId()) {
-        this.getEmployee();
+      if (employeeId) {
+        this.getEmployee(employeeId);
       }
     },
     methods: {
@@ -74,9 +76,8 @@
           self.stores = [];
         });
       },
-      getEmployee () {
+      getEmployee (employeeId) {
         let self = this;
-        let employeeId = this.getEmployeeId();
 
         this.$axios.get(`/employees/${employeeId}`)
         .then(function (response) {
