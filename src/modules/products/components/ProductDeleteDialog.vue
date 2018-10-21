@@ -54,10 +54,16 @@ export default {
       dialog: false
     }
   },
+  props: [
+    'productId'
+  ],
   methods: {
+    getProductId () {
+      return this.productId;
+    },
     deleteProduct () {
       let self = this;
-      let productId = this.$route.params.id;
+      let productId = this.getProductId();
 
       this.$axios.delete(`/products/${productId}`)
       .then(function (response) {
