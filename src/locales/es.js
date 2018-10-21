@@ -22,7 +22,7 @@ const translations = {
       back: 'Regresar'
     },
     alert: {
-      empty: 'No hay registros que mostrar. Cree un nuevo registro dando clic al botón "+"'
+      empty: 'No hay registros que mostrar.'
     },
     header: {
       new: 'Crear %{entity}',
