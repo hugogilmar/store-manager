@@ -1,5 +1,5 @@
 <template>
-  <v-list>
+  <v-list two-line>
     <v-alert
       :value="true"
       type="info"
@@ -17,7 +17,8 @@
         <v-icon>star</v-icon>
       </v-list-tile-action>
       <v-list-tile-content>
-        <v-list-tile-title v-text="product.name"></v-list-tile-title>
+        <v-list-tile-title>{{ product.name }}</v-list-tile-title>
+        <v-list-tile-sub-title>{{ product.price | currency }}</v-list-tile-sub-title>
       </v-list-tile-content>
       <v-list-tile-avatar v-if="product.avatar">
         <img :src="product.avatar">
