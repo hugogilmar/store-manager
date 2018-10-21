@@ -67,10 +67,14 @@ export default {
       this.$axios.delete(`/employees/${employeeId}`)
       .then(function (response) {
         self.dialog = false;
+        self.employeeList();
       })
       .catch(function (error) {
         self.dialog = false;
       });
+    },
+    employeeList () {
+      this.$router.push({ path: '/employees' });
     }
   }
 };

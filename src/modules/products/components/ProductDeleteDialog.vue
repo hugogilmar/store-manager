@@ -68,10 +68,14 @@ export default {
       this.$axios.delete(`/products/${productId}`)
       .then(function (response) {
         self.dialog = false;
+        self.productList();
       })
       .catch(function (error) {
         self.dialog = false;
       });
+    },
+    productList () {
+      this.$router.push({ path: '/products' });
     }
   }
 };

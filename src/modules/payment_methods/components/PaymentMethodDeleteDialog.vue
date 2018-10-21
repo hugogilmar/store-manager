@@ -67,10 +67,14 @@ export default {
       this.$axios.delete(`/payment_methods/${paymentMethodId}`)
       .then(function (response) {
         self.dialog = false;
+        self.paymentMethodList();
       })
       .catch(function (error) {
         self.dialog = false;
       });
+    },
+    paymentMethodList () {
+      this.$router.push({ path: '/payment_methods' });
     }
   }
 };

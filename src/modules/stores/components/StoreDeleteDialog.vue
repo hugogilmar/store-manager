@@ -67,10 +67,14 @@ export default {
       this.$axios.delete(`/stores/${storeId}`)
       .then(function (response) {
         self.dialog = false;
+        self.storeList();
       })
       .catch(function (error) {
         self.dialog = false;
       });
+    },
+    storeList () {
+      this.$router.push({ path: '/stores' });
     }
   }
 };
