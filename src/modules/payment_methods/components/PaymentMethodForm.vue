@@ -21,11 +21,6 @@
     >
       {{ $t('label.save') }}
     </v-btn>
-    <v-btn
-      @click="clear"
-    >
-      {{ $t('label.clear') }}
-    </v-btn>
   </v-form>
 </template>
 
@@ -118,9 +113,6 @@
         } else {
           this.valid = false;
         }
-      },
-      clear () {
-        this.$refs.form.reset();
       },
       editPaymentMethod: function (paymentMethodId) {
         this.$router.push({ path: `/payment_methods/${paymentMethodId}` });

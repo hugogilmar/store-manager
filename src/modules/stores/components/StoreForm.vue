@@ -14,11 +14,6 @@
     >
       {{ $t('label.save') }}
     </v-btn>
-    <v-btn
-      @click="clear"
-    >
-      {{ $t('label.clear') }}
-    </v-btn>
   </v-form>
 </template>
 
@@ -103,9 +98,6 @@
         } else {
           this.valid = false;
         }
-      },
-      clear () {
-        this.$refs.form.reset();
       },
       editStore: function (storeId) {
         this.$router.push({ path: `/stores/${storeId}` });

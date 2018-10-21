@@ -23,11 +23,6 @@
     >
       {{ $t('label.save') }}
     </v-btn>
-    <v-btn
-      @click="clear"
-    >
-      {{ $t('label.clear') }}
-    </v-btn>
   </v-form>
 </template>
 
@@ -128,9 +123,6 @@
         } else {
           this.valid = false;
         }
-      },
-      clear () {
-        this.$refs.form.reset();
       },
       editEmployee: function (employeeId) {
         this.$router.push({ path: `/employees/${employeeId}` });
