@@ -27,8 +27,10 @@ const routes = appRoutes.concat(
   ordersRoutes
 );
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: routes
 });
+
+export default router;
