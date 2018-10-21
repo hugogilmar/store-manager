@@ -16,8 +16,7 @@
     </v-btn>
     <v-card>
       <v-card-title
-        class="headline grey lighten-2"
-        primary-title
+        class="headline"
       >
         {{ $t('dialog.delete.title', { entity: $tc('entities.product', 1) }) }}
       </v-card-title>
