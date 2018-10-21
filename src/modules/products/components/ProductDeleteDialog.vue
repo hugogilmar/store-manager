@@ -72,9 +72,6 @@ export default {
       .catch(function (error) {
         self.dialog = false;
       });
-    },
-    clear () {
-      this.$refs.form.reset();
     }
   }
 };
