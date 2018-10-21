@@ -5,7 +5,7 @@
       <v-slide-y-transition mode="out-in">
         <store-form v-bind:store-id="storeId" />
       </v-slide-y-transition>
-      <store-delete-dialog />
+      <store-delete-dialog v-bind:store-id="storeId" />
     </v-container>
   </v-card>
 </template>

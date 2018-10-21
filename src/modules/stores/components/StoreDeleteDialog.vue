@@ -53,10 +53,16 @@ export default {
       dialog: false
     }
   },
+  props: [
+    'storeId'
+  ],
   methods: {
+    getStoreId () {
+      return this.storeId;
+    },
     deleteStore () {
       let self = this;
-      let storeId = this.$route.params.id;
+      let storeId = this.getStoreId();
 
       this.$axios.delete(`/stores/${storeId}`)
       .then(function (response) {
