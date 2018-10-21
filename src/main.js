@@ -12,6 +12,7 @@ import store from "./store";
 import i18n from './i18n';
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
+import 'nprogress/nprogress.css';
 
 Vue.config.productionTip = false;
 

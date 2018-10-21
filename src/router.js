@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import NProgress from 'nprogress';
 import Home from "./views/Home.vue";
 import productsRoutes from "./modules/products/routes";
 import productCategoriesRoutes from "./modules/product_categories/routes";
@@ -31,6 +32,18 @@ const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: routes
+});
+
+router.beforeResolve((to, from, next) => {
+  if (to.name) {
+    NProgress.start();
+  }
+
+  next();
+})
+
+router.afterEach((to, from) => {
+  NProgress.done();
 });
 
 export default router;
