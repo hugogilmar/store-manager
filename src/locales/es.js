@@ -9,7 +9,7 @@ const translations = {
       stores: 'Comercios',
       paymentMethods: 'Métodos de pago',
       employees: 'Empleados',
-      orders: 'Órdenes'
+      orders: 'Ordenes'
     },
     label: {
       save: 'Guardar',
@@ -41,7 +41,7 @@ const translations = {
       store: 'comercio | comercios',
       paymentMethod: 'método de pago | métodos de pago',
       employee: 'empleado | empleados',
-      order: 'órden | órdenes'
+      order: 'orden | ordenes'
     },
     product: {
       name: 'Nombre',
