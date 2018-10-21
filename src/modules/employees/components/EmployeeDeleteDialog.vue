@@ -53,10 +53,16 @@ export default {
       dialog: false
     }
   },
+  props: [
+    'employeeId'
+  ],
   methods: {
+    getEmployeeId () {
+      return this.employeeId;
+    },
     deleteEmployee () {
       let self = this;
-      let employeeId = this.$route.params.id;
+      let employeeId = this.getEmployeeId();
 
       this.$axios.delete(`/employees/${employeeId}`)
       .then(function (response) {

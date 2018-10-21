@@ -5,7 +5,7 @@
       <v-slide-y-transition mode="out-in">
         <employee-form v-bind:employee-id="employeeId" />
       </v-slide-y-transition>
-      <employee-delete-dialog />
+      <employee-delete-dialog v-bind:employee-id="employeeId" />
     </v-container>
   </v-card>
 </template>
