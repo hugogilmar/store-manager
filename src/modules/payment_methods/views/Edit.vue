@@ -5,7 +5,7 @@
       <v-slide-y-transition mode="out-in">
         <payment-method-form v-bind:payment-method-id="paymentMethodId" />
       </v-slide-y-transition>
-      <payment-method-delete-dialog />
+      <payment-method-delete-dialog v-bind:payment-method-id="paymentMethodId" />
     </v-container>
   </v-card>
 </template>

@@ -53,10 +53,16 @@ export default {
       dialog: false
     }
   },
+  props: [
+    'paymentMethodId'
+  ],
   methods: {
+    getPaymentMethodId () {
+      return this.paymentMethodId;
+    },
     deletePaymentMethod () {
       let self = this;
-      let paymentMethodId = this.$route.params.id;
+      let paymentMethodId = this.getPaymentMethodId();
 
       this.$axios.delete(`/payment_methods/${paymentMethodId}`)
       .then(function (response) {
