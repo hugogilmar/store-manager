@@ -5,7 +5,7 @@
       <v-slide-y-transition mode="out-in">
         <product-category-form v-bind:product-category-id="productCategoryId" />
       </v-slide-y-transition>
-      <product-category-delete-dialog />
+      <product-category-delete-dialog v-bind:product-category-id="productCategoryId" />
     </v-container>
   </v-card>
 </template>

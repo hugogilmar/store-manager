@@ -53,10 +53,16 @@ export default {
       dialog: false
     }
   },
+  props: [
+    'productCategoryId'
+  ],
   methods: {
+    getProductCategoryId () {
+      return this.productCategoryId;
+    },
     deleteProductCategory () {
       let self = this;
-      let productCategoryId = this.$route.params.id;
+      let productCategoryId = this.getProductCategoryId();
 
       this.$axios.delete(`/product_categories/${productCategoryId}`)
       .then(function (response) {
