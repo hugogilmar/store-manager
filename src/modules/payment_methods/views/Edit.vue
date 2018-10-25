@@ -3,9 +3,9 @@
     <v-subheader>{{ $t('header.edit', { entity: $tc('entities.paymentMethod', 1) }) }}</v-subheader>
     <v-container fluid>
       <v-slide-y-transition mode="out-in">
-        <payment-method-form v-bind:payment-method-id="paymentMethodId" />
+        <payment-method-form :payment-method-id="paymentMethodId" />
       </v-slide-y-transition>
-      <payment-method-delete-dialog v-bind:payment-method-id="paymentMethodId" />
+      <payment-method-delete-dialog :payment-method-id="paymentMethodId" />
     </v-container>
   </v-card>
 </template>

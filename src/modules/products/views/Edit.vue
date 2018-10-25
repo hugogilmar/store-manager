@@ -3,9 +3,9 @@
     <v-subheader>{{ $t('header.edit', { entity: $tc('entities.product', 1) }) }}</v-subheader>
     <v-container fluid>
       <v-slide-y-transition mode="out-in">
-        <product-form v-bind:product-id="productId" />
+        <product-form :product-id="productId" />
       </v-slide-y-transition>
-      <product-delete-dialog v-bind:product-id="productId" />
+      <product-delete-dialog :product-id="productId" />
     </v-container>
   </v-card>
 </template>
