@@ -4,7 +4,7 @@
       v-model="store.name"
       :rules="rules.name"
       :counter="48"
-      :label="$t('productCategory.name')"
+      :label="$t('store.name')"
       required
     ></v-text-field>
     <v-btn
@@ -13,11 +13,6 @@
       @click="submit"
     >
       {{ $t('label.save') }}
-    </v-btn>
-    <v-btn
-      @click="clear"
-    >
-      {{ $t('label.clear') }}
     </v-btn>
   </v-form>
 </template>
@@ -39,13 +34,22 @@
         }
       }
     },
+    props: [
+      'storeId'
+    ],
     created () {
-      this.getStore();
+      let storeId = this.getStoreId()
+
+      if (storeId) {
+        this.getStore(storeId);
+      }
     },
     methods: {
-      getStore () {
+      getStoreId () {
+        return this.storeId;
+      },
+      getStore (storeId) {
         let self = this;
-        let storeId = this.$route.params.id;
 
         this.$axios.get(`/stores/${storeId}`)
         .then(function (response) {
@@ -55,26 +59,48 @@
           self.store = {};
         });
       },
-      submit () {
+      createStore () {
         let self = this;
-        let storeId = this.$route.params.id;
+
+        this.$axios.post('/stores', {
+          name: this.store.name
+        })
+        .then(function (response) {
+          self.store = response.data;
+          self.editStore(self.store.id);
+        })
+        .catch(function (error) {
+          self.valid = false;
+        });
+      },
+      updateStore (storeId) {
+        let self = this;
+
+        this.$axios.put(`/stores/${storeId}`, {
+          name: this.store.name
+        })
+        .then(function (response) {
+          self.store = response.data;
+        })
+        .catch(function (error) {
+          self.valid = false;
+        });
+      },
+      submit () {
+        let storeId = this.getStoreId();
 
         if (this.$refs.form.validate()) {
-          this.$axios.put(`/stores/${storeId}`, {
-            name: this.store.name
-          })
-          .then(function (response) {
-            self.store = response.data;
-          })
-          .catch(function (error) {
-            self.valid = false;
-          });
+          if (storeId) {
+            this.updateStore(storeId);
+          } else {
+            this.createStore();
+          }
         } else {
           this.valid = false;
         }
       },
-      clear () {
-        this.$refs.form.reset();
+      editStore: function (storeId) {
+        this.$router.push({ path: `/stores/${storeId}` });
       }
     }
   };

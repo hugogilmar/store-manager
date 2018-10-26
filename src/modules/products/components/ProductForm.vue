@@ -34,17 +34,21 @@
       item-value="id"
       required
     ></v-select>
+    <v-select
+      v-model="product.storeId"
+      :items="stores"
+      :rules="[v => !!v || 'Item is required']"
+      :label="$t('product.store')"
+      item-text="name"
+      item-value="id"
+      required
+    ></v-select>
     <v-btn
       color="primary"
       :disabled="!valid"
       @click="submit"
     >
       {{ $t('label.save') }}
-    </v-btn>
-    <v-btn
-      @click="clear"
-    >
-      {{ $t('label.clear') }}
     </v-btn>
   </v-form>
 </template>
@@ -56,12 +60,14 @@
       return {
         valid: true,
         product_categories: [],
+        stores: [],
         product: {
           name: '',
           code: '',
           price: 0.0,
           specialPrice: 0.0,
-          productCategoryId: null
+          productCategoryId: 0,
+          storeId: 0
         },
         rules: {
           name: [
@@ -77,11 +83,23 @@
         }
       }
     },
+    props: [
+      'productId'
+    ],
     created () {
+      let productId = this.getProductId();
+
       this.getProductCategories();
-      this.getProduct();
+      this.getStores();
+
+      if (productId) {
+        this.getProduct(productId);
+      }
     },
     methods: {
+      getProductId () {
+        return this.productId;
+      },
       getProductCategories () {
         let self = this;
 
@@ -93,9 +111,19 @@
           self.product_categories = [];
         });
       },
-      getProduct () {
+      getStores () {
         let self = this;
-        let productId = this.$route.params.id;
+
+        this.$axios.get('/stores')
+        .then(function (response) {
+          self.stores = response.data;
+        })
+        .catch(function (error) {
+          self.stores = [];
+        });
+      },
+      getProduct (productId) {
+        let self = this;
 
         this.$axios.get(`/products/${productId}`)
         .then(function (response) {
@@ -105,30 +133,59 @@
           self.product = {};
         });
       },
+      createProduct () {
+        let self = this;
+
+        this.$axios.post('/products', {
+          name: this.product.name,
+          code: this.product.code,
+          price: this.product.price,
+          specialPrice: this.product.specialPrice,
+          productCategoryId: this.product.productCategoryId,
+          storeId: this.product.storeId
+        })
+        .then(function (response) {
+          self.product = response.data;
+          self.editProduct(self.product.id);
+        })
+        .catch(function (error) {
+          self.valid = false;
+        });
+      },
+      updateProduct (productId) {
+        let self = this;
+
+        this.$axios.put(`/products/${productId}`, {
+          name: this.product.name,
+          code: this.product.code,
+          price: this.product.price,
+          specialPrice: this.product.specialPrice,
+          productCategoryId: this.product.productCategoryId,
+          storeId: this.product.storeId
+        })
+        .then(function (response) {
+          self.product = response.data;
+        })
+        .catch(function (error) {
+          self.valid = false;
+        });
+      },
       submit () {
         let self = this;
-        let productId = this.$route.params.id;
+        let productId = this.getProductId();
 
         if (this.$refs.form.validate()) {
-          this.$axios.put(`/products/${productId}`, {
-            name: this.product.name,
-            code: this.product.code,
-            price: this.product.price,
-            specialPrice: this.product.specialPrice,
-            productCategoryId: this.product.productCategoryId
-          })
-          .then(function (response) {
-            self.product = response.data;
-          })
-          .catch(function (error) {
-            self.valid = false;
-          });
+          if (productId) {
+            this.updateProduct(productId);
+          } else {
+            this.createProduct();
+          }
         } else {
           this.valid = false;
         }
       },
-      clear () {
-        this.$refs.form.reset();
+      editProduct: function (productId) {
+        this.$router.push({ path: `/products/${productId}` });
       }
     }
   };

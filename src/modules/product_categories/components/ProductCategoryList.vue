@@ -1,21 +1,26 @@
 <template>
   <v-list>
+    <v-alert
+      :value="true"
+      type="info"
+      v-if="productCategories.length == 0"
+    >
+      {{ $t('alert.empty') }}
+    </v-alert>
     <v-list-tile
-      v-for="category in product_categories"
-      :key="category.id"
+      v-for="productCategory in productCategories"
+      :key="productCategory.id"
       avatar
-      @click="editProductCategory(category.id)"
+      @click="editProductCategory(productCategory.id)"
     >
       <v-list-tile-action>
         <v-icon>star</v-icon>
       </v-list-tile-action>
-
       <v-list-tile-content>
-        <v-list-tile-title v-text="category.name"></v-list-tile-title>
+        <v-list-tile-title v-text="productCategory.name"></v-list-tile-title>
       </v-list-tile-content>
-
-      <v-list-tile-avatar v-if="category.avatar">
-        <img :src="category.avatar">
+      <v-list-tile-avatar v-if="productCategory.avatar">
+        <img :src="productCategory.avatar">
       </v-list-tile-avatar>
     </v-list-tile>
   </v-list>
@@ -26,7 +31,7 @@
     name: 'ProductCategoryList',
     data () {
       return {
-        product_categories: []
+        productCategories: []
       }
     },
     created () {
@@ -38,10 +43,10 @@
 
         this.$axios.get('/product_categories')
         .then(function (response) {
-          self.product_categories = response.data;
+          self.productCategories = response.data;
         })
         .catch(function (error) {
-          self.product_categories = [];
+          self.productCategories = [];
         });
       },
       editProductCategory: function (productCategoryId) {

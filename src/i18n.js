@@ -3,7 +3,9 @@ import es from './locales/es';
 
 const locales = Object.assign({}, es);
 
-export default new VueI18n({
+const i18n = new VueI18n({
   locale: 'es',
   messages: locales
 });
+
+export default i18n;

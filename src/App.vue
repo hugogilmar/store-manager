@@ -66,6 +66,16 @@ export default {
           icon: 'attach_money',
           title: this.$t('navigation.paymentMethods'),
           path: '/payment_methods'
+        },
+        {
+          icon: 'person',
+          title: this.$t('navigation.employees'),
+          path: '/employees'
+        },
+        {
+          icon: 'list',
+          title: this.$t('navigation.orders'),
+          path: '/orders'
         }
       ],
       miniVariant: false,
