@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.2.0
+
+- Orders module added
+- Refactor form components
+- Standarize alert message
+- Success delete redirection to list
+- Progress bar added
+
 ## v0.1.1
 
 - Internationalization added
