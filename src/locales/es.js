@@ -30,6 +30,14 @@ const translations = {
       list: 'Lista de %{entity}'
     },
     dialog: {
+      add: {
+        title: 'Agregar %{entity}',
+        message: 'Ingrese la información solicitada en el siguiente formulario.'
+      },
+      edit: {
+        title: 'Editar %{entity}',
+        message: 'Ingrese la información solicitada en el siguiente formulario.'
+      },
       delete: {
         title: 'Eliminar %{entity}',
         message: 'Tenga en cuenta que esta acción no se puede deshacer, ¿está seguro que desea eliminar este %{entity}?'
@@ -41,7 +49,8 @@ const translations = {
       store: 'comercio | comercios',
       paymentMethod: 'método de pago | métodos de pago',
       employee: 'empleado | empleados',
-      order: 'orden | ordenes'
+      order: 'orden | ordenes',
+      invoice: 'invoice | invoices'
     },
     product: {
       name: 'Nombre',
@@ -67,10 +76,45 @@ const translations = {
       store: 'Comercio'
     },
     order: {
+      title: 'Orden #%{number}',
       date: 'Fecha',
       number: 'Número',
       store: 'Comercio',
-      employee: 'Empleado'
+      employee: 'Empleado',
+      total: 'Total',
+      subtotal: 'Subtotal',
+      taxesTotal: 'Impuestos',
+      discountsTotal: 'Descuentos',
+      chargesTotal: 'Cargos adicionales',
+      balance: 'Balance',
+      steps: {
+        one: {
+          title: 'Orden',
+          summary: ''
+        },
+        two: {
+          title: 'Productos',
+          summary: ''
+        },
+        three: {
+          title: 'Facturación',
+          summary: ''
+        }
+      }
+    },
+    orderLine: {
+      product: 'Producto',
+      quantity: 'Cantidad',
+      price: 'Precio',
+      comment: 'Comentario',
+      billable: 'Facturable',
+      total: 'Total'
+    },
+    invoice: {
+      date: 'Fecha',
+      number: 'Número',
+      paymentMethod: 'Método de pago',
+      amount: 'Monto'
     }
   }
 }

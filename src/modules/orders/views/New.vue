@@ -3,18 +3,18 @@
     <v-subheader>{{ $t('header.new', { entity: $tc('entities.order', 1) }) }}</v-subheader>
     <v-container fluid>
       <v-slide-y-transition mode="out-in">
-        <new-order-form />
+        <order-steper />
       </v-slide-y-transition>
     </v-container>
   </v-card>
 </template>
 
 <script>
-  import NewOrderForm from '../components/NewOrderForm.vue';
+  import OrderSteper from '../components/OrderSteper.vue';
 
   export default {
     components: {
-      'new-order-form': NewOrderForm
+      'order-steper': OrderSteper
     }
   }
 </script>

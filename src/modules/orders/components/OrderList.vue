@@ -1,5 +1,5 @@
 <template>
-  <v-list>
+  <v-list two-line>
     <v-alert
       :value="true"
       type="info"
@@ -17,7 +17,8 @@
         <v-icon>star</v-icon>
       </v-list-tile-action>
       <v-list-tile-content>
-        <v-list-tile-title v-text="order.number"></v-list-tile-title>
+        <v-list-tile-title>{{ order.number }}</v-list-tile-title>
+        <v-list-tile-sub-title>{{ order.total | currency }}</v-list-tile-sub-title>
       </v-list-tile-content>
       <v-list-tile-avatar v-if="order.avatar">
         <img :src="order.avatar">
@@ -49,8 +50,8 @@
           self.orders = [];
         });
       },
-      editOrder: function (productCategoryId) {
-        this.$router.push({ path: `/orders/${productCategoryId}` });
+      editOrder: function (orderId) {
+        this.$router.push({ path: `/orders/${orderId}` });
       }
     }
   };
