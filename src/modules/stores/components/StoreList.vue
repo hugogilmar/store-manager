@@ -1,21 +1,26 @@
 <template>
   <v-list>
+    <v-alert
+      :value="true"
+      type="info"
+      v-if="stores.length == 0"
+    >
+      {{ $t('alert.empty') }}
+    </v-alert>
     <v-list-tile
-      v-for="category in stores"
-      :key="category.id"
+      v-for="store in stores"
+      :key="store.id"
       avatar
-      @click="editStore(category.id)"
+      @click="editStore(store.id)"
     >
       <v-list-tile-action>
         <v-icon>star</v-icon>
       </v-list-tile-action>
-
       <v-list-tile-content>
-        <v-list-tile-title v-text="category.name"></v-list-tile-title>
+        <v-list-tile-title v-text="store.name"></v-list-tile-title>
       </v-list-tile-content>
-
-      <v-list-tile-avatar v-if="category.avatar">
-        <img :src="category.avatar">
+      <v-list-tile-avatar v-if="store.avatar">
+        <img :src="store.avatar">
       </v-list-tile-avatar>
     </v-list-tile>
   </v-list>

@@ -7,7 +7,9 @@ const translations = {
       products: 'Productos',
       productCategories: 'Categorías de productos',
       stores: 'Comercios',
-      paymentMethods: 'Métodos de pago'
+      paymentMethods: 'Métodos de pago',
+      employees: 'Empleados',
+      orders: 'Ordenes'
     },
     label: {
       save: 'Guardar',
@@ -19,12 +21,23 @@ const translations = {
       delete: 'Eliminar',
       back: 'Regresar'
     },
+    alert: {
+      empty: 'No hay registros que mostrar.'
+    },
     header: {
-      new: 'Nuevo %{entity}',
+      new: 'Crear %{entity}',
       edit: 'Editar %{entity}',
       list: 'Lista de %{entity}'
     },
     dialog: {
+      add: {
+        title: 'Agregar %{entity}',
+        message: 'Ingrese la información solicitada en el siguiente formulario.'
+      },
+      edit: {
+        title: 'Editar %{entity}',
+        message: 'Ingrese la información solicitada en el siguiente formulario.'
+      },
       delete: {
         title: 'Eliminar %{entity}',
         message: 'Tenga en cuenta que esta acción no se puede deshacer, ¿está seguro que desea eliminar este %{entity}?'
@@ -34,17 +47,22 @@ const translations = {
       product: 'producto | productos',
       productCategory: 'categoría | categorías',
       store: 'comercio | comercios',
-      paymentMethod: 'método de pago | métodos de pago'
+      paymentMethod: 'método de pago | métodos de pago',
+      employee: 'empleado | empleados',
+      order: 'orden | ordenes',
+      invoice: 'invoice | invoices'
     },
     product: {
       name: 'Nombre',
       code: 'Código',
       price: 'Precio',
       specialPrice: 'Precio de promoción',
-      productCategory: 'Categoría'
+      productCategory: 'Categoría',
+      store: 'Comercio'
     },
     productCategory: {
-      name: 'Nombre'
+      name: 'Nombre',
+      code: 'Código'
     },
     store: {
       name: 'Nombre'
@@ -52,6 +70,51 @@ const translations = {
     paymentMethod: {
       name: 'Nombre',
       code: 'Código'
+    },
+    employee: {
+      name: 'Nombre',
+      store: 'Comercio'
+    },
+    order: {
+      title: 'Orden #%{number}',
+      date: 'Fecha',
+      number: 'Número',
+      store: 'Comercio',
+      employee: 'Empleado',
+      total: 'Total',
+      subtotal: 'Subtotal',
+      taxesTotal: 'Impuestos',
+      discountsTotal: 'Descuentos',
+      chargesTotal: 'Cargos adicionales',
+      balance: 'Balance',
+      steps: {
+        one: {
+          title: 'Orden',
+          summary: ''
+        },
+        two: {
+          title: 'Productos',
+          summary: ''
+        },
+        three: {
+          title: 'Facturación',
+          summary: ''
+        }
+      }
+    },
+    orderLine: {
+      product: 'Producto',
+      quantity: 'Cantidad',
+      price: 'Precio',
+      comment: 'Comentario',
+      billable: 'Facturable',
+      total: 'Total'
+    },
+    invoice: {
+      date: 'Fecha',
+      number: 'Número',
+      paymentMethod: 'Método de pago',
+      amount: 'Monto'
     }
   }
 }

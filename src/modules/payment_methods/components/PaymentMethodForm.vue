@@ -1,14 +1,14 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-text-field
-      v-model="payment_method.name"
+      v-model="paymentMethod.name"
       :rules="rules.name"
       :counter="48"
       :label="$t('paymentMethod.name')"
       required
     ></v-text-field>
     <v-text-field
-      v-model="payment_method.code"
+      v-model="paymentMethod.code"
       :rules="rules.code"
       :counter="10"
       :label="$t('paymentMethod.code')"
@@ -21,11 +21,6 @@
     >
       {{ $t('label.save') }}
     </v-btn>
-    <v-btn
-      @click="clear"
-    >
-      {{ $t('label.clear') }}
-    </v-btn>
   </v-form>
 </template>
 
@@ -35,7 +30,7 @@
     data () {
       return {
         valid: true,
-        payment_method: {
+        paymentMethod: {
           name: '',
           code: ''
         },
@@ -51,42 +46,76 @@
         }
       }
     },
+    props: [
+      'paymentMethodId'
+    ],
     created () {
-      this.getPaymentMethod();
+      let paymentMethodId = this.getPaymentMethodId();
+
+      if (paymentMethodId) {
+        this.getPaymentMethod(paymentMethodId);
+      }
     },
     methods: {
-      getPaymentMethod () {
+      getPaymentMethodId () {
+        return this.paymentMethodId;
+      },
+      getPaymentMethod (paymentMethodId) {
         let self = this;
-        let paymentMethodId = this.$route.params.id;
 
         this.$axios.get(`/payment_methods/${paymentMethodId}`)
         .then(function (response) {
-          self.payment_method = response.data;
+          self.paymentMethod = response.data;
         })
         .catch(function (error) {
-          self.payment_method = {};
+          self.paymentMethod = {};
+        });
+      },
+      createPaymentMethod () {
+        let self = this;
+
+        this.$axios.post('/payment_methods', {
+          name: this.paymentMethod.name,
+          code: this.paymentMethod.code
+        })
+        .then(function (response) {
+          self.paymentMethod = response.data;
+          self.editPaymentMethod(self.paymentMethod.id);
+        })
+        .catch(function (error) {
+          self.valid = false;
+        });
+      },
+      updatePaymentMethod (paymentMethodId) {
+        let self = this;
+
+        this.$axios.put(`/payment_methods/${paymentMethodId}`, {
+          name: this.paymentMethod.name,
+          code: this.paymentMethod.code
+        })
+        .then(function (response) {
+          self.paymentMethod = response.data;
+        })
+        .catch(function (error) {
+          self.valid = false;
         });
       },
       submit () {
         let self = this;
-        let paymentMethodId = this.$route.params.id;
+        let paymentMethodId = this.getPaymentMethodId();
 
         if (this.$refs.form.validate()) {
-          this.$axios.put(`/payment_methods/${paymentMethodId}`, {
-            name: this.payment_method.name
-          })
-          .then(function (response) {
-            self.payment_method = response.data;
-          })
-          .catch(function (error) {
-            self.valid = false;
-          });
+          if (paymentMethodId) {
+            this.updatePaymentMethod(paymentMethodId);
+          } else {
+            this.createPaymentMethod();
+          }
         } else {
           this.valid = false;
         }
       },
-      clear () {
-        this.$refs.form.reset();
+      editPaymentMethod: function (paymentMethodId) {
+        this.$router.push({ path: `/payment_methods/${paymentMethodId}` });
       }
     }
   };

@@ -1,21 +1,26 @@
 <template>
   <v-list>
+    <v-alert
+      :value="true"
+      type="info"
+      v-if="paymentMethods.length == 0"
+    >
+      {{ $t('alert.empty') }}
+    </v-alert>
     <v-list-tile
-      v-for="category in payment_methods"
-      :key="category.id"
+      v-for="paymentMethod in paymentMethods"
+      :key="paymentMethod.id"
       avatar
-      @click="editPaymentMethod(category.id)"
+      @click="editPaymentMethod(paymentMethod.id)"
     >
       <v-list-tile-action>
         <v-icon>star</v-icon>
       </v-list-tile-action>
-
       <v-list-tile-content>
-        <v-list-tile-title v-text="category.name"></v-list-tile-title>
+        <v-list-tile-title v-text="paymentMethod.name"></v-list-tile-title>
       </v-list-tile-content>
-
-      <v-list-tile-avatar v-if="category.avatar">
-        <img :src="category.avatar">
+      <v-list-tile-avatar v-if="paymentMethod.avatar">
+        <img :src="paymentMethod.avatar">
       </v-list-tile-avatar>
     </v-list-tile>
   </v-list>
@@ -26,7 +31,7 @@
     name: 'PaymentMethodList',
     data () {
       return {
-        payment_methods: []
+        paymentMethods: []
       }
     },
     created () {
@@ -38,10 +43,10 @@
 
         this.$axios.get('/payment_methods')
         .then(function (response) {
-          self.payment_methods = response.data;
+          self.paymentMethods = response.data;
         })
         .catch(function (error) {
-          self.payment_methods = [];
+          self.paymentMethods = [];
         });
       },
       editPaymentMethod: function (paymentMethodId) {

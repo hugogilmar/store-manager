@@ -3,18 +3,18 @@
     <v-subheader>{{ $t('header.new', { entity: $tc('entities.product', 1) }) }}</v-subheader>
     <v-container fluid>
       <v-slide-y-transition mode="out-in">
-        <new-product-form />
+        <product-form />
       </v-slide-y-transition>
     </v-container>
   </v-card>
 </template>
 
 <script>
-  import NewProductForm from '../components/NewProductForm.vue';
+  import ProductForm from '../components/ProductForm.vue';
 
   export default {
     components: {
-      'new-product-form': NewProductForm
+      'product-form': ProductForm
     }
   }
 </script>

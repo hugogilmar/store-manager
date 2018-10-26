@@ -3,18 +3,18 @@
     <v-subheader>{{ $t('header.new', { entity: $tc('entities.store', 1) }) }}</v-subheader>
     <v-container fluid>
       <v-slide-y-transition mode="out-in">
-        <new-store-form />
+        <store-form />
       </v-slide-y-transition>
     </v-container>
   </v-card>
 </template>
 
 <script>
-  import NewStoreForm from '../components/NewStoreForm.vue';
+  import StoreForm from '../components/StoreForm.vue';
 
   export default {
     components: {
-      'new-store-form': NewStoreForm
+      'store-form': StoreForm
     }
   }
 </script>
