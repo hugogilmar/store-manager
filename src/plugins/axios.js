@@ -10,7 +10,7 @@ import NProgress from 'nprogress';
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let config = {
-  baseURL: 'http://localhost:3000/api'
+  baseURL: process.env.VUE_APP_API_BASE
   // timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
 };
