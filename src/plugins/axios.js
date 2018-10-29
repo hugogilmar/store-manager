@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import axios from "axios";
+import axios from 'axios';
 import NProgress from 'nprogress';
 
 // Full config:  https://github.com/axios/axios#request-config
