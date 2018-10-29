@@ -81,9 +81,10 @@
         .then(function (response) {
           self.paymentMethod = response.data;
           self.editPaymentMethod(self.paymentMethod.id);
+          self.$toasted.success(self.$t('toast.success.create'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.create'));
         });
       },
       updatePaymentMethod (paymentMethodId) {
@@ -95,9 +96,10 @@
         })
         .then(function (response) {
           self.paymentMethod = response.data;
+          self.$toasted.success(self.$t('toast.success.update'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.update'));
         });
       },
       submit () {
