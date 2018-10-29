@@ -135,9 +135,10 @@
         })
         .then(function (response) {
           self.$emit('order-created', response.data);
+          self.$toasted.success(self.$t('toast.success.create'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.create'));
         });
       },
       updateOrder (orderId) {
@@ -152,9 +153,10 @@
         })
         .then(function (response) {
           self.$emit('order-updated', response.data);
+          self.$toasted.success(self.$t('toast.success.update'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.update'));
         });
       },
       submit () {

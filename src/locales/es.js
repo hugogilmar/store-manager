@@ -25,6 +25,18 @@ const translations = {
     alert: {
       empty: 'No hay registros que mostrar.'
     },
+    toast: {
+      failure: {
+        create: 'No se pudo guardar el registro',
+        update: 'No se pudo actualizar el registro',
+        delete: 'No se pudo eliminar el registro'
+      },
+      success: {
+        create: 'Registro guardado',
+        update: 'Registro actualizado',
+        delete: 'Registro eliminado'
+      }
+    },
     header: {
       new: 'Crear %{entity}',
       edit: 'Editar %{entity}',

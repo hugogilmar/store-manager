@@ -92,9 +92,10 @@
         .then(function (response) {
           self.employee = response.data;
           self.editEmployee(self.employee.id);
+          self.$toasted.success(self.$t('toast.success.create'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.create'));
         });
       },
       updateEmployee (employeeId) {
@@ -106,9 +107,10 @@
         })
         .then(function (response) {
           self.employee = response.data;
+          self.$toasted.success(self.$t('toast.success.update'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.update'));
         });
       },
       submit () {

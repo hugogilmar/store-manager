@@ -162,9 +162,10 @@
         })
         .then(function (response) {
           self.$emit('invoice-created');
+          self.$toasted.success(self.$t('toast.success.create'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.create'));
         });
       },
       updateInvoice (invoiceId) {
@@ -179,9 +180,10 @@
         })
         .then(function (response) {
           self.$emit('invoice-updated');
+          self.$toasted.success(self.$t('toast.success.update'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.update'));
         });
       },
       submit () {

@@ -147,9 +147,10 @@
         .then(function (response) {
           self.product = response.data;
           self.editProduct(self.product.id);
+          self.$toasted.success(self.$t('toast.success.create'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.create'));
         });
       },
       updateProduct (productId) {
@@ -165,9 +166,10 @@
         })
         .then(function (response) {
           self.product = response.data;
+          self.$toasted.success(self.$t('toast.success.update'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.update'));
         });
       },
       submit () {

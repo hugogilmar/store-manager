@@ -148,9 +148,10 @@
         })
         .then(function (response) {
           self.$emit('order-line-created');
+          self.$toasted.success(self.$t('toast.success.create'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.create'));
         });
       },
       updateOrderLine (orderLineId) {
@@ -165,9 +166,10 @@
         })
         .then(function (response) {
           self.$emit('order-line-updated');
+          self.$toasted.success(self.$t('toast.success.update'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.update'));
         });
       },
       submit () {
