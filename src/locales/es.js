@@ -9,7 +9,8 @@ const translations = {
       stores: 'Comercios',
       paymentMethods: 'Métodos de pago',
       employees: 'Empleados',
-      orders: 'Ordenes'
+      orders: 'Ordenes',
+      logout: 'Cerrar sesión'
     },
     label: {
       save: 'Guardar',
@@ -50,7 +51,8 @@ const translations = {
       paymentMethod: 'método de pago | métodos de pago',
       employee: 'empleado | empleados',
       order: 'orden | ordenes',
-      invoice: 'invoice | invoices'
+      invoice: 'invoice | invoices',
+      session: 'sesión | sesiones'
     },
     product: {
       name: 'Nombre',
@@ -115,6 +117,10 @@ const translations = {
       number: 'Número',
       paymentMethod: 'Método de pago',
       amount: 'Monto'
+    },
+    session: {
+      username: 'Usuario',
+      password: 'Contraseña'
     }
   }
 }
