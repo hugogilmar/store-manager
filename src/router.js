@@ -26,7 +26,8 @@ const routes = appRoutes.concat(
   storesRoutes,
   paymentMethodsRoutes,
   employeesRoutes,
-  ordersRoutes
+  ordersRoutes,
+  sessionsRoutes
 );
 
 const router = new Router({
