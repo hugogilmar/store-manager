@@ -9,6 +9,7 @@ import paymentMethodsRoutes from './modules/payment_methods/routes';
 import employeesRoutes from './modules/employees/routes';
 import ordersRoutes from './modules/orders/routes';
 import sessionsRoutes from './modules/sessions/routes';
+import store from './store';
 
 Vue.use(Router);
 
@@ -36,13 +37,24 @@ const router = new Router({
   routes: routes
 });
 
-router.beforeResolve((to, from, next) => {
+router.beforeEach((to, from, next) => {
+  const publicPages = [
+    '/login'
+  ];
+
+  const authRequired = !publicPages.includes(to.path);
+  const token = store.state.token;
+
+  if (authRequired && !token) {
+    return next('/login');
+  }
+
   if (to.name) {
     NProgress.start();
   }
 
   next();
-})
+});
 
 router.afterEach((to, from) => {
   NProgress.done();
