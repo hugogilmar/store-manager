@@ -6,13 +6,13 @@
     <table class="v-table theme--light">
       <tbody>
         <td>
-          <p class="mb-1">{{ order.store.name }}</p>
+          <p class="mb-1" v-if="order.store">{{ order.store.name }}</p>
           <p>
             <small>{{ $t('order.store') }}</small>
           </p>
         </td>
         <td>
-          <p class="mb-1">{{ order.employee.name }}</p>
+          <p class="mb-1" v-if="order.employee">{{ order.employee.name }}</p>
           <p>
             <small>{{ $t('order.employee') }}</small>
           </p>
