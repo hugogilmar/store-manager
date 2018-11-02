@@ -226,28 +226,32 @@
         });
       },
       orderCreated (order) {
-        this.order = order;
-        this.editOrder(this.order.id);
+        this.editOrder(order.id);
       },
       orderUpdated (order) {
-        this.order = order;
+        this.getOrder(order.id);
       },
       orderLineCreated () {
         let orderId = this.orderId;
+        this.getOrder(orderId);
         this.getOrderLines(orderId);
       },
       orderLineUpdated () {
         let orderId = this.orderId;
+        this.getOrder(orderId);
         this.getOrderLines(orderId);
       },
       invoiceCreated () {
         let orderId = this.orderId;
+        this.getOrder(orderId);
         this.getInvoices(orderId);
       },
       invoiceUpdated () {
         let orderId = this.orderId;
+        this.getOrder(orderId);
         this.getInvoices(orderId);
       },
+
       editOrder (orderId) {
         this.$router.push({ path: `/orders/${orderId}` });
       }
