@@ -46,6 +46,7 @@
           <v-stepper-content step="2">
             <order-line-list
               :orderId.sync="orderId"
+              :storeId.sync="storeId"
               :order-lines.sync="orderLines"
               @order-line-created="orderLineCreated"
               @order-line-updated="orderLineUpdated"
@@ -78,6 +79,7 @@
           <v-stepper-content step="3">
             <invoice-list
               :orderId.sync="orderId"
+              :balance.sync="balance"
               :invoices.sync="invoices"
               @invoice-created="invoiceCreated"
               @invoice-updated="invoiceUpdated"
@@ -127,6 +129,14 @@
     props: [
       'orderId'
     ],
+    computed: {
+      storeId () {
+        return this.order.storeId;
+      },
+      balance () {
+        return this.order.balance;
+      }
+    },
     created () {
       let orderId = this.orderId;
 
