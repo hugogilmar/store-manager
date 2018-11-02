@@ -48,15 +48,16 @@
         <v-card-title
           class="headline"
         >
-          {{ $t('dialog.add.title', { entity: $tc('entities.order', 1) }) }}
+          {{ $t('dialog.add.title', { entity: $tc('entities.product', 1) }) }}
         </v-card-title>
         <v-card-text>
-          {{ $t('dialog.add.message', { entity: $tc('entities.order', 1) }) }}
+          {{ $t('dialog.add.message', { entity: $tc('entities.product', 1) }) }}
         </v-card-text>
         <v-card-text>
           <order-line-form
-            :order-id="orderId"
-            :order-line-id="orderLineId"
+            :order-id.sync="orderId"
+            :store-id.sync="storeId"
+            :order-line-id.sync="orderLineId"
             @order-line-created="orderLineCreated"
             @order-line-updated="orderLineUpdated"
             @cancel="cancel"
@@ -83,6 +84,7 @@
     },
     props: [
       'orderId',
+      'storeId',
       'orderLines'
     ],
     methods: {
