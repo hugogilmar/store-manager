@@ -112,7 +112,13 @@
           date: '',
           storeId: 0,
           employeeId: 0,
-          status: 0
+          status: 0,
+          total: 0,
+          subtotal: 0,
+          taxesTotal: 0,
+          discountsTotal: 0,
+          chargesTotal: 0,
+          balance: 0
         },
         orderLines: [],
         invoices: []
