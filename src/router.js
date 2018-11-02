@@ -8,6 +8,7 @@ import storesRoutes from './modules/stores/routes';
 import paymentMethodsRoutes from './modules/payment_methods/routes';
 import employeesRoutes from './modules/employees/routes';
 import ordersRoutes from './modules/orders/routes';
+import reportsRoutes from './modules/reports/routes';
 import sessionsRoutes from './modules/sessions/routes';
 import store from './store';
 
@@ -28,6 +29,7 @@ const routes = appRoutes.concat(
   paymentMethodsRoutes,
   employeesRoutes,
   ordersRoutes,
+  reportsRoutes,
   sessionsRoutes
 );
 

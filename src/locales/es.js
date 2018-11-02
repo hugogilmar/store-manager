@@ -65,6 +65,7 @@ const translations = {
       employee: 'empleado | empleados',
       order: 'orden | ordenes',
       invoice: 'factura | facturas',
+      report: 'reporte | reportes',
       session: 'sesión | sesiones'
     },
     product: {
