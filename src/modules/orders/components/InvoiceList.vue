@@ -55,8 +55,8 @@
         </v-card-text>
         <v-card-text>
           <invoice-form
-            :order-id="orderId"
             :invoice-id="invoiceId"
+            :order-id.sync="orderId"
             @invoice-created="invoiceCreated"
             @invoice-updated="invoiceUpdated"
             @cancel="cancel"
