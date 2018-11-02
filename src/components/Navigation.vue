@@ -73,6 +73,11 @@
             icon: 'list',
             title: this.$t('navigation.orders'),
             path: '/orders'
+          },
+          {
+            icon: 'show_chart',
+            title: this.$t('navigation.reports'),
+            path: '/reports'
           }
         ]
       }

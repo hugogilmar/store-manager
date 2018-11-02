@@ -10,6 +10,7 @@ const translations = {
       paymentMethods: 'Métodos de pago',
       employees: 'Empleados',
       orders: 'Ordenes',
+      reports: 'Reportes',
       logout: 'Cerrar sesión'
     },
     label: {
