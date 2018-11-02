@@ -28,7 +28,7 @@
 
           <v-stepper-content step="1">
             <order-form
-              :order="order"
+              :order.sync="order"
               @order-created="orderCreated"
               @order-updated="orderUpdated"
             />
@@ -45,7 +45,7 @@
 
           <v-stepper-content step="2">
             <order-line-list
-              :orderId="orderId"
+              :orderId.sync="orderId"
               :order-lines.sync="orderLines"
               @order-line-created="orderLineCreated"
               @order-line-updated="orderLineUpdated"
@@ -77,7 +77,7 @@
 
           <v-stepper-content step="3">
             <invoice-list
-              :orderId="orderId"
+              :orderId.sync="orderId"
               :invoices.sync="invoices"
               @invoice-created="invoiceCreated"
               @invoice-updated="invoiceUpdated"
