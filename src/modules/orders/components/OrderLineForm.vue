@@ -56,6 +56,7 @@
     },
     props: [
       'orderId',
+      'storeId',
       'orderLineId'
     ],
     computed: {
@@ -66,6 +67,9 @@
     watch: {
       productId: function (value) {
         this.orderLine.productId = value;
+      },
+      storeId () {
+        this.getProducts();
       },
       orderLineId () {
         let orderLineId = this.orderLineId;
@@ -94,8 +98,17 @@
       },
       getProducts () {
         let self = this;
+        let storeId = this.storeId;
 
-        this.$axios.get('/products')
+        this.$axios.get('/products', {
+          params: {
+            filter: {
+              where: {
+                storeId: storeId
+              }
+            }
+          }
+        })
         .then(function (response) {
           self.products = response.data;
         })
