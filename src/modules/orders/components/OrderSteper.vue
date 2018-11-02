@@ -28,7 +28,7 @@
 
           <v-stepper-content step="1">
             <order-form
-              :order="order"
+              :order.sync="order"
               @order-created="orderCreated"
               @order-updated="orderUpdated"
             />
@@ -45,7 +45,8 @@
 
           <v-stepper-content step="2">
             <order-line-list
-              :orderId="orderId"
+              :orderId.sync="orderId"
+              :storeId.sync="storeId"
               :order-lines.sync="orderLines"
               @order-line-created="orderLineCreated"
               @order-line-updated="orderLineUpdated"
@@ -77,7 +78,8 @@
 
           <v-stepper-content step="3">
             <invoice-list
-              :orderId="orderId"
+              :orderId.sync="orderId"
+              :balance.sync="balance"
               :invoices.sync="invoices"
               @invoice-created="invoiceCreated"
               @invoice-updated="invoiceUpdated"
@@ -112,7 +114,13 @@
           date: '',
           storeId: 0,
           employeeId: 0,
-          status: 0
+          status: 0,
+          total: 0,
+          subtotal: 0,
+          taxesTotal: 0,
+          discountsTotal: 0,
+          chargesTotal: 0,
+          balance: 0
         },
         orderLines: [],
         invoices: []
@@ -121,6 +129,14 @@
     props: [
       'orderId'
     ],
+    computed: {
+      storeId () {
+        return this.order.storeId;
+      },
+      balance () {
+        return this.order.balance;
+      }
+    },
     created () {
       let orderId = this.orderId;
 
@@ -226,28 +242,32 @@
         });
       },
       orderCreated (order) {
-        this.order = order;
-        this.editOrder(this.order.id);
+        this.editOrder(order.id);
       },
       orderUpdated (order) {
-        this.order = order;
+        this.getOrder(order.id);
       },
       orderLineCreated () {
         let orderId = this.orderId;
+        this.getOrder(orderId);
         this.getOrderLines(orderId);
       },
       orderLineUpdated () {
         let orderId = this.orderId;
+        this.getOrder(orderId);
         this.getOrderLines(orderId);
       },
       invoiceCreated () {
         let orderId = this.orderId;
+        this.getOrder(orderId);
         this.getInvoices(orderId);
       },
       invoiceUpdated () {
         let orderId = this.orderId;
+        this.getOrder(orderId);
         this.getInvoices(orderId);
       },
+
       editOrder (orderId) {
         this.$router.push({ path: `/orders/${orderId}` });
       }

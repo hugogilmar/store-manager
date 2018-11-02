@@ -1,30 +1,41 @@
 <template>
-  <v-list two-line>
-    <v-alert
-      :value="true"
-      type="info"
-      v-if="orders.length == 0"
-    >
-      {{ $t('alert.empty') }}
-    </v-alert>
-    <v-list-tile
-      v-for="order in orders"
-      :key="order.id"
-      avatar
-      @click="editOrder(order.id)"
-    >
-      <v-list-tile-action>
-        <v-icon>star</v-icon>
-      </v-list-tile-action>
-      <v-list-tile-content>
-        <v-list-tile-title>{{ order.number }}</v-list-tile-title>
-        <v-list-tile-sub-title>{{ order.total | currency }}</v-list-tile-sub-title>
-      </v-list-tile-content>
-      <v-list-tile-avatar v-if="order.avatar">
-        <img :src="order.avatar">
-      </v-list-tile-avatar>
-    </v-list-tile>
-  </v-list>
+  <v-layout row wrap>
+    <v-flex xs4>
+      <v-date-picker
+        v-model="date"
+        locale="es-MX"
+        :landscape="landscape"
+      ></v-date-picker>
+    </v-flex>
+    <v-flex xs8>
+      <v-list two-line>
+        <v-alert
+          :value="true"
+          type="info"
+          v-if="orders.length == 0"
+        >
+          {{ $t('alert.empty') }}
+        </v-alert>
+        <v-list-tile
+          v-for="order in orders"
+          :key="order.id"
+          avatar
+          @click="editOrder(order.id)"
+        >
+          <v-list-tile-action>
+            <v-icon>star</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ order.number }}</v-list-tile-title>
+            <v-list-tile-sub-title>{{ order.total | currency }}</v-list-tile-sub-title>
+          </v-list-tile-content>
+          <v-list-tile-avatar v-if="order.avatar">
+            <img :src="order.avatar">
+          </v-list-tile-avatar>
+        </v-list-tile>
+      </v-list>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -32,7 +43,14 @@
     name: 'OrderList',
     data () {
       return {
+        landscape: true,
+        date: new Date().toISOString().substr(0, 10),
         orders: []
+      }
+    },
+    watch: {
+      date (value) {
+        this.getOrders();
       }
     },
     created () {
@@ -42,7 +60,15 @@
       getOrders () {
         let self = this;
 
-        this.$axios.get('/orders')
+        this.$axios.get('/orders', {
+          params: {
+            filter: {
+              where: {
+                date: this.date
+              }
+            }
+          }
+        })
         .then(function (response) {
           self.orders = response.data;
         })

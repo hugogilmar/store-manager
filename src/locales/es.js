@@ -63,7 +63,7 @@ const translations = {
       paymentMethod: 'método de pago | métodos de pago',
       employee: 'empleado | empleados',
       order: 'orden | ordenes',
-      invoice: 'invoice | invoices',
+      invoice: 'factura | facturas',
       session: 'sesión | sesiones'
     },
     product: {
