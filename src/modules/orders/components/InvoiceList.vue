@@ -57,6 +57,7 @@
           <invoice-form
             :order-id.sync="orderId"
             :invoice-id.sync="invoiceId"
+            :balance.sync="balance"
             @invoice-created="invoiceCreated"
             @invoice-updated="invoiceUpdated"
             @cancel="cancel"
@@ -83,6 +84,7 @@
     },
     props: [
       'orderId',
+      'balance',
       'invoices'
     ],
     methods: {
