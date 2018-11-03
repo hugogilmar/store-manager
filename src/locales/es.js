@@ -102,6 +102,7 @@ const translations = {
     },
     employee: {
       name: 'Nombre',
+      code: 'Código',
       store: 'Comercio',
       header: 'Empleados'
     },

@@ -7,6 +7,13 @@
       :label="$t('employee.name')"
       required
     ></v-text-field>
+    <v-text-field
+      v-model="employee.code"
+      :rules="rules.code"
+      :counter="10"
+      :label="$t('employee.code')"
+      required
+    ></v-text-field>
     <v-select
       v-model="employee.storeId"
       :items="stores"
@@ -35,12 +42,17 @@
         stores: [],
         employee: {
           name: '',
+          code: '',
           storeId: 0
         },
         rules: {
           name: [
             v => !!v || 'Name is required',
             v => (v && v.length <= 48) || 'Name must be less than 48 characters'
+          ],
+          code: [
+            v => !!v || 'Code is required',
+            v => (v && v.length <= 10) || 'Code must be less than 10 characters'
           ]
         }
       }
@@ -87,6 +99,7 @@
 
         this.$axios.post('/employees', {
           name: this.employee.name,
+          code: this.employee.code,
           storeId: this.employee.storeId
         })
         .then(function (response) {
@@ -103,6 +116,7 @@
 
         this.$axios.put(`/employees/${employeeId}`, {
           name: this.employee.name,
+          code: this.employee.code,
           storeId: this.employee.storeId
         })
         .then(function (response) {
