@@ -1,11 +1,39 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs4>
-      <v-date-picker
-        v-model="date"
-        locale="es-MX"
-        :landscape="landscape"
-      ></v-date-picker>
+    <v-flex xs4 class="pa-4">
+      <v-select
+        v-model="storeId"
+        :items="stores"
+        :rules="[v => !!v || 'Item is required']"
+        :label="$t('product.store')"
+        item-text="name"
+        item-value="id"
+        required
+      ></v-select>
+      <v-menu
+        ref="menu"
+        v-model="menu"
+        :nudge-right="40"
+        lazy
+        transition="scale-transition"
+        offset-y
+        full-width
+        min-width="290px"
+      >
+        <v-text-field
+          slot="activator"
+          v-model="date"
+          :label="$t('order.date')"
+          readonly
+        ></v-text-field>
+        <v-date-picker
+          v-model="date"
+          scrollable
+          locale="es-MX"
+          @input="menu = false"
+        >
+        </v-date-picker>
+      </v-menu>
     </v-flex>
     <v-flex xs8>
       <v-list two-line>
