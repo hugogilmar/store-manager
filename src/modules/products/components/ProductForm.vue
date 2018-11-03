@@ -10,6 +10,7 @@
     <v-text-field
       v-model="product.code"
       :rules="rules.code"
+      :counter="10"
       :label="$t('product.code')"
       required
     ></v-text-field>
