@@ -162,6 +162,7 @@
         .then(function (response) {
           self.$emit('order-line-created');
           self.$toasted.success(self.$t('toast.success.create'));
+          self.resetOrderLine();
         })
         .catch(function (error) {
           self.$toasted.error(self.$t('toast.failure.create'));
@@ -180,6 +181,7 @@
         .then(function (response) {
           self.$emit('order-line-updated');
           self.$toasted.success(self.$t('toast.success.update'));
+          self.resetOrderLine();
         })
         .catch(function (error) {
           self.$toasted.error(self.$t('toast.failure.update'));
@@ -199,8 +201,8 @@
         }
       },
       cancel () {
-        this.resetOrderLine();
         this.$emit('cancel');
+        this.resetOrderLine();
       }
     }
   };

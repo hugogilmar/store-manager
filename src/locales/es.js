@@ -4,12 +4,22 @@ const translations = {
       name: 'Administrador de comercios'
     },
     navigation: {
-      products: 'Productos',
-      productCategories: 'Categorías de productos',
-      stores: 'Comercios',
-      paymentMethods: 'Métodos de pago',
-      employees: 'Empleados',
-      orders: 'Ordenes',
+      title: 'Menú principal',
+      groups: {
+        cruds: 'Mantenimientos',
+        reports: 'Reportes'
+      },
+      links: {
+        products: 'Productos',
+        productCategories: 'Categorías de productos',
+        stores: 'Comercios',
+        paymentMethods: 'Métodos de pago',
+        employees: 'Empleados',
+        orders: 'Ordenes',
+        productsReport: 'Ventas por producto',
+        productCategoriesReport: 'Ventas por categoría',
+        paymentMethodsReport: 'Ventas por método de pago',
+      },
       logout: 'Cerrar sesión'
     },
     label: {
@@ -64,6 +74,7 @@ const translations = {
       employee: 'empleado | empleados',
       order: 'orden | ordenes',
       invoice: 'factura | facturas',
+      report: 'reporte | reportes',
       session: 'sesión | sesiones'
     },
     product: {
@@ -72,22 +83,27 @@ const translations = {
       price: 'Precio',
       specialPrice: 'Precio de promoción',
       productCategory: 'Categoría',
-      store: 'Comercio'
+      store: 'Comercio',
+      header: 'Productos'
     },
     productCategory: {
       name: 'Nombre',
-      code: 'Código'
+      code: 'Código',
+      header: 'Categorías'
     },
     store: {
-      name: 'Nombre'
+      name: 'Nombre',
+      header: 'Comercios'
     },
     paymentMethod: {
       name: 'Nombre',
-      code: 'Código'
+      code: 'Código',
+      header: 'Métodos de pago'
     },
     employee: {
       name: 'Nombre',
-      store: 'Comercio'
+      store: 'Comercio',
+      header: 'Empleados'
     },
     order: {
       title: 'Orden #%{number}',
@@ -114,7 +130,8 @@ const translations = {
           title: 'Facturación',
           summary: ''
         }
-      }
+      },
+      header: 'Ordenes'
     },
     orderLine: {
       product: 'Producto',
@@ -122,13 +139,31 @@ const translations = {
       price: 'Precio',
       comment: 'Comentario',
       billable: 'Facturable',
-      total: 'Total'
+      total: 'Total',
+      header: 'Productos'
     },
     invoice: {
       date: 'Fecha',
       number: 'Número',
       paymentMethod: 'Método de pago',
-      amount: 'Monto'
+      amount: 'Monto',
+      header: 'Facturas'
+    },
+    report: {
+      dateFrom: 'Fecha desde',
+      dateTo: 'Fecha hasta',
+      code: 'Código',
+      store: 'Comercio',
+      product: 'Producto',
+      productCategory: 'Categoría',
+      paymentMethod: 'Método de pago',
+      quantity: 'Cantidad',
+      total: 'Total',
+      header: {
+        product: 'Ventas por producto',
+        productCategory: 'Ventas por categoría',
+        paymentMethod: 'Ventas por método de pago'
+      }
     },
     session: {
       username: 'Usuario',

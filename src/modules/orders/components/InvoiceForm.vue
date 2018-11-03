@@ -7,7 +7,6 @@
     ></v-text-field>
     <v-menu
       ref="menu"
-      :close-on-content-click="false"
       v-model="menu"
       :nudge-right="40"
       lazy
@@ -20,7 +19,6 @@
         slot="activator"
         v-model="invoice.date"
         :label="$t('invoice.date')"
-        prepend-icon="event"
         readonly
       ></v-text-field>
       <v-date-picker
@@ -126,7 +124,7 @@
       resetInvoice () {
         this.invoice = {
           number: '',
-          date: '',
+          date: new Date().toISOString().substr(0, 10),
           paymentMethodId: 0,
           amount: 0.00
         }
@@ -163,6 +161,7 @@
         .then(function (response) {
           self.$emit('invoice-created');
           self.$toasted.success(self.$t('toast.success.create'));
+          self.resetInvoice();
         })
         .catch(function (error) {
           self.$toasted.error(self.$t('toast.failure.create'));
@@ -181,6 +180,7 @@
         .then(function (response) {
           self.$emit('invoice-updated');
           self.$toasted.success(self.$t('toast.success.update'));
+          self.resetInvoice();
         })
         .catch(function (error) {
           self.$toasted.error(self.$t('toast.failure.update'));
@@ -200,8 +200,8 @@
         }
       },
       cancel () {
-        this.resetInvoice();
         this.$emit('cancel');
+        this.resetInvoice();
       }
     }
   };

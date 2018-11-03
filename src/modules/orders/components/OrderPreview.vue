@@ -110,6 +110,6 @@
   }
 
   .v-table tfoot th {
-    color: rgba(0,0,0,.54);
+    color: rgba(0, 0, 0, .54);
   }
 </style>

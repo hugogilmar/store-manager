@@ -111,7 +111,7 @@
         step: 1,
         order: {
           number: '',
-          date: '',
+          date: new Date().toISOString().substr(0, 10),
           storeId: 0,
           employeeId: 0,
           status: 0,
@@ -267,7 +267,6 @@
         this.getOrder(orderId);
         this.getInvoices(orderId);
       },
-
       editOrder (orderId) {
         this.$router.push({ path: `/orders/${orderId}` });
       }
