@@ -163,6 +163,7 @@
         .then(function (response) {
           self.$emit('invoice-created');
           self.$toasted.success(self.$t('toast.success.create'));
+          self.resetInvoice();
         })
         .catch(function (error) {
           self.$toasted.error(self.$t('toast.failure.create'));
@@ -181,6 +182,7 @@
         .then(function (response) {
           self.$emit('invoice-updated');
           self.$toasted.success(self.$t('toast.success.update'));
+          self.resetInvoice();
         })
         .catch(function (error) {
           self.$toasted.error(self.$t('toast.failure.update'));
@@ -200,8 +202,8 @@
         }
       },
       cancel () {
-        this.resetInvoice();
         this.$emit('cancel');
+        this.resetInvoice();
       }
     }
   };
