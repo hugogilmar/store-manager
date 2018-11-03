@@ -7,7 +7,6 @@
     ></v-text-field>
     <v-menu
       ref="menu"
-      :close-on-content-click="false"
       v-model="menu"
       :nudge-right="40"
       lazy
@@ -20,7 +19,6 @@
         slot="activator"
         v-model="order.date"
         :label="$t('order.date')"
-        prepend-icon="event"
         readonly
       ></v-text-field>
       <v-date-picker

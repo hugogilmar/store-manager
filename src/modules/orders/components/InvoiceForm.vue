@@ -7,7 +7,6 @@
     ></v-text-field>
     <v-menu
       ref="menu"
-      :close-on-content-click="false"
       v-model="menu"
       :nudge-right="40"
       lazy
@@ -20,7 +19,6 @@
         slot="activator"
         v-model="invoice.date"
         :label="$t('invoice.date')"
-        prepend-icon="event"
         readonly
       ></v-text-field>
       <v-date-picker
@@ -126,7 +124,7 @@
       resetInvoice () {
         this.invoice = {
           number: '',
-          date: '',
+          date: new Date().toISOString().substr(0, 10),
           paymentMethodId: 0,
           amount: 0.00
         }
