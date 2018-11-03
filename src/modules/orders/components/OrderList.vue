@@ -35,7 +35,7 @@
         </v-date-picker>
       </v-menu>
     </v-flex>
-    <v-flex xs8>
+    <v-flex xs8 class="pa-4">
       <v-list two-line>
         <v-alert
           :value="true"
@@ -73,18 +73,35 @@
       return {
         landscape: true,
         date: new Date().toISOString().substr(0, 10),
+        storeId: 1,
+        stores: [],
         orders: []
       }
     },
     watch: {
       date (value) {
         this.getOrders();
+      },
+      storeId (value) {
+        this.getOrders();
       }
     },
     created () {
+      this.getStores();
       this.getOrders();
     },
     methods: {
+      getStores () {
+        let self = this;
+
+        this.$axios.get('/stores')
+        .then(function (response) {
+          self.stores = response.data;
+        })
+        .catch(function (error) {
+          self.stores = [];
+        });
+      },
       getOrders () {
         let self = this;
 
@@ -92,7 +109,8 @@
           params: {
             filter: {
               where: {
-                date: this.date
+                date: this.date,
+                storeId: this.storeId
               }
             }
           }
