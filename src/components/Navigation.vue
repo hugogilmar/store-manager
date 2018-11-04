@@ -101,6 +101,12 @@
             group: 'cruds'
           },
           {
+            icon: 'attach_money',
+            title: this.$t('navigation.links.charges'),
+            path: '/charges',
+            group: 'cruds'
+          },
+          {
             icon: 'list',
             title: this.$t('navigation.links.orders'),
             path: '/orders',

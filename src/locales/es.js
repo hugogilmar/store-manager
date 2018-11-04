@@ -15,6 +15,7 @@ const translations = {
         stores: 'Comercios',
         paymentMethods: 'Métodos de pago',
         employees: 'Empleados',
+        charges: 'Cargos',
         orders: 'Ordenes',
         productsReport: 'Ventas por producto',
         productCategoriesReport: 'Ventas por categoría',
@@ -72,6 +73,7 @@ const translations = {
       store: 'comercio | comercios',
       paymentMethod: 'método de pago | métodos de pago',
       employee: 'empleado | empleados',
+      charge: 'cargo | cargos',
       order: 'orden | ordenes',
       invoice: 'factura | facturas',
       report: 'reporte | reportes',
@@ -105,6 +107,12 @@ const translations = {
       code: 'Código',
       store: 'Comercio',
       header: 'Empleados'
+    },
+    charge: {
+      name: 'Nombre',
+      code: 'Código',
+      amount: 'Porcentage',
+      store: 'Comercio'
     },
     order: {
       title: 'Orden #%{number}',

@@ -7,6 +7,7 @@ import productCategoriesRoutes from './modules/product_categories/routes';
 import storesRoutes from './modules/stores/routes';
 import paymentMethodsRoutes from './modules/payment_methods/routes';
 import employeesRoutes from './modules/employees/routes';
+import chargesRoutes from './modules/charges/routes';
 import ordersRoutes from './modules/orders/routes';
 import reportsRoutes from './modules/reports/routes';
 import sessionsRoutes from './modules/sessions/routes';
@@ -28,6 +29,7 @@ const routes = appRoutes.concat(
   storesRoutes,
   paymentMethodsRoutes,
   employeesRoutes,
+  chargesRoutes,
   ordersRoutes,
   reportsRoutes,
   sessionsRoutes
