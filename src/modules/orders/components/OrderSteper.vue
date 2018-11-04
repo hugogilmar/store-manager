@@ -19,7 +19,6 @@
         >
           <v-stepper-step
             :editable="stepEditable(1)"
-            :complete="stepCompleted(1)"
             step="1"
           >
             {{ $t('order.steps.one.title') }}
@@ -36,7 +35,6 @@
 
           <v-stepper-step
             :editable="stepEditable(2)"
-            :complete="stepCompleted(2)"
             step="2"
           >
             {{ $t('order.steps.two.title') }}
@@ -69,7 +67,6 @@
 
           <v-stepper-step
             :editable="stepEditable(3)"
-            :complete="stepCompleted(3)"
             step="3"
           >
             {{ $t('order.steps.three.title') }}
@@ -77,6 +74,38 @@
           </v-stepper-step>
 
           <v-stepper-content step="3">
+            <order-charge-list
+              :orderId.sync="orderId"
+              :storeId.sync="storeId"
+              :order-charges.sync="orderCharges"
+              @order-charge-created="orderChargeCreated"
+              @order-charge-updated="orderChargeUpdated"
+            />
+            <v-fab-transition>
+              <v-btn
+                color="primary"
+                dark
+                fab
+                fixed
+                bottom
+                right
+                @click="newOrderCharge()"
+                v-if="step == 3"
+              >
+                <v-icon>add</v-icon>
+              </v-btn>
+            </v-fab-transition>
+          </v-stepper-content>
+
+          <v-stepper-step
+            :editable="stepEditable(4)"
+            step="4"
+          >
+            {{ $t('order.steps.four.title') }}
+            <small>{{ $t('order.steps.four.summary') }}</small>
+          </v-stepper-step>
+
+          <v-stepper-content step="4">
             <invoice-list
               :orderId.sync="orderId"
               :balance.sync="balance"
@@ -96,6 +125,7 @@
   import OrderPreview from '../components/OrderPreview.vue';
   import OrderForm from '../components/OrderForm.vue';
   import OrderLineList from '../components/OrderLineList.vue';
+  import OrderChargeList from '../components/OrderChargeList.vue';
   import InvoiceList from '../components/InvoiceList.vue';
 
   export default {
@@ -104,6 +134,7 @@
       'order-preview': OrderPreview,
       'order-form': OrderForm,
       'order-line-list': OrderLineList,
+      'order-charge-list': OrderChargeList,
       'invoice-list': InvoiceList
     },
     data () {
@@ -112,17 +143,23 @@
         order: {
           number: '',
           date: new Date().toISOString().substr(0, 10),
+          location: '',
+          guests: '',
+          comment: '',
+          billable: true,
+          discountAmount: 0,
           storeId: 0,
           employeeId: 0,
           status: 0,
-          total: 0,
-          subtotal: 0,
-          taxesTotal: 0,
-          discountsTotal: 0,
-          chargesTotal: 0,
-          balance: 0
+          total: 0.00,
+          subtotal: 0.00,
+          taxesTotal: 0.00,
+          discountsTotal: 0.00,
+          chargesTotal: 0.00,
+          balance: 0.00
         },
         orderLines: [],
+        orderCharges: [],
         invoices: []
       }
     },
@@ -143,6 +180,7 @@
       if (orderId) {
         this.getOrder(orderId);
         this.getOrderLines(orderId);
+        this.getOrderCharges(orderId);
         this.getInvoices(orderId);
       }
     },
@@ -156,23 +194,10 @@
             return !!this.orderId;
             break;
           case 3:
-            return !!this.orderId && !!this.order.total;
-            break;
-          default:
-            return false;
-            break;
-        }
-      },
-      stepCompleted (step) {
-        switch (step) {
-          case 1:
             return !!this.orderId;
             break;
-          case 2:
-            return !!this.orderLines.length;
-            break;
-          case 3:
-            return !!this.invoices.length;
+          case 4:
+            return !!this.orderId && !!this.order.total;
             break;
           default:
             return false;
@@ -194,7 +219,7 @@
         })
         .then(function (response) {
           let date = moment(response.data.date);
-          response.data.date = date.format('YYYY-MM-DD');
+          response.data.date = date.utc().format('YYYY-MM-DD');
           self.order = response.data;
         })
         .catch(function (error) {
@@ -219,6 +244,26 @@
         })
         .catch(function (error) {
           self.orderLines = [];
+        });
+      },
+      getOrderCharges (orderId) {
+        let self = this;
+
+        this.$axios.get('/order_charges', {
+          params: {
+            filter: {
+              where: {
+                orderId: orderId
+              },
+              include: 'charge'
+            }
+          }
+        })
+        .then(function (response) {
+          self.orderCharges = response.data;
+        })
+        .catch(function (error) {
+          self.orderCharges = [];
         });
       },
       getInvoices (orderId) {
@@ -256,6 +301,16 @@
         let orderId = this.orderId;
         this.getOrder(orderId);
         this.getOrderLines(orderId);
+      },
+      orderChargeCreated () {
+        let orderId = this.orderId;
+        this.getOrder(orderId);
+        this.getOrderCharges(orderId);
+      },
+      orderChargeUpdated () {
+        let orderId = this.orderId;
+        this.getOrder(orderId);
+        this.getOrderCharges(orderId);
       },
       invoiceCreated () {
         let orderId = this.orderId;

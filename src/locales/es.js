@@ -141,6 +141,10 @@ const translations = {
           summary: ''
         },
         three: {
+          title: 'Cargos',
+          summary: ''
+        },
+        four: {
           title: 'Facturación',
           summary: ''
         }
@@ -156,6 +160,9 @@ const translations = {
       total: 'Total',
       discountAmount: 'Porcentaje de descuento',
       header: 'Productos'
+    },
+    orderCharge: {
+      charge: 'Cargo'
     },
     invoice: {
       date: 'Fecha',
