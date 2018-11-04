@@ -19,6 +19,11 @@
       v-model="orderLine.billable"
     ></v-checkbox>
     <v-text-field
+      v-model="orderLine.discountAmount"
+      :label="$t('orderLine.discountAmount')"
+      required
+    ></v-text-field>
+    <v-text-field
       v-model="orderLine.comment"
       :counter="48"
       :label="$t('orderLine.comment')"
@@ -124,6 +129,7 @@
           subtotal: 0.00,
           total: 0.00,
           billable: true,
+          discountAmount: 0.00,
           comment: '',
           product: {
             id: 0,
@@ -157,6 +163,7 @@
           productId: this.orderLine.productId,
           quantity: this.orderLine.quantity,
           billable: this.orderLine.billable,
+          discountAmount: this.orderLine.discountAmount,
           comment: this.orderLine.comment
         })
         .then(function (response) {
@@ -176,6 +183,7 @@
           productId: this.orderLine.productId,
           quantity: this.orderLine.quantity,
           billable: this.orderLine.billable,
+          discountAmount: this.orderLine.discountAmount,
           comment: this.orderLine.comment
         })
         .then(function (response) {

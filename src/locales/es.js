@@ -126,6 +126,11 @@ const translations = {
       discountsTotal: 'Descuentos',
       chargesTotal: 'Cargos adicionales',
       balance: 'Balance',
+      billable: 'Facturable',
+      location: 'Ubicación',
+      guests: 'Personas',
+      discountAmount: 'Porcentaje de descuento',
+      comment: 'Comentario',
       steps: {
         one: {
           title: 'Orden',
@@ -149,6 +154,7 @@ const translations = {
       comment: 'Comentario',
       billable: 'Facturable',
       total: 'Total',
+      discountAmount: 'Porcentaje de descuento',
       header: 'Productos'
     },
     invoice: {

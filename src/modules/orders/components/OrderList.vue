@@ -71,7 +71,7 @@
     name: 'OrderList',
     data () {
       return {
-        landscape: true,
+        menu: false,
         date: new Date().toISOString().substr(0, 10),
         storeId: 1,
         stores: [],

@@ -5,6 +5,16 @@
       :label="$t('order.number')"
       required
     ></v-text-field>
+    <v-text-field
+      v-model="order.location"
+      :label="$t('order.location')"
+      required
+    ></v-text-field>
+    <v-text-field
+      v-model="order.guests"
+      :label="$t('order.guests')"
+      required
+    ></v-text-field>
     <v-menu
       ref="menu"
       v-model="menu"
@@ -48,6 +58,21 @@
       required
       v-if="employees.length > 0"
     ></v-select>
+    <v-checkbox
+      :label="$t('order.billable')"
+      v-model="order.billable"
+    ></v-checkbox>
+    <v-text-field
+      v-model="order.discountAmount"
+      :label="$t('order.discountAmount')"
+      required
+    ></v-text-field>
+    <v-text-field
+      v-model="order.comment"
+      :counter="48"
+      :label="$t('order.comment')"
+      required
+    ></v-text-field>
     <v-btn
       color="primary"
       :disabled="!valid"
@@ -129,7 +154,12 @@
           date: this.order.date,
           storeId: this.order.storeId,
           employeeId: this.order.employeeId,
-          status: this.order.status
+          status: this.order.status,
+          location: this.order.location,
+          guests: this.order.guests,
+          comment: this.order.comment,
+          discountAmount: this.order.discountAmount,
+          billable: this.order.billable
         })
         .then(function (response) {
           self.$emit('order-created', response.data);
@@ -147,7 +177,12 @@
           date: this.order.date,
           storeId: this.order.storeId,
           employeeId: this.order.employeeId,
-          status: this.order.status
+          status: this.order.status,
+          location: this.order.location,
+          guests: this.order.guests,
+          comment: this.order.comment,
+          discountAmount: this.order.discountAmount,
+          billable: this.order.billable
         })
         .then(function (response) {
           self.$emit('order-updated', response.data);
