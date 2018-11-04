@@ -145,7 +145,7 @@ const translations = {
     },
     invoice: {
       date: 'Fecha',
-      number: 'Número',
+      referenceNumber: 'Número de referencia',
       paymentMethod: 'Método de pago',
       amount: 'Monto',
       header: 'Facturas'
