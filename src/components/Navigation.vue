@@ -89,7 +89,7 @@
             group: 'cruds'
           },
           {
-            icon: 'attach_money',
+            icon: 'credit_card',
             title: this.$t('navigation.links.paymentMethods'),
             path: '/payment_methods',
             group: 'cruds'
