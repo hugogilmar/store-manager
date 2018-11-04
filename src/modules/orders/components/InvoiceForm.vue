@@ -5,30 +5,6 @@
       :label="$t('invoice.number')"
       required
     ></v-text-field>
-    <v-menu
-      ref="menu"
-      v-model="menu"
-      :nudge-right="40"
-      lazy
-      transition="scale-transition"
-      offset-y
-      full-width
-      min-width="290px"
-    >
-      <v-text-field
-        slot="activator"
-        v-model="invoice.date"
-        :label="$t('invoice.date')"
-        readonly
-      ></v-text-field>
-      <v-date-picker
-        v-model="invoice.date"
-        scrollable
-        locale="es-MX"
-        @input="menu = false"
-      >
-      </v-date-picker>
-    </v-menu>
     <v-select
       v-model="invoice.paymentMethodId"
       :items="paymentMethods"
@@ -124,7 +100,6 @@
       resetInvoice () {
         this.invoice = {
           number: '',
-          date: new Date().toISOString().substr(0, 10),
           paymentMethodId: 0,
           amount: 0.00
         }
@@ -153,7 +128,6 @@
 
         this.$axios.post('/invoices', {
           number: this.invoice.number,
-          date: this.invoice.date,
           amount: this.invoice.amount,
           orderId: this.orderId,
           paymentMethodId: this.invoice.paymentMethodId
@@ -172,7 +146,6 @@
 
         this.$axios.put(`/invoices/${invoiceId}`, {
           number: this.invoice.number,
-          date: this.invoice.date,
           amount: this.invoice.amount,
           orderId: this.orderId,
           paymentMethodId: this.invoice.paymentMethodId
