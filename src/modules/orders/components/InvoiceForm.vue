@@ -1,8 +1,8 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-text-field
-      v-model="invoice.number"
-      :label="$t('invoice.number')"
+      v-model="invoice.referenceNumber"
+      :label="$t('invoice.referenceNumber')"
       required
     ></v-text-field>
     <v-select
@@ -99,7 +99,7 @@
       },
       resetInvoice () {
         this.invoice = {
-          number: '',
+          referenceNumber: '',
           paymentMethodId: 0,
           amount: 0.00
         }
@@ -127,7 +127,7 @@
         let self = this;
 
         this.$axios.post('/invoices', {
-          number: this.invoice.number,
+          referenceNumber: this.invoice.referenceNumber,
           amount: this.invoice.amount,
           orderId: this.orderId,
           paymentMethodId: this.invoice.paymentMethodId
@@ -145,7 +145,7 @@
         let self = this;
 
         this.$axios.put(`/invoices/${invoiceId}`, {
-          number: this.invoice.number,
+          referenceNumber: this.invoice.referenceNumber,
           amount: this.invoice.amount,
           orderId: this.orderId,
           paymentMethodId: this.invoice.paymentMethodId
