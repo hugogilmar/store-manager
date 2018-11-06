@@ -172,7 +172,7 @@
       updateOrder (orderId) {
         let self = this;
 
-        this.$axios.put(`/orders/${orderId}`, {
+        this.$axios.patch(`/orders/${orderId}`, {
           number: this.order.number,
           date: this.order.date,
           storeId: this.order.storeId,
