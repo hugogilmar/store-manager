@@ -1,123 +1,120 @@
 <template>
-  <v-container grid-list-lg>
-    <v-layout
-      row
-      wrap
-    >
-      <v-flex xs5>
-        <order-preview
-          :order.sync="order"
-          :order-lines.sync="orderLines"
-          :invoices.sync="invoices"
+  <v-layout
+    row
+    wrap
+  >
+    <v-flex xs5>
+      <order-preview
+        :order.sync="order"
+        :order-lines.sync="orderLines"
+        :invoices.sync="invoices"
+      ></order-preview>
+    </v-flex>
+    <v-flex xs7>
+      <v-stepper
+        v-model="step"
+        vertical
+      >
+        <v-stepper-step
+          :editable="stepEditable(1)"
+          step="1"
         >
-      </order-preview>
-      </v-flex>
-      <v-flex xs7>
-        <v-stepper
-          v-model="step"
-          vertical
+          {{ $t('order.steps.one.title') }}
+          <small>{{ $t('order.steps.one.summary') }}</small>
+        </v-stepper-step>
+
+        <v-stepper-content step="1">
+          <order-form
+            :order.sync="order"
+            @order-created="orderCreated"
+            @order-updated="orderUpdated"
+          />
+        </v-stepper-content>
+
+        <v-stepper-step
+          :editable="stepEditable(2)"
+          step="2"
         >
-          <v-stepper-step
-            :editable="stepEditable(1)"
-            step="1"
-          >
-            {{ $t('order.steps.one.title') }}
-            <small>{{ $t('order.steps.one.summary') }}</small>
-          </v-stepper-step>
+          {{ $t('order.steps.two.title') }}
+          <small>{{ $t('order.steps.two.summary') }}</small>
+        </v-stepper-step>
 
-          <v-stepper-content step="1">
-            <order-form
-              :order.sync="order"
-              @order-created="orderCreated"
-              @order-updated="orderUpdated"
-            />
-          </v-stepper-content>
+        <v-stepper-content step="2">
+          <order-line-list
+            :orderId.sync="orderId"
+            :storeId.sync="storeId"
+            :order-lines.sync="orderLines"
+            @order-line-created="orderLineCreated"
+            @order-line-updated="orderLineUpdated"
+          />
+          <v-fab-transition>
+            <v-btn
+              color="primary"
+              dark
+              fab
+              fixed
+              bottom
+              right
+              @click="newOrderLine()"
+              v-if="step == 2"
+            >
+              <v-icon>add</v-icon>
+            </v-btn>
+          </v-fab-transition>
+        </v-stepper-content>
 
-          <v-stepper-step
-            :editable="stepEditable(2)"
-            step="2"
-          >
-            {{ $t('order.steps.two.title') }}
-            <small>{{ $t('order.steps.two.summary') }}</small>
-          </v-stepper-step>
+        <v-stepper-step
+          :editable="stepEditable(3)"
+          step="3"
+        >
+          {{ $t('order.steps.three.title') }}
+          <small>{{ $t('order.steps.three.summary') }}</small>
+        </v-stepper-step>
 
-          <v-stepper-content step="2">
-            <order-line-list
-              :orderId.sync="orderId"
-              :storeId.sync="storeId"
-              :order-lines.sync="orderLines"
-              @order-line-created="orderLineCreated"
-              @order-line-updated="orderLineUpdated"
-            />
-            <v-fab-transition>
-              <v-btn
-                color="primary"
-                dark
-                fab
-                fixed
-                bottom
-                right
-                @click="newOrderLine()"
-                v-if="step == 2"
-              >
-                <v-icon>add</v-icon>
-              </v-btn>
-            </v-fab-transition>
-          </v-stepper-content>
+        <v-stepper-content step="3">
+          <order-charge-list
+            :orderId.sync="orderId"
+            :storeId.sync="storeId"
+            :order-charges.sync="orderCharges"
+            @order-charge-created="orderChargeCreated"
+            @order-charge-updated="orderChargeUpdated"
+          />
+          <v-fab-transition>
+            <v-btn
+              color="primary"
+              dark
+              fab
+              fixed
+              bottom
+              right
+              @click="newOrderCharge()"
+              v-if="step == 3"
+            >
+              <v-icon>add</v-icon>
+            </v-btn>
+          </v-fab-transition>
+        </v-stepper-content>
 
-          <v-stepper-step
-            :editable="stepEditable(3)"
-            step="3"
-          >
-            {{ $t('order.steps.three.title') }}
-            <small>{{ $t('order.steps.three.summary') }}</small>
-          </v-stepper-step>
+        <v-stepper-step
+          :editable="stepEditable(4)"
+          step="4"
+        >
+          {{ $t('order.steps.four.title') }}
+          <small>{{ $t('order.steps.four.summary') }}</small>
+        </v-stepper-step>
 
-          <v-stepper-content step="3">
-            <order-charge-list
-              :orderId.sync="orderId"
-              :storeId.sync="storeId"
-              :order-charges.sync="orderCharges"
-              @order-charge-created="orderChargeCreated"
-              @order-charge-updated="orderChargeUpdated"
-            />
-            <v-fab-transition>
-              <v-btn
-                color="primary"
-                dark
-                fab
-                fixed
-                bottom
-                right
-                @click="newOrderCharge()"
-                v-if="step == 3"
-              >
-                <v-icon>add</v-icon>
-              </v-btn>
-            </v-fab-transition>
-          </v-stepper-content>
-
-          <v-stepper-step
-            :editable="stepEditable(4)"
-            step="4"
-          >
-            {{ $t('order.steps.four.title') }}
-            <small>{{ $t('order.steps.four.summary') }}</small>
-          </v-stepper-step>
-
-          <v-stepper-content step="4">
-            <invoice-list
-              :orderId.sync="orderId"
-              :balance.sync="balance"
-              :invoices.sync="invoices"
-              @invoice-created="invoiceCreated"
-              @invoice-updated="invoiceUpdated"
-            />
-          </v-stepper-content>
-        </v-stepper>
-      </v-flex>
-    </v-layout>
-  </v-container>
+        <v-stepper-content step="4">
+          <invoice-list
+            :orderId.sync="orderId"
+            :balance.sync="balance"
+            :invoices.sync="invoices"
+            @invoice-created="invoiceCreated"
+            @invoice-updated="invoiceUpdated"
+          />
+        </v-stepper-content>
+      </v-stepper>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>

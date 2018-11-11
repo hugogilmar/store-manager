@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs4 class="pa-4">
+    <v-flex xs4 class="pa-2">
       <v-select
         v-model="storeId"
         :items="stores"
@@ -35,7 +35,7 @@
         </v-date-picker>
       </v-menu>
     </v-flex>
-    <v-flex xs8 class="pa-4">
+    <v-flex xs8 class="pa-2">
       <v-list two-line>
         <v-alert
           :value="true"
