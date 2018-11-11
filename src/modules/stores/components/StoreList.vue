@@ -17,7 +17,7 @@
         <v-icon>star</v-icon>
       </v-list-tile-action>
       <v-list-tile-content>
-        <v-list-tile-title v-text="store.name"></v-list-tile-title>
+        <v-list-tile-title>{{ store.name }}</v-list-tile-title>
       </v-list-tile-content>
       <v-list-tile-avatar v-if="store.avatar">
         <img :src="store.avatar">
