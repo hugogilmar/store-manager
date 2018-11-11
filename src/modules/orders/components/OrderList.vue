@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs4 class="pa-2">
+    <v-flex xs3 class="pa-2">
       <v-select
         v-model="storeId"
         :items="stores"
@@ -35,7 +35,7 @@
         </v-date-picker>
       </v-menu>
     </v-flex>
-    <v-flex xs8 class="pa-2">
+    <v-flex xs9 class="pa-2">
       <v-list two-line>
         <v-alert
           :value="true"
@@ -72,23 +72,34 @@
     data () {
       return {
         menu: false,
-        date: new Date().toISOString().substr(0, 10),
-        storeId: 1,
+        storeId: null,
+        date: null,
         stores: [],
-        orders: []
+        orders: [],
+        params: new URLSearchParams()
+      }
+    },
+    computed: {
+      valid () {
+        return this.storeId && this.date;
       }
     },
     watch: {
       date (value) {
-        this.getOrders();
+        this.params.set('filter[where][date]', value);
+        if (this.valid) {
+          this.getOrders();
+        }
       },
       storeId (value) {
-        this.getOrders();
+        this.params.set('filter[where][storeId]', value);
+        if (this.valid) {
+          this.getOrders();
+        }
       }
     },
     created () {
       this.getStores();
-      this.getOrders();
     },
     methods: {
       getStores () {
@@ -106,14 +117,7 @@
         let self = this;
 
         this.$axios.get('/orders', {
-          params: {
-            filter: {
-              where: {
-                date: this.date,
-                storeId: this.storeId
-              }
-            }
-          }
+          params: this.params
         })
         .then(function (response) {
           self.orders = response.data;
