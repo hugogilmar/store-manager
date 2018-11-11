@@ -76,15 +76,19 @@
             </v-alert>
           </template>
           <template slot="items" slot-scope="report">
-            <td class="text-xs-center">{{ report.item.code }}</td>
-            <td>{{ report.item.name }}</td>
-            <td class="text-xs-center">{{ report.item.quantity }}</td>
-            <td class="text-xs-right">{{ report.item.total | currency }}</td>
+            <tr>
+              <td class="text-xs-center" width="100">{{ report.item.code }}</td>
+              <td>{{ report.item.name }}</td>
+              <td class="text-xs-center" width="160">{{ report.item.quantity }}</td>
+              <td class="text-xs-right" width="160">{{ report.item.total | currency }}</td>
+            </tr>
           </template>
           <template slot="footer">
-            <td colspan="2" class="text-xs-right">Totales</td>
-            <td class="text-xs-center">{{ quantity }}</td>
-            <td class="text-xs-right">{{ total | currency }}</td>
+            <tr>
+              <td colspan="2" class="text-xs-right">Totales</td>
+              <td class="text-xs-center">{{ quantity }}</td>
+              <td class="text-xs-right">{{ total | currency }}</td>
+            </tr>
           </template>
         </v-data-table>
       </v-flex>
