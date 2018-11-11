@@ -42,12 +42,14 @@ const translations = {
       failure: {
         create: 'No se pudo guardar el registro',
         update: 'No se pudo actualizar el registro',
-        delete: 'No se pudo eliminar el registro'
+        delete: 'No se pudo eliminar el registro',
+        session: 'No se pudo iniciar sesión'
       },
       success: {
         create: 'Registro guardado',
         update: 'Registro actualizado',
-        delete: 'Registro eliminado'
+        delete: 'Registro eliminado',
+        session: 'Sesión iniciada'
       }
     },
     header: {

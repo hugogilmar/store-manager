@@ -6,16 +6,19 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    token: null,
+    authenticationToken: null,
+    user: {},
     drawer: false,
     dark: false
   },
   mutations: {
-    login (state, token) {
-      state.token = token;
+    login (state, payload) {
+      state.authenticationToken = payload.authenticationToken;
+      state.user = payload.user;
     },
     logout (state) {
-      state.token = null;
+      state.authenticationToken = null;
+      state.user = {};
     },
     drawerToggle (state) {
       state.drawer = !state.drawer;
@@ -26,7 +29,10 @@ const store = new Vuex.Store({
   },
   getters: {
     authenticationToken (state) {
-      return state.token;
+      return state.authenticationToken;
+    },
+    currentUser (state) {
+      return state.user;
     },
     drawerOpen (state) {
       return state.drawer;
@@ -36,8 +42,8 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    login({ commit }, token) {
-      commit('login', token);
+    login({ commit }, payload) {
+      commit('login', payload);
       router.push('/');
     },
     logout({ commit }) {

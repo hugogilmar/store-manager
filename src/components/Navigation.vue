@@ -4,10 +4,16 @@
     clipped
     :value="drawerOpen"
   >
+    <v-responsive :aspect-ratio="16/9" class="secondary white--text">
+      <v-layout pa-4 column fill-height>
+        <v-spacer></v-spacer>
+        <v-flex shrink>
+          <div class="subheading">{{ currentUser.name }}</div>
+          <div class="body-1">{{ currentUser.realm }}</div>
+        </v-flex>
+      </v-layout>
+    </v-responsive>
     <v-list dense>
-      <v-subheader>
-        {{ $t('navigation.title') }}
-      </v-subheader>
       <v-list-group
         prepend-icon="menu"
         v-for="(group, i) in groups"
@@ -86,9 +92,9 @@
         ],
         links: [
           {
-            icon: 'shopping_cart',
-            title: this.$t('navigation.links.products'),
-            path: '/products',
+            icon: 'store',
+            title: this.$t('navigation.links.stores'),
+            path: '/stores',
             group: 'cruds'
           },
           {
@@ -98,15 +104,15 @@
             group: 'cruds'
           },
           {
-            icon: 'store',
-            title: this.$t('navigation.links.stores'),
-            path: '/stores',
-            group: 'cruds'
-          },
-          {
             icon: 'credit_card',
             title: this.$t('navigation.links.paymentMethods'),
             path: '/payment_methods',
+            group: 'cruds'
+          },
+          {
+            icon: 'shopping_cart',
+            title: this.$t('navigation.links.products'),
+            path: '/products',
             group: 'cruds'
           },
           {
@@ -128,12 +134,6 @@
             group: 'cruds'
           },
           {
-            icon: 'shopping_cart',
-            title: this.$t('navigation.links.productsReport'),
-            path: '/reports/product',
-            group: 'reports'
-          },
-          {
             icon: 'bookmark',
             title: this.$t('navigation.links.productCategoriesReport'),
             path: '/reports/productCategory',
@@ -144,12 +144,19 @@
             title: this.$t('navigation.links.paymentMethodsReport'),
             path: '/reports/paymentMethod',
             group: 'reports'
+          },
+          {
+            icon: 'shopping_cart',
+            title: this.$t('navigation.links.productsReport'),
+            path: '/reports/product',
+            group: 'reports'
           }
         ]
       }
     },
     computed: {
       ...mapGetters([
+        'currentUser',
         'drawerOpen',
         'darkTheme'
       ])
