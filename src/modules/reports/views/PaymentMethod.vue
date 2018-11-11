@@ -62,22 +62,31 @@
         </v-menu>
       </v-flex>
       <v-flex xs9 class="pa-4">
-        <table class="v-table theme--light">
-          <thead>
-            <th width="60" class="text-xs-center">{{ $t('report.code') }}</th>
-            <th class="text-xs-left">{{ $t('report.paymentMethod') }}</th>
-            <th width="60" class="text-xs-center">{{ $t('report.quantity') }}</th>
-            <th width="120" class="text-xs-right">{{ $t('report.total') }}</th>
-          </thead>
-          <tbody>
-            <tr v-for="row in rows" :key="row.code">
-              <td class="text-xs-center">{{ row.code }}</td>
-              <td>{{ row.name }}</td>
-              <td class="text-xs-center">{{ row.quantity }}</td>
-              <td class="text-xs-right">{{ row.total | currency }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <v-data-table
+          hide-actions
+          :headers="headers"
+          :items="rows"
+        >
+          <template slot="no-data">
+            <v-alert
+              :value="true"
+              type="info"
+            >
+              {{ $t('alert.empty') }}
+            </v-alert>
+          </template>
+          <template slot="items" slot-scope="report">
+            <td class="text-xs-center">{{ report.item.code }}</td>
+            <td>{{ report.item.name }}</td>
+            <td class="text-xs-center">{{ report.item.quantity }}</td>
+            <td class="text-xs-right">{{ report.item.total | currency }}</td>
+          </template>
+          <template slot="footer">
+            <td colspan="2" class="text-xs-right">Totales</td>
+            <td class="text-xs-center">{{ quantity }}</td>
+            <td class="text-xs-right">{{ total | currency }}</td>
+          </template>
+        </v-data-table>
       </v-flex>
     </v-layout>
   </v-card>
@@ -93,12 +102,48 @@
         stores: [],
         rows: [],
         dateFromDialog: false,
-        dateToDialog: false
+        dateToDialog: false,
+        headers: [
+          {
+            text: this.$t('report.code'),
+            align: 'center',
+            sortable: false,
+            value: 'code'
+          },
+          {
+            text: this.$t('report.productCategory'),
+            align: 'left',
+            sortable: false,
+            value: 'name'
+          },
+          {
+            text: this.$t('report.quantity'),
+            align: 'center',
+            sortable: false,
+            value: 'quantity'
+          },
+          {
+            text: this.$t('report.total'),
+            align: 'right',
+            sortable: false,
+            value: 'total'
+          }
+        ]
       }
     },
     computed: {
       valid () {
         return this.storeId && this.dateFrom && this.dateTo;
+      },
+      quantity () {
+        return this.rows.reduce(function (sum, row) {
+          return sum += row.quantity
+        }, 0);
+      },
+      total () {
+        return this.rows.reduce(function (sum, row) {
+          return sum += row.total
+        }, 0);
       }
     },
     watch: {
@@ -153,31 +198,9 @@
 </script>
 
 <style scoped>
-  .v-table small {
-    color: rgba(0, 0, 0, .54);
-  }
-
-  .v-table thead, .v-table tbody {
-    border-bottom: 1px solid rgba(0, 0, 0, .12);
-  }
-
-  .v-table thead th {
+  .v-datatable tfoot td {
     font-size: 13px;
-    height: 48px
-  }
-
-  .v-table tfoot td, .v-table tfoot th {
-    border: none;
-    font-size: 13px;
-    font-weight: 500;
-    height: 48px
-  }
-
-  .v-table tfoot tr {
-    border: none;
-  }
-
-  .v-table tfoot th {
-    color: rgba(0, 0, 0, .54);
+    font-weight: 600;
+    padding: 0 24px;
   }
 </style>
