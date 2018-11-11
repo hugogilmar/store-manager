@@ -7,7 +7,8 @@ const translations = {
       title: 'Menú principal',
       groups: {
         cruds: 'Mantenimientos',
-        reports: 'Reportes'
+        reports: 'Reportes',
+        settings: 'Configuración'
       },
       links: {
         products: 'Productos',
@@ -20,6 +21,7 @@ const translations = {
         productsReport: 'Ventas por producto',
         productCategoriesReport: 'Ventas por categoría',
         paymentMethodsReport: 'Ventas por método de pago',
+        darkMode: 'Modo nocturno'
       },
       logout: 'Cerrar sesión'
     },

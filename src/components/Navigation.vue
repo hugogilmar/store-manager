@@ -1,12 +1,10 @@
 <template>
   <v-navigation-drawer
-    persistent
-    permanent
-    fixed
-    dark
     app
+    clipped
+    :value="drawerOpen"
   >
-    <v-list>
+    <v-list dense>
       <v-subheader>
         {{ $t('navigation.title') }}
       </v-subheader>
@@ -35,6 +33,24 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list-group>
+      <v-list-group
+        prepend-icon="menu"
+      >
+        <v-list-tile slot="activator">
+          <v-list-tile-title>{{ $t('navigation.groups.settings') }}</v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile @click="darkThemeToggle">
+          <v-list-tile-action>
+            <v-checkbox
+              :value="darkTheme"
+            ></v-checkbox>
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+            <v-list-tile-title>{{ $t('navigation.links.darkMode') }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list-group>
       <v-list-tile
         @click.stop="logout"
       >
@@ -56,7 +72,6 @@
     name: 'Navigation',
     data () {
       return {
-        clipped: false,
         groups: [
           {
             icon: 'menu',
@@ -133,9 +148,16 @@
         ]
       }
     },
+    computed: {
+      ...mapGetters([
+        'drawerOpen',
+        'darkTheme'
+      ])
+    },
     methods: {
       ...mapActions([
-        'logout'
+        'logout',
+        'darkThemeToggle'
       ]),
       items (group) {
         return this.links.filter(function (link) {
@@ -148,9 +170,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .v-list__group__header--active .v-list__group__header__prepend-icon .v-icon {
-    color: #fff;
-  }
-</style>
