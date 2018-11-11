@@ -90,10 +90,12 @@
     methods: {
       orderLineCreated () {
         this.dialog = false;
+        this.orderLineId = null;
         this.$emit('order-line-created');
       },
       orderLineUpdated () {
         this.dialog = false;
+        this.orderLineId = null;
         this.$emit('order-line-updated');
       },
       editOrderLine (orderLineId) {
