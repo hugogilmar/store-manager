@@ -3,14 +3,14 @@
     row
     wrap
   >
-    <v-flex xs5>
+    <v-flex xs6>
       <order-preview
         :order.sync="order"
         :order-lines.sync="orderLines"
         :invoices.sync="invoices"
       ></order-preview>
     </v-flex>
-    <v-flex xs7>
+    <v-flex xs6>
       <v-stepper
         v-model="step"
         vertical
