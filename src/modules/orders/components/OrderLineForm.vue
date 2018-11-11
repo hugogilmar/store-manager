@@ -51,11 +51,7 @@
     data () {
       return {
         valid: true,
-        orderLine: {
-          product: {
-            id: 0
-          }
-        },
+        orderLine: {},
         products: []
       }
     },
@@ -130,9 +126,8 @@
           total: 0.00,
           billable: true,
           discountAmount: 0.00,
-          comment: '',
+          comment: null,
           product: {
-            id: 0,
             code: '',
             name: ''
           }

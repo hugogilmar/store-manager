@@ -31,7 +31,7 @@
       return {
         valid: true,
         productCategory: {
-          name: ''
+          name: null
         },
         rules: {
           name: [

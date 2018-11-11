@@ -31,8 +31,8 @@
       return {
         valid: true,
         paymentMethod: {
-          name: '',
-          code: ''
+          name: null,
+          code: null
         },
         rules: {
           name: [

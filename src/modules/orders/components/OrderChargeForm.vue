@@ -107,8 +107,8 @@
           amount: 0.00,
           charge: {
             id: 0,
-            code: '',
-            name: '',
+            code: null,
+            name: null,
             amount: 0.00
           }
         }

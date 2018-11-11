@@ -46,8 +46,8 @@
         valid: true,
         stores: [],
         charge: {
-          name: '',
-          code: '',
+          name: null,
+          code: null,
           amount: 0.00,
           storeId: 0
         },

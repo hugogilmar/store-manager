@@ -41,8 +41,8 @@
         valid: true,
         stores: [],
         employee: {
-          name: '',
-          code: '',
+          name: null,
+          code: null,
           storeId: 0
         },
         rules: {

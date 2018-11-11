@@ -99,7 +99,7 @@
       },
       resetInvoice () {
         this.invoice = {
-          referenceNumber: '',
+          referenceNumber: null,
           paymentMethodId: 0,
           amount: 0.00
         }

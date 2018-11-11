@@ -24,7 +24,7 @@
       return {
         valid: true,
         store: {
-          name: ''
+          name: null
         },
         rules: {
           name: [

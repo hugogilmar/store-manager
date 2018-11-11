@@ -63,8 +63,8 @@
         product_categories: [],
         stores: [],
         product: {
-          name: '',
-          code: '',
+          name: null,
+          code: null,
           price: 0.0,
           specialPrice: 0.0,
           productCategoryId: 0,
