@@ -24,6 +24,7 @@ const store = new Vuex.Store({
       state.drawer = !state.drawer;
     },
     darkThemeToggle (state) {
+      state.drawer = !state.drawer;
       state.dark = !state.dark;
     }
   },
