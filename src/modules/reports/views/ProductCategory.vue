@@ -2,7 +2,7 @@
   <v-card class="ma-4">
     <v-subheader>{{ $t('report.header.productCategory') }}</v-subheader>
     <v-layout row wrap>
-      <v-flex xs4 class="pa-4">
+      <v-flex xs3 class="pa-4">
         <v-select
           v-model="storeId"
           :items="stores"
@@ -61,7 +61,7 @@
           </v-date-picker>
         </v-menu>
       </v-flex>
-      <v-flex xs8 class="pa-4">
+      <v-flex xs9 class="pa-4">
         <table class="v-table theme--light">
           <thead>
             <th width="60" class="text-xs-center">{{ $t('report.code') }}</th>
@@ -87,30 +87,44 @@
   export default {
     data () {
       return {
-        storeId: 1,
-        dateFrom: new Date().toISOString().substr(0, 10),
-        dateTo: new Date().toISOString().substr(0, 10),
-        landscape: true,
+        storeId: null,
+        dateFrom: null,
+        dateTo: null,
         stores: [],
         rows: [],
         dateFromDialog: false,
         dateToDialog: false
       }
     },
+    computed: {
+      valid () {
+        return this.storeId && this.dateFrom && this.dateTo;
+      }
+    },
     watch: {
       dateFrom () {
-        this.getReport();
+        if (this.valid) {
+          this.getReport();
+        }
       },
       dateTo () {
-        this.getReport();
+        if (this.valid) {
+          this.getReport();
+        }
       },
       storeId () {
-        this.getReport();
+        if (this.valid) {
+          this.getReport();
+        }
+      }
+    },
+    computed: {
+      valid () {
+        return this.storeId && this.dateFrom && this.dateTo;
       }
     },
     created () {
       this.getStores();
-      this.getReport();
     },
     methods: {
       getStores () {
