@@ -85,7 +85,7 @@
           </template>
           <template slot="footer">
             <tr>
-              <td colspan="2" class="text-xs-right">Totales</td>
+              <td colspan="2" class="text-xs-right">{{ $t('report.total') }}</td>
               <td class="text-xs-center">{{ quantity }}</td>
               <td class="text-xs-right">{{ total | currency }}</td>
             </tr>
