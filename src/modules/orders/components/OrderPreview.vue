@@ -3,36 +3,28 @@
     <v-card-title primary-title>
       <h3 class="headline">{{ $t('order.title', { number: order.number }) }}</h3>
     </v-card-title>
-    <v-item-group>
-      <v-container grid-list-md>
-        <v-layout wrap>
-          <v-flex xs4>
-            <v-item>
-              <p class="mb-1" v-if="order.store">{{ order.store.name }}</p>
-              <p>
-                <small>{{ $t('order.store') }}</small>
-              </p>
-            </v-item>
-          </v-flex>
-          <v-flex xs4>
-            <v-item>
-              <p class="mb-1" v-if="order.employee">{{ order.employee.name }}</p>
-              <p>
-                <small>{{ $t('order.employee') }}</small>
-              </p>
-            </v-item>
-          </v-flex>
-          <v-flex xs4>
-            <v-item>
-              <p class="mb-1">{{ order.date }}</p>
-              <p>
-                <small>{{ $t('order.date') }}</small>
-              </p>
-            </v-item>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-item-group>
+    <v-container grid-list-md>
+      <v-layout wrap>
+        <v-flex xs4>
+          <p class="mb-1" v-if="order.store">{{ order.store.name }}</p>
+          <p>
+            <small>{{ $t('order.store') }}</small>
+          </p>
+        </v-flex>
+        <v-flex xs4>
+          <p class="mb-1" v-if="order.employee">{{ order.employee.name }}</p>
+          <p>
+            <small>{{ $t('order.employee') }}</small>
+          </p>
+        </v-flex>
+        <v-flex xs4>
+          <p class="mb-1">{{ order.date }}</p>
+          <p>
+            <small>{{ $t('order.date') }}</small>
+          </p>
+        </v-flex>
+      </v-layout>
+    </v-container>
     <v-data-table
       hide-actions
       :headers="headers"
