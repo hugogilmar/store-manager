@@ -7,7 +7,8 @@ const translations = {
       title: 'Menú principal',
       groups: {
         cruds: 'Mantenimientos',
-        reports: 'Reportes'
+        reports: 'Reportes',
+        settings: 'Configuración'
       },
       links: {
         products: 'Productos',
@@ -15,10 +16,15 @@ const translations = {
         stores: 'Comercios',
         paymentMethods: 'Métodos de pago',
         employees: 'Empleados',
+        charges: 'Cargos',
         orders: 'Ordenes',
-        productsReport: 'Ventas por producto',
-        productCategoriesReport: 'Ventas por categoría',
-        paymentMethodsReport: 'Ventas por método de pago',
+        locations: 'Ubicaciones',
+        productsReport: 'Ingresos por producto',
+        productCategoriesReport: 'Ingresos por categoría',
+        paymentMethodsReport: 'Ingresos por método de pago',
+        storesReport: 'Ingresos por comercio',
+        chargesReport: 'Ingresos por cargos',
+        darkMode: 'Modo nocturno'
       },
       logout: 'Cerrar sesión'
     },
@@ -39,12 +45,14 @@ const translations = {
       failure: {
         create: 'No se pudo guardar el registro',
         update: 'No se pudo actualizar el registro',
-        delete: 'No se pudo eliminar el registro'
+        delete: 'No se pudo eliminar el registro',
+        session: 'No se pudo iniciar sesión'
       },
       success: {
         create: 'Registro guardado',
         update: 'Registro actualizado',
-        delete: 'Registro eliminado'
+        delete: 'Registro eliminado',
+        session: 'Sesión iniciada'
       }
     },
     header: {
@@ -72,7 +80,9 @@ const translations = {
       store: 'comercio | comercios',
       paymentMethod: 'método de pago | métodos de pago',
       employee: 'empleado | empleados',
+      charge: 'cargo | cargos',
       order: 'orden | ordenes',
+      location: 'ubicación | ubicaciones',
       invoice: 'factura | facturas',
       report: 'reporte | reportes',
       session: 'sesión | sesiones'
@@ -102,8 +112,15 @@ const translations = {
     },
     employee: {
       name: 'Nombre',
+      code: 'Código',
       store: 'Comercio',
       header: 'Empleados'
+    },
+    charge: {
+      name: 'Nombre',
+      code: 'Código',
+      amount: 'Porcentage',
+      store: 'Comercio'
     },
     order: {
       title: 'Orden #%{number}',
@@ -117,6 +134,11 @@ const translations = {
       discountsTotal: 'Descuentos',
       chargesTotal: 'Cargos adicionales',
       balance: 'Balance',
+      billable: 'Facturable',
+      location: 'Ubicación',
+      guests: 'Personas',
+      discountAmount: 'Porcentaje de descuento',
+      comment: 'Comentario',
       steps: {
         one: {
           title: 'Orden',
@@ -127,6 +149,10 @@ const translations = {
           summary: ''
         },
         three: {
+          title: 'Cargos',
+          summary: ''
+        },
+        four: {
           title: 'Facturación',
           summary: ''
         }
@@ -140,14 +166,23 @@ const translations = {
       comment: 'Comentario',
       billable: 'Facturable',
       total: 'Total',
+      discountAmount: 'Porcentaje de descuento',
       header: 'Productos'
+    },
+    orderCharge: {
+      charge: 'Cargo'
     },
     invoice: {
       date: 'Fecha',
-      number: 'Número',
+      referenceNumber: 'Número de referencia',
       paymentMethod: 'Método de pago',
       amount: 'Monto',
       header: 'Facturas'
+    },
+    location: {
+      name: 'Nombre',
+      code: 'Código',
+      store: 'Comercio'
     },
     report: {
       dateFrom: 'Fecha desde',
@@ -157,12 +192,15 @@ const translations = {
       product: 'Producto',
       productCategory: 'Categoría',
       paymentMethod: 'Método de pago',
+      charge: 'Cargo',
       quantity: 'Cantidad',
       total: 'Total',
       header: {
-        product: 'Ventas por producto',
-        productCategory: 'Ventas por categoría',
-        paymentMethod: 'Ventas por método de pago'
+        product: 'Ingresos por producto',
+        productCategory: 'Ingresos por categoría',
+        paymentMethod: 'Ingresos por método de pago',
+        store: 'Ingresos por comercio',
+        charge: 'Ingresos por cargo'
       }
     },
     session: {

@@ -1,24 +1,24 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-text-field
-      v-model="employee.name"
+      v-model="location.name"
       :rules="rules.name"
       :counter="48"
-      :label="$t('employee.name')"
+      :label="$t('location.name')"
       required
     ></v-text-field>
     <v-text-field
-      v-model="employee.code"
+      v-model="location.code"
       :rules="rules.code"
       :counter="10"
-      :label="$t('employee.code')"
+      :label="$t('location.code')"
       required
     ></v-text-field>
     <v-select
-      v-model="employee.storeId"
+      v-model="location.storeId"
       :items="stores"
       :rules="[v => !!v || 'Item is required']"
-      :label="$t('employee.store')"
+      :label="$t('location.store')"
       item-text="name"
       item-value="id"
       required
@@ -35,12 +35,12 @@
 
 <script>
   export default {
-    name: 'EmployeeForm',
+    name: 'LocationForm',
     data () {
       return {
         valid: true,
         stores: [],
-        employee: {
+        location: {
           name: null,
           code: null,
           storeId: 0
@@ -58,19 +58,19 @@
       }
     },
     props: [
-      'employeeId'
+      'locationId'
     ],
     created () {
-      let employeeId = this.getEmployeeId();
+      let locationId = this.getLocationId();
 
       this.getStores();
-      if (employeeId) {
-        this.getEmployee(employeeId);
+      if (locationId) {
+        this.getLocation(locationId);
       }
     },
     methods: {
-      getEmployeeId () {
-        return this.employeeId;
+      getLocationId () {
+        return this.locationId;
       },
       getStores () {
         let self = this;
@@ -83,44 +83,44 @@
           self.stores = [];
         });
       },
-      getEmployee (employeeId) {
+      getLocation (locationId) {
         let self = this;
 
-        this.$axios.get(`/employees/${employeeId}`)
+        this.$axios.get(`/locations/${locationId}`)
         .then(function (response) {
-          self.employee = response.data;
+          self.location = response.data;
         })
         .catch(function (error) {
-          self.employee = {};
+          self.location = {};
         });
       },
-      createEmployee () {
+      createLocation () {
         let self = this;
 
-        this.$axios.post('/employees', {
-          name: this.employee.name,
-          code: this.employee.code,
-          storeId: this.employee.storeId
+        this.$axios.post('/locations', {
+          name: this.location.name,
+          code: this.location.code,
+          storeId: this.location.storeId
         })
         .then(function (response) {
-          self.employee = response.data;
-          self.editEmployee(self.employee.id);
+          self.location = response.data;
+          self.editLocation(self.location.id);
           self.$toasted.success(self.$t('toast.success.create'));
         })
         .catch(function (error) {
           self.$toasted.error(self.$t('toast.failure.create'));
         });
       },
-      updateEmployee (employeeId) {
+      updateLocation (locationId) {
         let self = this;
 
-        this.$axios.put(`/employees/${employeeId}`, {
-          name: this.employee.name,
-          code: this.employee.code,
-          storeId: this.employee.storeId
+        this.$axios.put(`/locations/${locationId}`, {
+          name: this.location.name,
+          code: this.location.code,
+          storeId: this.location.storeId
         })
         .then(function (response) {
-          self.employee = response.data;
+          self.location = response.data;
           self.$toasted.success(self.$t('toast.success.update'));
         })
         .catch(function (error) {
@@ -128,20 +128,20 @@
         });
       },
       submit () {
-        let employeeId = this.getEmployeeId();
+        let locationId = this.getLocationId();
 
         if (this.$refs.form.validate()) {
-          if (employeeId) {
-            this.updateEmployee(employeeId);
+          if (locationId) {
+            this.updateLocation(locationId);
           } else {
-            this.createEmployee();
+            this.createLocation();
           }
         } else {
           this.valid = false;
         }
       },
-      editEmployee: function (employeeId) {
-        this.$router.push({ path: `/employees/${employeeId}` });
+      editLocation: function (locationId) {
+        this.$router.push({ path: `/locations/${locationId}` });
       }
     }
   };

@@ -10,40 +10,31 @@
         item-value="id"
         required
       ></v-select>
-      <v-select
-        v-model="productCategoryId"
-        :items="productCategories"
-        :rules="[v => !!v || 'Item is required']"
-        :label="$t('product.productCategory')"
-        item-text="name"
-        item-value="id"
-        required
-      ></v-select>
     </v-flex>
     <v-flex xs9 class="pa-2">
       <v-list two-line>
         <v-alert
           :value="true"
           type="info"
-          v-if="products.length == 0"
+          v-if="charges.length == 0"
         >
           {{ $t('alert.empty') }}
         </v-alert>
         <v-list-tile
-          v-for="product in products"
-          :key="product.id"
+          v-for="charge in charges"
+          :key="charge.id"
           avatar
-          @click="editProduct(product.id)"
+          @click="editCharge(charge.id)"
         >
           <v-list-tile-action>
             <v-icon>star</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{ product.name }}</v-list-tile-title>
-            <v-list-tile-sub-title>{{ product.code }} - {{ product.price | currency }}</v-list-tile-sub-title>
+            <v-list-tile-title>{{ charge.name }}</v-list-tile-title>
+            <v-list-tile-sub-title>{{ charge.code }}</v-list-tile-sub-title>
           </v-list-tile-content>
-          <v-list-tile-avatar v-if="product.avatar">
-            <img :src="product.avatar">
+          <v-list-tile-avatar v-if="charge.avatar">
+            <img :src="charge.avatar">
           </v-list-tile-avatar>
         </v-list-tile>
       </v-list>
@@ -53,30 +44,23 @@
 
 <script>
   export default {
-    name: 'ProductList',
+    name: 'ChargeList',
     data () {
       return {
         storeId: null,
-        productCategoryId: null,
         stores: [],
-        productCategories: [],
-        products: [],
+        charges: [],
         params: new URLSearchParams()
       }
     },
     watch: {
       storeId (value) {
         this.params.set('filter[where][storeId]', value);
-        this.getProducts();
-      },
-      productCategoryId (value) {
-        this.params.set('filter[where][productCategoryId]', value);
-        this.getProducts();
+        this.getCharges();
       }
     },
     created () {
       this.getStores();
-      this.getProductCategories();
     },
     methods: {
       getStores () {
@@ -90,32 +74,21 @@
           self.stores = [];
         });
       },
-      getProductCategories () {
+      getCharges () {
         let self = this;
 
-        this.$axios.get('/product_categories')
-        .then(function (response) {
-          self.productCategories = response.data;
-        })
-        .catch(function (error) {
-          self.productCategories = [];
-        });
-      },
-      getProducts () {
-        let self = this;
-
-        this.$axios.get('/products', {
+        this.$axios.get('/charges', {
           params: this.params
         })
         .then(function (response) {
-          self.products = response.data;
+          self.charges = response.data;
         })
         .catch(function (error) {
-          self.products = [];
+          self.charges = [];
         });
       },
-      editProduct: function (productId) {
-        this.$router.push({ path: `/products/${productId}` });
+      editCharge: function (chargeId) {
+        this.$router.push({ path: `/charges/${chargeId}` });
       }
     }
   };

@@ -1,17 +1,8 @@
-<template>
+storesstore<template>
   <v-card class="ma-4">
-    <v-subheader>{{ $t('report.header.productCategory') }}</v-subheader>
+    <v-subheader>{{ $t('report.header.store') }}</v-subheader>
     <v-layout row wrap>
       <v-flex xs3 class="pa-4">
-        <v-select
-          v-model="storeId"
-          :items="stores"
-          :rules="[v => !!v || 'Item is required']"
-          :label="$t('report.store')"
-          item-text="name"
-          item-value="id"
-          required
-        ></v-select>
         <v-menu
           ref="menu"
           v-model="dateFromDialog"
@@ -77,7 +68,6 @@
           </template>
           <template slot="items" slot-scope="report">
             <tr>
-              <td class="text-xs-center" width="100">{{ report.item.code }}</td>
               <td>{{ report.item.name }}</td>
               <td class="text-xs-center" width="160">{{ report.item.quantity }}</td>
               <td class="text-xs-right" width="160">{{ report.item.total | currency }}</td>
@@ -85,7 +75,7 @@
           </template>
           <template slot="footer">
             <tr>
-              <td colspan="2" class="text-xs-right">{{ $t('report.total') }}</td>
+              <td class="text-xs-right">{{ $t('report.total') }}</td>
               <td class="text-xs-center">{{ quantity }}</td>
               <td class="text-xs-right">{{ total | currency }}</td>
             </tr>
@@ -109,13 +99,7 @@
         dateToDialog: false,
         headers: [
           {
-            text: this.$t('report.code'),
-            align: 'center',
-            sortable: false,
-            value: 'code'
-          },
-          {
-            text: this.$t('report.productCategory'),
+            text: this.$t('report.store'),
             align: 'left',
             sortable: false,
             value: 'name'
@@ -137,7 +121,7 @@
     },
     computed: {
       valid () {
-        return this.storeId && this.dateFrom && this.dateTo;
+        return this.dateFrom && this.dateTo;
       },
       quantity () {
         return this.rows.reduce(function (sum, row) {
@@ -160,32 +144,13 @@
         if (this.valid) {
           this.getReport();
         }
-      },
-      storeId () {
-        if (this.valid) {
-          this.getReport();
-        }
       }
     },
-    created () {
-      this.getStores();
-    },
     methods: {
-      getStores () {
-        let self = this;
-
-        this.$axios.get('/stores')
-        .then(function (response) {
-          self.stores = response.data;
-        })
-        .catch(function (error) {
-          self.stores = [];
-        });
-      },
       getReport () {
         let self = this;
 
-        this.$axios.post('/order_lines/productCategoriesReport', {
+        this.$axios.post('/orders/storesReport', {
           dateFrom: this.dateFrom,
           dateTo: this.dateTo,
           storeId: this.storeId

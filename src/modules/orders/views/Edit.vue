@@ -1,7 +1,10 @@
 <template>
   <v-card class="ma-4">
     <v-subheader>{{ $t('header.edit', { entity: $tc('entities.order', 1) }) }}</v-subheader>
-    <v-container fluid>
+    <v-container
+      grid-list-lg
+      fluid
+    >
       <v-slide-y-transition mode="out-in">
         <order-steper :order-id="orderId" />
       </v-slide-y-transition>

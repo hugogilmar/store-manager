@@ -1,6 +1,6 @@
 <template>
   <v-card class="ma-4">
-    <v-subheader>{{ $t('report.header.productCategory') }}</v-subheader>
+    <v-subheader>{{ $t('report.header.charge') }}</v-subheader>
     <v-layout row wrap>
       <v-flex xs3 class="pa-4">
         <v-select
@@ -115,7 +115,7 @@
             value: 'code'
           },
           {
-            text: this.$t('report.productCategory'),
+            text: this.$t('report.charge'),
             align: 'left',
             sortable: false,
             value: 'name'
@@ -185,7 +185,7 @@
       getReport () {
         let self = this;
 
-        this.$axios.post('/order_lines/productCategoriesReport', {
+        this.$axios.post('/order_charges/chargesReport', {
           dateFrom: this.dateFrom,
           dateTo: this.dateTo,
           storeId: this.storeId

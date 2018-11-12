@@ -7,25 +7,25 @@
     <v-alert
       :value="true"
       type="info"
-      v-if="orderLines.length == 0"
+      v-if="orderCharges.length == 0"
     >
       {{ $t('alert.empty') }}
     </v-alert>
     <v-list-tile
-      v-for="orderLine in orderLines"
-      :key="orderLine.id"
+      v-for="orderCharge in orderCharges"
+      :key="orderCharge.id"
       avatar
-      @click="editOrderLine(orderLine.id)"
+      @click="editOrderCharge(orderCharge.id)"
     >
       <v-list-tile-action>
         <v-icon>star</v-icon>
       </v-list-tile-action>
       <v-list-tile-content>
-        <v-list-tile-title>{{ orderLine.product.name }}</v-list-tile-title>
-        <v-list-tile-sub-title>{{ orderLine.quantity }} x {{ orderLine.price | currency }} - {{ orderLine.discountsTotal | currency }} ({{ orderLine.discountAmount | percentage }}) = {{ orderLine.total | currency }}</v-list-tile-sub-title>
+        <v-list-tile-title>{{ orderCharge.charge.name }}</v-list-tile-title>
+        <v-list-tile-sub-title>{{ orderCharge.amount | percentage }}</v-list-tile-sub-title>
       </v-list-tile-content>
-      <v-list-tile-avatar v-if="orderLine.avatar">
-        <img :src="orderLine.avatar">
+      <v-list-tile-avatar v-if="orderCharge.avatar">
+        <img :src="orderCharge.avatar">
       </v-list-tile-avatar>
     </v-list-tile>
     <v-dialog
@@ -48,18 +48,18 @@
         <v-card-title
           class="headline"
         >
-          {{ $t('dialog.add.title', { entity: $tc('entities.product', 1) }) }}
+          {{ $t('dialog.add.title', { entity: $tc('entities.charge', 1) }) }}
         </v-card-title>
         <v-card-text>
-          {{ $t('dialog.add.message', { entity: $tc('entities.product', 1) }) }}
+          {{ $t('dialog.add.message', { entity: $tc('entities.charge', 1) }) }}
         </v-card-text>
         <v-card-text>
           <order-line-form
             :order-id.sync="orderId"
             :store-id.sync="storeId"
-            :order-line-id.sync="orderLineId"
-            @order-line-created="orderLineCreated"
-            @order-line-updated="orderLineUpdated"
+            :order-charge-id.sync="orderChargeId"
+            @order-charge-created="orderChargeCreated"
+            @order-charge-updated="orderChargeUpdated"
             @cancel="cancel"
           />
         </v-card-text>
@@ -69,41 +69,39 @@
 </template>
 
 <script>
-  import OrderLineForm from './OrderLineForm.vue';
+  import OrderChargeForm from './OrderChargeForm.vue';
 
   export default {
-    name: 'OrderLineList',
+    name: 'OrderChargeList',
     components: {
-      'order-line-form': OrderLineForm
+      'order-line-form': OrderChargeForm
     },
     data () {
       return {
         dialog: false,
-        orderLineId: null
+        orderChargeId: null
       }
     },
     props: [
       'orderId',
       'storeId',
-      'orderLines'
+      'orderCharges'
     ],
     methods: {
-      orderLineCreated () {
+      orderChargeCreated () {
         this.dialog = false;
-        this.orderLineId = null;
-        this.$emit('order-line-created');
+        this.$emit('order-charge-created');
       },
-      orderLineUpdated () {
+      orderChargeUpdated () {
         this.dialog = false;
-        this.orderLineId = null;
-        this.$emit('order-line-updated');
+        this.$emit('order-charge-updated');
       },
-      editOrderLine (orderLineId) {
-        this.orderLineId = orderLineId;
+      editOrderCharge (orderChargeId) {
+        this.orderChargeId = orderChargeId;
         this.dialog = true;
       },
       cancel () {
-        this.orderLineId = null;
+        this.orderChargeId = null;
         this.dialog = false;
       }
     }

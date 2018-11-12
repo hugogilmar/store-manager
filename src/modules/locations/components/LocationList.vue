@@ -10,40 +10,31 @@
         item-value="id"
         required
       ></v-select>
-      <v-select
-        v-model="productCategoryId"
-        :items="productCategories"
-        :rules="[v => !!v || 'Item is required']"
-        :label="$t('product.productCategory')"
-        item-text="name"
-        item-value="id"
-        required
-      ></v-select>
     </v-flex>
     <v-flex xs9 class="pa-2">
       <v-list two-line>
         <v-alert
           :value="true"
           type="info"
-          v-if="products.length == 0"
+          v-if="locations.length == 0"
         >
           {{ $t('alert.empty') }}
         </v-alert>
         <v-list-tile
-          v-for="product in products"
-          :key="product.id"
+          v-for="location in locations"
+          :key="location.id"
           avatar
-          @click="editProduct(product.id)"
+          @click="editLocation(location.id)"
         >
           <v-list-tile-action>
             <v-icon>star</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{ product.name }}</v-list-tile-title>
-            <v-list-tile-sub-title>{{ product.code }} - {{ product.price | currency }}</v-list-tile-sub-title>
+            <v-list-tile-title>{{ location.name }}</v-list-tile-title>
+            <v-list-tile-sub-title>{{ location.code }}</v-list-tile-sub-title>
           </v-list-tile-content>
-          <v-list-tile-avatar v-if="product.avatar">
-            <img :src="product.avatar">
+          <v-list-tile-avatar v-if="location.avatar">
+            <img :src="location.avatar">
           </v-list-tile-avatar>
         </v-list-tile>
       </v-list>
@@ -53,30 +44,23 @@
 
 <script>
   export default {
-    name: 'ProductList',
+    name: 'LocationList',
     data () {
       return {
         storeId: null,
-        productCategoryId: null,
         stores: [],
-        productCategories: [],
-        products: [],
+        locations: [],
         params: new URLSearchParams()
       }
     },
     watch: {
       storeId (value) {
         this.params.set('filter[where][storeId]', value);
-        this.getProducts();
-      },
-      productCategoryId (value) {
-        this.params.set('filter[where][productCategoryId]', value);
-        this.getProducts();
+        this.getLocations();
       }
     },
     created () {
       this.getStores();
-      this.getProductCategories();
     },
     methods: {
       getStores () {
@@ -90,32 +74,21 @@
           self.stores = [];
         });
       },
-      getProductCategories () {
+      getLocations () {
         let self = this;
 
-        this.$axios.get('/product_categories')
-        .then(function (response) {
-          self.productCategories = response.data;
-        })
-        .catch(function (error) {
-          self.productCategories = [];
-        });
-      },
-      getProducts () {
-        let self = this;
-
-        this.$axios.get('/products', {
+        this.$axios.get('/locations', {
           params: this.params
         })
         .then(function (response) {
-          self.products = response.data;
+          self.locations = response.data;
         })
         .catch(function (error) {
-          self.products = [];
+          self.locations = [];
         });
       },
-      editProduct: function (productId) {
-        this.$router.push({ path: `/products/${productId}` });
+      editLocation: function (locationId) {
+        this.$router.push({ path: `/locations/${locationId}` });
       }
     }
   };

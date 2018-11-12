@@ -7,7 +7,9 @@ import productCategoriesRoutes from './modules/product_categories/routes';
 import storesRoutes from './modules/stores/routes';
 import paymentMethodsRoutes from './modules/payment_methods/routes';
 import employeesRoutes from './modules/employees/routes';
+import chargesRoutes from './modules/charges/routes';
 import ordersRoutes from './modules/orders/routes';
+import locationsRoutes from './modules/locations/routes';
 import reportsRoutes from './modules/reports/routes';
 import sessionsRoutes from './modules/sessions/routes';
 import store from './store';
@@ -28,8 +30,10 @@ const routes = appRoutes.concat(
   storesRoutes,
   paymentMethodsRoutes,
   employeesRoutes,
+  chargesRoutes,
   ordersRoutes,
   reportsRoutes,
+  locationsRoutes,
   sessionsRoutes
 );
 
@@ -44,10 +48,10 @@ router.beforeEach((to, from, next) => {
     '/login'
   ];
 
-  const authRequired = !publicPages.includes(to.path);
-  const token = store.state.token;
+  const authenticationRequired = !publicPages.includes(to.path);
+  const authenticationToken = store.state.authenticationToken;
 
-  if (authRequired && !token) {
+  if (authenticationRequired && !authenticationToken) {
     return next('/login');
   }
 

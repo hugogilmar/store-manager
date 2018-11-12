@@ -1,7 +1,7 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-combobox
-      v-model="orderLine.product"
+      v-model="product"
       :items="products"
       :rules="[v => !!v || 'Item is required']"
       :label="$t('orderLine.product')"
@@ -18,6 +18,11 @@
       :label="$t('orderLine.billable')"
       v-model="orderLine.billable"
     ></v-checkbox>
+    <v-text-field
+      v-model="orderLine.discountAmount"
+      :label="$t('orderLine.discountAmount')"
+      required
+    ></v-text-field>
     <v-text-field
       v-model="orderLine.comment"
       :counter="48"
@@ -46,11 +51,8 @@
     data () {
       return {
         valid: true,
-        orderLine: {
-          product: {
-            id: 0
-          }
-        },
+        orderLine: {},
+        product: {},
         products: []
       }
     },
@@ -61,23 +63,26 @@
     ],
     computed: {
       productId () {
-        return this.orderLine.product.id;
+        return this.product.id;
       }
     },
     watch: {
-      productId: function (value) {
-        this.orderLine.productId = value;
+      orderLine (object) {
+        this.product = object.product;
       },
-      storeId () {
+      product (object) {
+        this.orderLine.productId = object.id;
+      },
+      storeId (value) {
         this.getProducts();
       },
-      orderLineId () {
-        let orderLineId = this.orderLineId;
+      orderLineId (value) {
+        let orderLineId = value;
 
         if (orderLineId) {
-          this.getOrderLine(this.orderLineId);
+          this.getOrderLine(orderLineId);
         } else {
-          this.resetOrderLine();
+          this.reset();
         }
       }
     },
@@ -89,12 +94,12 @@
       if (orderLineId) {
         this.getOrderLine(this.orderLineId);
       } else {
-        this.resetOrderLine();
+        this.reset();
       }
     },
     methods: {
       productText (product) {
-        return product.code + ' ' + product.name;
+        return (product.code ? product.code : '') + ' ' + (product.name ? product.name : '');
       },
       getProducts () {
         let self = this;
@@ -115,22 +120,6 @@
         .catch(function (error) {
           self.products = [];
         });
-      },
-      resetOrderLine () {
-        this.orderLine = {
-          productId: 0,
-          quantity: 0,
-          price: 0.00,
-          subtotal: 0.00,
-          total: 0.00,
-          billable: true,
-          comment: '',
-          product: {
-            id: 0,
-            code: '',
-            name: ''
-          }
-        }
       },
       getOrderLine (orderLineId) {
         let self = this;
@@ -157,12 +146,13 @@
           productId: this.orderLine.productId,
           quantity: this.orderLine.quantity,
           billable: this.orderLine.billable,
+          discountAmount: this.orderLine.discountAmount,
           comment: this.orderLine.comment
         })
         .then(function (response) {
-          self.$emit('order-line-created');
           self.$toasted.success(self.$t('toast.success.create'));
-          self.resetOrderLine();
+          self.reset();
+          self.$emit('order-line-created');
         })
         .catch(function (error) {
           self.$toasted.error(self.$t('toast.failure.create'));
@@ -176,12 +166,13 @@
           productId: this.orderLine.productId,
           quantity: this.orderLine.quantity,
           billable: this.orderLine.billable,
+          discountAmount: this.orderLine.discountAmount,
           comment: this.orderLine.comment
         })
         .then(function (response) {
-          self.$emit('order-line-updated');
           self.$toasted.success(self.$t('toast.success.update'));
-          self.resetOrderLine();
+          self.reset();
+          self.$emit('order-line-updated');
         })
         .catch(function (error) {
           self.$toasted.error(self.$t('toast.failure.update'));
@@ -200,9 +191,29 @@
           this.valid = false;
         }
       },
-      cancel () {
-        this.$emit('cancel');
+      resetProduct () {
+        this.product = {};
+      },
+      resetOrderLine () {
+        this.orderLine = {
+          productId: null,
+          quantity: 0,
+          price: 0.00,
+          subtotal: 0.00,
+          total: 0.00,
+          billable: true,
+          discountAmount: 0.00,
+          comment: null,
+          product: {}
+        }
+      },
+      reset () {
+        this.resetProduct();
         this.resetOrderLine();
+      },
+      cancel () {
+        this.reset();
+        this.$emit('cancel');
       }
     }
   };

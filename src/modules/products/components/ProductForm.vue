@@ -10,6 +10,7 @@
     <v-text-field
       v-model="product.code"
       :rules="rules.code"
+      :counter="10"
       :label="$t('product.code')"
       required
     ></v-text-field>
@@ -62,8 +63,8 @@
         product_categories: [],
         stores: [],
         product: {
-          name: '',
-          code: '',
+          name: null,
+          code: null,
           price: 0.0,
           specialPrice: 0.0,
           productCategoryId: 0,

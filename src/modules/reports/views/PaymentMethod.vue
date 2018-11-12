@@ -2,7 +2,7 @@
   <v-card class="ma-4">
     <v-subheader>{{ $t('report.header.paymentMethod') }}</v-subheader>
     <v-layout row wrap>
-      <v-flex xs4 class="pa-4">
+      <v-flex xs3 class="pa-4">
         <v-select
           v-model="storeId"
           :items="stores"
@@ -61,23 +61,36 @@
           </v-date-picker>
         </v-menu>
       </v-flex>
-      <v-flex xs8 class="pa-4">
-        <table class="v-table theme--light">
-          <thead>
-            <th width="60" class="text-xs-center">{{ $t('report.code') }}</th>
-            <th class="text-xs-left">{{ $t('report.paymentMethod') }}</th>
-            <th width="60" class="text-xs-center">{{ $t('report.quantity') }}</th>
-            <th width="120" class="text-xs-right">{{ $t('report.total') }}</th>
-          </thead>
-          <tbody>
-            <tr v-for="row in rows" :key="row.code">
-              <td class="text-xs-center">{{ row.code }}</td>
-              <td>{{ row.name }}</td>
-              <td class="text-xs-center">{{ row.quantity }}</td>
-              <td class="text-xs-right">{{ row.total | currency }}</td>
+      <v-flex xs9 class="pa-4">
+        <v-data-table
+          hide-actions
+          :headers="headers"
+          :items="rows"
+        >
+          <template slot="no-data">
+            <v-alert
+              :value="true"
+              type="info"
+            >
+              {{ $t('alert.empty') }}
+            </v-alert>
+          </template>
+          <template slot="items" slot-scope="report">
+            <tr>
+              <td class="text-xs-center" width="100">{{ report.item.code }}</td>
+              <td>{{ report.item.name }}</td>
+              <td class="text-xs-center" width="160">{{ report.item.quantity }}</td>
+              <td class="text-xs-right" width="160">{{ report.item.total | currency }}</td>
             </tr>
-          </tbody>
-        </table>
+          </template>
+          <template slot="footer">
+            <tr>
+              <td colspan="2" class="text-xs-right">{{ $t('report.total') }}</td>
+              <td class="text-xs-center">{{ quantity }}</td>
+              <td class="text-xs-right">{{ total | currency }}</td>
+            </tr>
+          </template>
+        </v-data-table>
       </v-flex>
     </v-layout>
   </v-card>
@@ -87,30 +100,75 @@
   export default {
     data () {
       return {
-        storeId: 1,
-        dateFrom: new Date().toISOString().substr(0, 10),
-        dateTo: new Date().toISOString().substr(0, 10),
-        landscape: true,
+        storeId: null,
+        dateFrom: null,
+        dateTo: null,
         stores: [],
         rows: [],
         dateFromDialog: false,
-        dateToDialog: false
+        dateToDialog: false,
+        headers: [
+          {
+            text: this.$t('report.code'),
+            align: 'center',
+            sortable: false,
+            value: 'code'
+          },
+          {
+            text: this.$t('report.paymentMethod'),
+            align: 'left',
+            sortable: false,
+            value: 'name'
+          },
+          {
+            text: this.$t('report.quantity'),
+            align: 'center',
+            sortable: false,
+            value: 'quantity'
+          },
+          {
+            text: this.$t('report.total'),
+            align: 'right',
+            sortable: false,
+            value: 'total'
+          }
+        ]
+      }
+    },
+    computed: {
+      valid () {
+        return this.storeId && this.dateFrom && this.dateTo;
+      },
+      quantity () {
+        return this.rows.reduce(function (sum, row) {
+          return sum += row.quantity
+        }, 0);
+      },
+      total () {
+        return this.rows.reduce(function (sum, row) {
+          return sum += row.total
+        }, 0);
       }
     },
     watch: {
       dateFrom () {
-        this.getReport();
+        if (this.valid) {
+          this.getReport();
+        }
       },
       dateTo () {
-        this.getReport();
+        if (this.valid) {
+          this.getReport();
+        }
       },
       storeId () {
-        this.getReport();
+        if (this.valid) {
+          this.getReport();
+        }
       }
     },
     created () {
       this.getStores();
-      this.getReport();
     },
     methods: {
       getStores () {
@@ -127,7 +185,7 @@
       getReport () {
         let self = this;
 
-        this.$axios.post('/orders/paymentMethodsReport', {
+        this.$axios.post('/invoices/paymentMethodsReport', {
           dateFrom: this.dateFrom,
           dateTo: this.dateTo,
           storeId: this.storeId
@@ -144,31 +202,8 @@
 </script>
 
 <style scoped>
-  .v-table small {
-    color: rgba(0, 0, 0, .54);
-  }
-
-  .v-table thead, .v-table tbody {
-    border-bottom: 1px solid rgba(0, 0, 0, .12);
-  }
-
-  .v-table thead th {
+  .v-datatable tfoot td {
     font-size: 13px;
-    height: 48px
-  }
-
-  .v-table tfoot td, .v-table tfoot th {
-    border: none;
-    font-size: 13px;
-    font-weight: 500;
-    height: 48px
-  }
-
-  .v-table tfoot tr {
-    border: none;
-  }
-
-  .v-table tfoot th {
-    color: rgba(0, 0, 0, .54);
+    font-weight: 600;
   }
 </style>

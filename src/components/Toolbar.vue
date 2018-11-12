@@ -1,22 +1,25 @@
 <template>
   <v-toolbar
     app
+    clipped-left
+    fixed
   >
+    <v-toolbar-side-icon @click="drawerToggle"></v-toolbar-side-icon>
     <v-toolbar-title>
-      {{ title }}
+      {{ $t('app.name') }}
     </v-toolbar-title>
   </v-toolbar>
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex';
+  import { mapActions } from 'vuex';
 
   export default {
-    name: 'Navigation',
-    data () {
-      return {
-        title: this.$t('app.name')
-      }
+    name: 'Toolbar',
+    methods: {
+      ...mapActions([
+        'drawerToggle',
+      ])
     }
   }
 </script>

@@ -1,7 +1,9 @@
 <template>
-  <v-app>
+  <v-app
+    :dark="darkTheme"
+  >
     <navigation v-if="authenticationToken"></navigation>
-    <toolbar></toolbar>
+    <toolbar v-if="authenticationToken"></toolbar>
     <v-content>
       <transition name="fade" mode="out-in">
         <router-view></router-view>
@@ -23,7 +25,8 @@
     },
     computed: {
       ...mapGetters([
-        'authenticationToken'
+        'authenticationToken',
+        'darkTheme'
       ])
     }
   }

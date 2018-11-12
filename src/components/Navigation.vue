@@ -1,15 +1,19 @@
 <template>
   <v-navigation-drawer
-    persistent
-    permanent
-    fixed
-    dark
     app
+    clipped
+    :value="drawerOpen"
   >
-    <v-list>
-      <v-subheader>
-        {{ $t('navigation.title') }}
-      </v-subheader>
+    <v-responsive :aspect-ratio="16/9" class="secondary white--text">
+      <v-layout pa-4 column fill-height>
+        <v-spacer></v-spacer>
+        <v-flex shrink>
+          <div class="subheading">{{ currentUser.name }}</div>
+          <div class="body-1">{{ currentUser.realm }}</div>
+        </v-flex>
+      </v-layout>
+    </v-responsive>
+    <v-list dense>
       <v-list-group
         prepend-icon="menu"
         v-for="(group, i) in groups"
@@ -35,6 +39,24 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list-group>
+      <v-list-group
+        prepend-icon="menu"
+      >
+        <v-list-tile slot="activator">
+          <v-list-tile-title>{{ $t('navigation.groups.settings') }}</v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile @click="darkThemeToggle">
+          <v-list-tile-action>
+            <v-checkbox
+              :value="darkTheme"
+            ></v-checkbox>
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+            <v-list-tile-title>{{ $t('navigation.links.darkMode') }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list-group>
       <v-list-tile
         @click.stop="logout"
       >
@@ -56,7 +78,6 @@
     name: 'Navigation',
     data () {
       return {
-        clipped: false,
         groups: [
           {
             icon: 'menu',
@@ -71,9 +92,9 @@
         ],
         links: [
           {
-            icon: 'shopping_cart',
-            title: this.$t('navigation.links.products'),
-            path: '/products',
+            icon: 'store',
+            title: this.$t('navigation.links.stores'),
+            path: '/stores',
             group: 'cruds'
           },
           {
@@ -83,15 +104,15 @@
             group: 'cruds'
           },
           {
-            icon: 'store',
-            title: this.$t('navigation.links.stores'),
-            path: '/stores',
+            icon: 'credit_card',
+            title: this.$t('navigation.links.paymentMethods'),
+            path: '/payment_methods',
             group: 'cruds'
           },
           {
-            icon: 'attach_money',
-            title: this.$t('navigation.links.paymentMethods'),
-            path: '/payment_methods',
+            icon: 'shopping_cart',
+            title: this.$t('navigation.links.products'),
+            path: '/products',
             group: 'cruds'
           },
           {
@@ -101,15 +122,27 @@
             group: 'cruds'
           },
           {
+            icon: 'attach_money',
+            title: this.$t('navigation.links.charges'),
+            path: '/charges',
+            group: 'cruds'
+          },
+          {
+            icon: 'place',
+            title: this.$t('navigation.links.locations'),
+            path: '/locations',
+            group: 'cruds'
+          },
+          {
             icon: 'list',
             title: this.$t('navigation.links.orders'),
             path: '/orders',
             group: 'cruds'
           },
           {
-            icon: 'shopping_cart',
-            title: this.$t('navigation.links.productsReport'),
-            path: '/reports/product',
+            icon: 'store',
+            title: this.$t('navigation.links.storesReport'),
+            path: '/reports/store',
             group: 'reports'
           },
           {
@@ -119,17 +152,37 @@
             group: 'reports'
           },
           {
-            icon: 'attach_money',
+            icon: 'credit_card',
             title: this.$t('navigation.links.paymentMethodsReport'),
             path: '/reports/paymentMethod',
+            group: 'reports'
+          },
+          {
+            icon: 'attach_money',
+            title: this.$t('navigation.links.chargesReport'),
+            path: '/reports/charge',
+            group: 'reports'
+          },
+          {
+            icon: 'shopping_cart',
+            title: this.$t('navigation.links.productsReport'),
+            path: '/reports/product',
             group: 'reports'
           }
         ]
       }
     },
+    computed: {
+      ...mapGetters([
+        'currentUser',
+        'drawerOpen',
+        'darkTheme'
+      ])
+    },
     methods: {
       ...mapActions([
-        'logout'
+        'logout',
+        'darkThemeToggle'
       ]),
       items (group) {
         return this.links.filter(function (link) {
@@ -142,9 +195,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .v-list__group__header--active .v-list__group__header__prepend-icon .v-icon {
-    color: #fff;
-  }
-</style>

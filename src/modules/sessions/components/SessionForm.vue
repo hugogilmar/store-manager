@@ -32,8 +32,8 @@
       return {
         valid: true,
         session: {
-          username: '',
-          password: ''
+          username: null,
+          password: null
         },
         rules: {
           username: [],
@@ -53,10 +53,29 @@
           password: this.session.password
         })
         .then(function (response) {
-          self.login(response.data.id);
+          self.getUser(response.data.id, response.data.userId);
         })
         .catch(function (error) {
-          // todo
+          self.$toasted.error(self.$t('toast.failure.session'));
+        });
+      },
+      getUser (authenticationToken, userId) {
+        let self = this;
+
+        this.$axios.get(`/managers/${userId}`, {
+          headers: {
+            'Authorization': authenticationToken
+          }
+        })
+        .then(function (response) {
+          self.login({
+            authenticationToken: authenticationToken,
+            user: response.data
+          });
+          self.$toasted.success(self.$t('toast.success.session'));
+        })
+        .catch(function (error) {
+          self.$toasted.error(self.$t('toast.failure.session'));
         });
       }
     }

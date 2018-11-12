@@ -1,24 +1,29 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-text-field
-      v-model="employee.name"
+      v-model="charge.name"
       :rules="rules.name"
       :counter="48"
-      :label="$t('employee.name')"
+      :label="$t('charge.name')"
       required
     ></v-text-field>
     <v-text-field
-      v-model="employee.code"
+      v-model="charge.code"
       :rules="rules.code"
       :counter="10"
-      :label="$t('employee.code')"
+      :label="$t('charge.code')"
+      required
+    ></v-text-field>
+    <v-text-field
+      v-model="charge.amount"
+      :label="$t('charge.amount')"
       required
     ></v-text-field>
     <v-select
-      v-model="employee.storeId"
+      v-model="charge.storeId"
       :items="stores"
       :rules="[v => !!v || 'Item is required']"
-      :label="$t('employee.store')"
+      :label="$t('charge.store')"
       item-text="name"
       item-value="id"
       required
@@ -35,14 +40,15 @@
 
 <script>
   export default {
-    name: 'EmployeeForm',
+    name: 'ChargeForm',
     data () {
       return {
         valid: true,
         stores: [],
-        employee: {
+        charge: {
           name: null,
           code: null,
+          amount: 0.00,
           storeId: 0
         },
         rules: {
@@ -58,19 +64,19 @@
       }
     },
     props: [
-      'employeeId'
+      'chargeId'
     ],
     created () {
-      let employeeId = this.getEmployeeId();
+      let chargeId = this.getChargeId();
 
       this.getStores();
-      if (employeeId) {
-        this.getEmployee(employeeId);
+      if (chargeId) {
+        this.getCharge(chargeId);
       }
     },
     methods: {
-      getEmployeeId () {
-        return this.employeeId;
+      getChargeId () {
+        return this.chargeId;
       },
       getStores () {
         let self = this;
@@ -83,44 +89,46 @@
           self.stores = [];
         });
       },
-      getEmployee (employeeId) {
+      getCharge (chargeId) {
         let self = this;
 
-        this.$axios.get(`/employees/${employeeId}`)
+        this.$axios.get(`/charges/${chargeId}`)
         .then(function (response) {
-          self.employee = response.data;
+          self.charge = response.data;
         })
         .catch(function (error) {
-          self.employee = {};
+          self.charge = {};
         });
       },
-      createEmployee () {
+      createCharge () {
         let self = this;
 
-        this.$axios.post('/employees', {
-          name: this.employee.name,
-          code: this.employee.code,
-          storeId: this.employee.storeId
+        this.$axios.post('/charges', {
+          name: this.charge.name,
+          code: this.charge.code,
+          amount: this.charge.amount,
+          storeId: this.charge.storeId
         })
         .then(function (response) {
-          self.employee = response.data;
-          self.editEmployee(self.employee.id);
+          self.charge = response.data;
+          self.editCharge(self.charge.id);
           self.$toasted.success(self.$t('toast.success.create'));
         })
         .catch(function (error) {
           self.$toasted.error(self.$t('toast.failure.create'));
         });
       },
-      updateEmployee (employeeId) {
+      updateCharge (chargeId) {
         let self = this;
 
-        this.$axios.put(`/employees/${employeeId}`, {
-          name: this.employee.name,
-          code: this.employee.code,
-          storeId: this.employee.storeId
+        this.$axios.put(`/charges/${chargeId}`, {
+          name: this.charge.name,
+          code: this.charge.code,
+          amount: this.charge.amount,
+          storeId: this.charge.storeId
         })
         .then(function (response) {
-          self.employee = response.data;
+          self.charge = response.data;
           self.$toasted.success(self.$t('toast.success.update'));
         })
         .catch(function (error) {
@@ -128,20 +136,20 @@
         });
       },
       submit () {
-        let employeeId = this.getEmployeeId();
+        let chargeId = this.getChargeId();
 
         if (this.$refs.form.validate()) {
-          if (employeeId) {
-            this.updateEmployee(employeeId);
+          if (chargeId) {
+            this.updateCharge(chargeId);
           } else {
-            this.createEmployee();
+            this.createCharge();
           }
         } else {
           this.valid = false;
         }
       },
-      editEmployee: function (employeeId) {
-        this.$router.push({ path: `/employees/${employeeId}` });
+      editCharge: function (chargeId) {
+        this.$router.push({ path: `/charges/${chargeId}` });
       }
     }
   };
