@@ -19,10 +19,11 @@ const translations = {
         charges: 'Cargos',
         orders: 'Ordenes',
         locations: 'Ubicaciones',
-        productsReport: 'Ventas por producto',
-        productCategoriesReport: 'Ventas por categoría',
-        paymentMethodsReport: 'Ventas por método de pago',
-        storesReport: 'Ventas por comercio',
+        productsReport: 'Ingresos por producto',
+        productCategoriesReport: 'Ingresos por categoría',
+        paymentMethodsReport: 'Ingresos por método de pago',
+        storesReport: 'Ingresos por comercio',
+        chargesReport: 'Ingresos por cargos',
         darkMode: 'Modo nocturno'
       },
       logout: 'Cerrar sesión'
@@ -191,13 +192,15 @@ const translations = {
       product: 'Producto',
       productCategory: 'Categoría',
       paymentMethod: 'Método de pago',
+      charge: 'Cargo',
       quantity: 'Cantidad',
       total: 'Total',
       header: {
-        product: 'Ventas por producto',
-        productCategory: 'Ventas por categoría',
-        paymentMethod: 'Ventas por método de pago',
-        store: 'Ventas por comercio'
+        product: 'Ingresos por producto',
+        productCategory: 'Ingresos por categoría',
+        paymentMethod: 'Ingresos por método de pago',
+        store: 'Ingresos por comercio',
+        charge: 'Ingresos por cargo'
       }
     },
     session: {

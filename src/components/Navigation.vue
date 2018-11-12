@@ -152,9 +152,15 @@
             group: 'reports'
           },
           {
-            icon: 'attach_money',
+            icon: 'credit_card',
             title: this.$t('navigation.links.paymentMethodsReport'),
             path: '/reports/paymentMethod',
+            group: 'reports'
+          },
+          {
+            icon: 'attach_money',
+            title: this.$t('navigation.links.chargesReport'),
+            path: '/reports/charge',
             group: 'reports'
           },
           {

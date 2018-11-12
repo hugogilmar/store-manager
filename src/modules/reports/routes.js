@@ -22,5 +22,11 @@ export default [
     name: "paymentMethod_report",
     component: () =>
       import(/* webpackChunkName: "reports" */ "./views/PaymentMethod.vue")
+  },
+  {
+    path: "/reports/charge",
+    name: "charge_report",
+    component: () =>
+      import(/* webpackChunkName: "reports" */ "./views/Charge.vue")
   }
 ];
