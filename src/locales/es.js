@@ -4,12 +4,29 @@ const translations = {
       name: 'Administrador de comercios'
     },
     navigation: {
-      products: 'Productos',
-      productCategories: 'Categorías de productos',
-      stores: 'Comercios',
-      paymentMethods: 'Métodos de pago',
-      employees: 'Empleados',
-      orders: 'Ordenes'
+      title: 'Menú principal',
+      groups: {
+        cruds: 'Mantenimientos',
+        reports: 'Reportes',
+        settings: 'Configuración'
+      },
+      links: {
+        products: 'Productos',
+        productCategories: 'Categorías de productos',
+        stores: 'Comercios',
+        paymentMethods: 'Métodos de pago',
+        employees: 'Empleados',
+        charges: 'Cargos',
+        orders: 'Ordenes',
+        locations: 'Ubicaciones',
+        productsReport: 'Ingresos por producto',
+        productCategoriesReport: 'Ingresos por categoría',
+        paymentMethodsReport: 'Ingresos por método de pago',
+        storesReport: 'Ingresos por comercio',
+        chargesReport: 'Ingresos por cargos',
+        darkMode: 'Modo nocturno'
+      },
+      logout: 'Cerrar sesión'
     },
     label: {
       save: 'Guardar',
@@ -23,6 +40,20 @@ const translations = {
     },
     alert: {
       empty: 'No hay registros que mostrar.'
+    },
+    toast: {
+      failure: {
+        create: 'No se pudo guardar el registro',
+        update: 'No se pudo actualizar el registro',
+        delete: 'No se pudo eliminar el registro',
+        session: 'No se pudo iniciar sesión'
+      },
+      success: {
+        create: 'Registro guardado',
+        update: 'Registro actualizado',
+        delete: 'Registro eliminado',
+        session: 'Sesión iniciada'
+      }
     },
     header: {
       new: 'Crear %{entity}',
@@ -49,8 +80,12 @@ const translations = {
       store: 'comercio | comercios',
       paymentMethod: 'método de pago | métodos de pago',
       employee: 'empleado | empleados',
+      charge: 'cargo | cargos',
       order: 'orden | ordenes',
-      invoice: 'invoice | invoices'
+      location: 'ubicación | ubicaciones',
+      invoice: 'factura | facturas',
+      report: 'reporte | reportes',
+      session: 'sesión | sesiones'
     },
     product: {
       name: 'Nombre',
@@ -58,21 +93,33 @@ const translations = {
       price: 'Precio',
       specialPrice: 'Precio de promoción',
       productCategory: 'Categoría',
-      store: 'Comercio'
+      store: 'Comercio',
+      header: 'Productos'
     },
     productCategory: {
       name: 'Nombre',
-      code: 'Código'
+      code: 'Código',
+      header: 'Categorías'
     },
     store: {
-      name: 'Nombre'
+      name: 'Nombre',
+      header: 'Comercios'
     },
     paymentMethod: {
       name: 'Nombre',
-      code: 'Código'
+      code: 'Código',
+      header: 'Métodos de pago'
     },
     employee: {
       name: 'Nombre',
+      code: 'Código',
+      store: 'Comercio',
+      header: 'Empleados'
+    },
+    charge: {
+      name: 'Nombre',
+      code: 'Código',
+      amount: 'Porcentage',
       store: 'Comercio'
     },
     order: {
@@ -87,6 +134,11 @@ const translations = {
       discountsTotal: 'Descuentos',
       chargesTotal: 'Cargos adicionales',
       balance: 'Balance',
+      billable: 'Facturable',
+      location: 'Ubicación',
+      guests: 'Personas',
+      discountAmount: 'Porcentaje de descuento',
+      comment: 'Comentario',
       steps: {
         one: {
           title: 'Orden',
@@ -97,10 +149,15 @@ const translations = {
           summary: ''
         },
         three: {
+          title: 'Cargos',
+          summary: ''
+        },
+        four: {
           title: 'Facturación',
           summary: ''
         }
-      }
+      },
+      header: 'Ordenes'
     },
     orderLine: {
       product: 'Producto',
@@ -108,13 +165,47 @@ const translations = {
       price: 'Precio',
       comment: 'Comentario',
       billable: 'Facturable',
-      total: 'Total'
+      total: 'Total',
+      discountAmount: 'Porcentaje de descuento',
+      header: 'Productos'
+    },
+    orderCharge: {
+      charge: 'Cargo'
     },
     invoice: {
       date: 'Fecha',
-      number: 'Número',
+      referenceNumber: 'Número de referencia',
       paymentMethod: 'Método de pago',
-      amount: 'Monto'
+      amount: 'Monto',
+      header: 'Facturas'
+    },
+    location: {
+      name: 'Nombre',
+      code: 'Código',
+      store: 'Comercio'
+    },
+    report: {
+      dateFrom: 'Fecha desde',
+      dateTo: 'Fecha hasta',
+      code: 'Código',
+      store: 'Comercio',
+      product: 'Producto',
+      productCategory: 'Categoría',
+      paymentMethod: 'Método de pago',
+      charge: 'Cargo',
+      quantity: 'Cantidad',
+      total: 'Total',
+      header: {
+        product: 'Ingresos por producto',
+        productCategory: 'Ingresos por categoría',
+        paymentMethod: 'Ingresos por método de pago',
+        store: 'Ingresos por comercio',
+        charge: 'Ingresos por cargo'
+      }
+    },
+    session: {
+      username: 'Usuario',
+      password: 'Contraseña'
     }
   }
 }

@@ -10,6 +10,7 @@
     <v-text-field
       v-model="product.code"
       :rules="rules.code"
+      :counter="10"
       :label="$t('product.code')"
       required
     ></v-text-field>
@@ -62,8 +63,8 @@
         product_categories: [],
         stores: [],
         product: {
-          name: '',
-          code: '',
+          name: null,
+          code: null,
           price: 0.0,
           specialPrice: 0.0,
           productCategoryId: 0,
@@ -147,9 +148,10 @@
         .then(function (response) {
           self.product = response.data;
           self.editProduct(self.product.id);
+          self.$toasted.success(self.$t('toast.success.create'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.create'));
         });
       },
       updateProduct (productId) {
@@ -165,9 +167,10 @@
         })
         .then(function (response) {
           self.product = response.data;
+          self.$toasted.success(self.$t('toast.success.update'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.update'));
         });
       },
       submit () {
@@ -190,5 +193,3 @@
     }
   };
 </script>
-
-<style></script>

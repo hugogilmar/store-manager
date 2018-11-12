@@ -31,7 +31,7 @@
       return {
         valid: true,
         productCategory: {
-          name: ''
+          name: null
         },
         rules: {
           name: [
@@ -80,9 +80,10 @@
         .then(function (response) {
           self.productCategory = response.data;
           self.editProductCategory(self.productCategory.id);
+          self.$toasted.success(self.$t('toast.success.create'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.create'));
         });
       },
       updateProductCategory (productCategoryId) {
@@ -94,9 +95,10 @@
         })
         .then(function (response) {
           self.productCategory = response.data;
+          self.$toasted.success(self.$t('toast.success.update'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.update'));
         });
       },
       submit () {

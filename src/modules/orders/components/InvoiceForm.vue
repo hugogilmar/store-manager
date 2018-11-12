@@ -1,36 +1,10 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-text-field
-      v-model="invoice.number"
-      :label="$t('invoice.number')"
+      v-model="invoice.referenceNumber"
+      :label="$t('invoice.referenceNumber')"
       required
     ></v-text-field>
-    <v-menu
-      ref="menu"
-      :close-on-content-click="false"
-      v-model="menu"
-      :nudge-right="40"
-      lazy
-      transition="scale-transition"
-      offset-y
-      full-width
-      min-width="290px"
-    >
-      <v-text-field
-        slot="activator"
-        v-model="invoice.date"
-        :label="$t('invoice.date')"
-        prepend-icon="event"
-        readonly
-      ></v-text-field>
-      <v-date-picker
-        v-model="invoice.date"
-        scrollable
-        locale="es-MX"
-        @input="menu = false"
-      >
-      </v-date-picker>
-    </v-menu>
     <v-select
       v-model="invoice.paymentMethodId"
       :items="paymentMethods"
@@ -125,8 +99,7 @@
       },
       resetInvoice () {
         this.invoice = {
-          number: '',
-          date: '',
+          referenceNumber: null,
           paymentMethodId: 0,
           amount: 0.00
         }
@@ -154,34 +127,36 @@
         let self = this;
 
         this.$axios.post('/invoices', {
-          number: this.invoice.number,
-          date: this.invoice.date,
+          referenceNumber: this.invoice.referenceNumber,
           amount: this.invoice.amount,
           orderId: this.orderId,
           paymentMethodId: this.invoice.paymentMethodId
         })
         .then(function (response) {
           self.$emit('invoice-created');
+          self.$toasted.success(self.$t('toast.success.create'));
+          self.resetInvoice();
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.create'));
         });
       },
       updateInvoice (invoiceId) {
         let self = this;
 
         this.$axios.put(`/invoices/${invoiceId}`, {
-          number: this.invoice.number,
-          date: this.invoice.date,
+          referenceNumber: this.invoice.referenceNumber,
           amount: this.invoice.amount,
           orderId: this.orderId,
           paymentMethodId: this.invoice.paymentMethodId
         })
         .then(function (response) {
           self.$emit('invoice-updated');
+          self.$toasted.success(self.$t('toast.success.update'));
+          self.resetInvoice();
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.update'));
         });
       },
       submit () {
@@ -198,8 +173,8 @@
         }
       },
       cancel () {
-        this.resetInvoice();
         this.$emit('cancel');
+        this.resetInvoice();
       }
     }
   };

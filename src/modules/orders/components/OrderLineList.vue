@@ -22,7 +22,7 @@
       </v-list-tile-action>
       <v-list-tile-content>
         <v-list-tile-title>{{ orderLine.product.name }}</v-list-tile-title>
-        <v-list-tile-sub-title>{{ orderLine.quantity }} x {{ orderLine.price | currency }} = {{ orderLine.total | currency }}</v-list-tile-sub-title>
+        <v-list-tile-sub-title>{{ orderLine.quantity }} x {{ orderLine.price | currency }} - {{ orderLine.discountsTotal | currency }} ({{ orderLine.discountAmount | percentage }}) = {{ orderLine.total | currency }}</v-list-tile-sub-title>
       </v-list-tile-content>
       <v-list-tile-avatar v-if="orderLine.avatar">
         <img :src="orderLine.avatar">
@@ -48,15 +48,16 @@
         <v-card-title
           class="headline"
         >
-          {{ $t('dialog.add.title', { entity: $tc('entities.order', 1) }) }}
+          {{ $t('dialog.add.title', { entity: $tc('entities.product', 1) }) }}
         </v-card-title>
         <v-card-text>
-          {{ $t('dialog.add.message', { entity: $tc('entities.order', 1) }) }}
+          {{ $t('dialog.add.message', { entity: $tc('entities.product', 1) }) }}
         </v-card-text>
         <v-card-text>
           <order-line-form
-            :order-id="orderId"
-            :order-line-id="orderLineId"
+            :order-id.sync="orderId"
+            :store-id.sync="storeId"
+            :order-line-id.sync="orderLineId"
             @order-line-created="orderLineCreated"
             @order-line-updated="orderLineUpdated"
             @cancel="cancel"
@@ -83,15 +84,18 @@
     },
     props: [
       'orderId',
+      'storeId',
       'orderLines'
     ],
     methods: {
       orderLineCreated () {
         this.dialog = false;
+        this.orderLineId = null;
         this.$emit('order-line-created');
       },
       orderLineUpdated () {
         this.dialog = false;
+        this.orderLineId = null;
         this.$emit('order-line-updated');
       },
       editOrderLine (orderLineId) {
