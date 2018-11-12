@@ -63,11 +63,6 @@
       v-model="order.billable"
     ></v-checkbox>
     <v-text-field
-      v-model="order.discountAmount"
-      :label="$t('order.discountAmount')"
-      required
-    ></v-text-field>
-    <v-text-field
       v-model="order.comment"
       :counter="48"
       :label="$t('order.comment')"
@@ -158,7 +153,6 @@
           location: this.order.location,
           guests: this.order.guests,
           comment: this.order.comment,
-          discountAmount: this.order.discountAmount,
           billable: this.order.billable
         })
         .then(function (response) {
@@ -181,7 +175,6 @@
           location: this.order.location,
           guests: this.order.guests,
           comment: this.order.comment,
-          discountAmount: this.order.discountAmount,
           billable: this.order.billable
         })
         .then(function (response) {
