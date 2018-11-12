@@ -24,7 +24,7 @@
       return {
         valid: true,
         store: {
-          name: ''
+          name: null
         },
         rules: {
           name: [
@@ -68,9 +68,10 @@
         .then(function (response) {
           self.store = response.data;
           self.editStore(self.store.id);
+          self.$toasted.success(self.$t('toast.success.create'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.create'));
         });
       },
       updateStore (storeId) {
@@ -81,9 +82,10 @@
         })
         .then(function (response) {
           self.store = response.data;
+          self.$toasted.success(self.$t('toast.success.update'));
         })
         .catch(function (error) {
-          self.valid = false;
+          self.$toasted.error(self.$t('toast.failure.update'));
         });
       },
       submit () {

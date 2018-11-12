@@ -55,8 +55,9 @@
         </v-card-text>
         <v-card-text>
           <invoice-form
-            :order-id="orderId"
-            :invoice-id="invoiceId"
+            :order-id.sync="orderId"
+            :invoice-id.sync="invoiceId"
+            :balance.sync="balance"
             @invoice-created="invoiceCreated"
             @invoice-updated="invoiceUpdated"
             @cancel="cancel"
@@ -83,6 +84,7 @@
     },
     props: [
       'orderId',
+      'balance',
       'invoices'
     ],
     methods: {

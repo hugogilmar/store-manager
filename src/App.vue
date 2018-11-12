@@ -1,93 +1,42 @@
 <template>
-  <v-app>
-    <v-navigation-drawer
-      persistent
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      v-model="drawer"
-      enable-resize-watcher
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-tile
-          value="true"
-          v-for="(item, i) in items"
-          :key="i"
-          @click.stop="navigateTo(item)"
-        >
-          <v-list-tile-action>
-            <v-icon v-html="item.icon"></v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-    <v-toolbar
-      app
-      :clipped-left="clipped"
-    >
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
-    </v-toolbar>
+  <v-app
+    :dark="darkTheme"
+  >
+    <navigation v-if="authenticationToken"></navigation>
+    <toolbar v-if="authenticationToken"></toolbar>
     <v-content>
-      <router-view/>
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
     </v-content>
   </v-app>
 </template>
 
 <script>
-export default {
-  name: 'App',
-  data () {
-    return {
-      clipped: false,
-      drawer: true,
-      fixed: false,
-      items: [
-        {
-          icon: 'shopping_cart',
-          title: this.$t('navigation.products'),
-          path: '/products'
-        },
-        {
-          icon: 'bookmark',
-          title: this.$t('navigation.productCategories'),
-          path: '/product_categories'
-        },
-        {
-          icon: 'store',
-          title: this.$t('navigation.stores'),
-          path: '/stores'
-        },
-        {
-          icon: 'attach_money',
-          title: this.$t('navigation.paymentMethods'),
-          path: '/payment_methods'
-        },
-        {
-          icon: 'person',
-          title: this.$t('navigation.employees'),
-          path: '/employees'
-        },
-        {
-          icon: 'list',
-          title: this.$t('navigation.orders'),
-          path: '/orders'
-        }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: this.$t('app.name')
-    }
-  },
-  methods: {
-    navigateTo: function (item) {
-      this.$router.push({ path: item.path });
+  import { mapGetters, mapActions } from 'vuex';
+  import Navitation from './components/Navigation.vue';
+  import Toolbar from './components/Toolbar.vue';
+
+  export default {
+    name: 'App',
+    components: {
+      'navigation': Navitation,
+      'toolbar': Toolbar
+    },
+    computed: {
+      ...mapGetters([
+        'authenticationToken',
+        'darkTheme'
+      ])
     }
   }
-}
 </script>
+
+<style>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+</style>
