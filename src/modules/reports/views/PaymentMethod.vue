@@ -185,7 +185,7 @@
       getReport () {
         let self = this;
 
-        this.$axios.post('/orders/paymentMethodsReport', {
+        this.$axios.post('/invoices/paymentMethodsReport', {
           dateFrom: this.dateFrom,
           dateTo: this.dateTo,
           storeId: this.storeId
