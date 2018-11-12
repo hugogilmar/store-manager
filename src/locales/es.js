@@ -18,6 +18,7 @@ const translations = {
         employees: 'Empleados',
         charges: 'Cargos',
         orders: 'Ordenes',
+        locations: 'Ubicaciones',
         productsReport: 'Ventas por producto',
         productCategoriesReport: 'Ventas por categoría',
         paymentMethodsReport: 'Ventas por método de pago',
@@ -79,6 +80,7 @@ const translations = {
       employee: 'empleado | empleados',
       charge: 'cargo | cargos',
       order: 'orden | ordenes',
+      location: 'ubicación | ubicaciones',
       invoice: 'factura | facturas',
       report: 'reporte | reportes',
       session: 'sesión | sesiones'
@@ -174,6 +176,11 @@ const translations = {
       paymentMethod: 'Método de pago',
       amount: 'Monto',
       header: 'Facturas'
+    },
+    location: {
+      name: 'Nombre',
+      code: 'Código',
+      store: 'Comercio'
     },
     report: {
       dateFrom: 'Fecha desde',

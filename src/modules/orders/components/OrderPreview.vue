@@ -5,19 +5,25 @@
     </v-card-title>
     <v-container grid-list-md>
       <v-layout wrap>
-        <v-flex xs4>
+        <v-flex xs3>
           <p class="mb-1" v-if="order.store">{{ order.store.name }}</p>
           <p>
             <small>{{ $t('order.store') }}</small>
           </p>
         </v-flex>
-        <v-flex xs4>
+        <v-flex xs3>
+          <p class="mb-1" v-if="order.location">{{ order.location.name }}</p>
+          <p>
+            <small>{{ $t('order.location') }}</small>
+          </p>
+        </v-flex>
+        <v-flex xs3>
           <p class="mb-1" v-if="order.employee">{{ order.employee.name }}</p>
           <p>
             <small>{{ $t('order.employee') }}</small>
           </p>
         </v-flex>
-        <v-flex xs4>
+        <v-flex xs3>
           <p class="mb-1">{{ order.date }}</p>
           <p>
             <small>{{ $t('order.date') }}</small>

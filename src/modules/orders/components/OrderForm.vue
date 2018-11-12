@@ -6,11 +6,6 @@
       required
     ></v-text-field>
     <v-text-field
-      v-model="order.location"
-      :label="$t('order.location')"
-      required
-    ></v-text-field>
-    <v-text-field
       v-model="order.guests"
       :label="$t('order.guests')"
       required
@@ -58,6 +53,16 @@
       required
       v-if="employees.length > 0"
     ></v-select>
+    <v-select
+      v-model="order.locationId"
+      :items="locations"
+      :rules="[v => !!v || 'Item is required']"
+      :label="$t('order.location')"
+      item-text="name"
+      item-value="id"
+      required
+      v-if="locations.length > 0"
+    ></v-select>
     <v-checkbox
       :label="$t('order.billable')"
       v-model="order.billable"
@@ -88,7 +93,8 @@
         valid: true,
         menu: false,
         stores: [],
-        employees: []
+        employees: [],
+        locations: []
       }
     },
     props: [
@@ -105,6 +111,7 @@
     watch: {
       storeId() {
         this.getEmployees(this.storeId);
+        this.getLocations(this.storeId);
       }
     },
     methods: {
@@ -141,6 +148,25 @@
           self.employees = [];
         });
       },
+      getLocations (storeId) {
+        let self = this;
+
+        this.$axios.get('/locations', {
+          params: {
+            filter: {
+              where: {
+                storeId: storeId
+              }
+            }
+          }
+        })
+        .then(function (response) {
+          self.locations = response.data;
+        })
+        .catch(function (error) {
+          self.locations = [];
+        });
+      },
       createOrder () {
         let self = this;
 
@@ -149,6 +175,7 @@
           date: this.order.date,
           storeId: this.order.storeId,
           employeeId: this.order.employeeId,
+          locationId: this.order.locationId,
           status: this.order.status,
           location: this.order.location,
           guests: this.order.guests,
@@ -171,6 +198,7 @@
           date: this.order.date,
           storeId: this.order.storeId,
           employeeId: this.order.employeeId,
+          locationId: this.order.locationId,
           status: this.order.status,
           location: this.order.location,
           guests: this.order.guests,

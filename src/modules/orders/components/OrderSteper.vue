@@ -140,13 +140,13 @@
         order: {
           storeId: null,
           employeeId: null,
+          locationId: null,
           number: null,
           date: null,
           location: null,
           guests: null,
           comment: null,
           billable: true,
-          discountAmount: 0,
           status: 0,
           total: 0.00,
           subtotal: 0.00,
@@ -209,7 +209,8 @@
             filter: {
               include: [
                 'store',
-                'employee'
+                'employee',
+                'location'
               ]
             }
           }

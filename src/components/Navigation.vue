@@ -128,6 +128,12 @@
             group: 'cruds'
           },
           {
+            icon: 'place',
+            title: this.$t('navigation.links.locations'),
+            path: '/locations',
+            group: 'cruds'
+          },
+          {
             icon: 'list',
             title: this.$t('navigation.links.orders'),
             path: '/orders',
