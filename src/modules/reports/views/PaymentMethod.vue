@@ -115,7 +115,7 @@
             value: 'code'
           },
           {
-            text: this.$t('report.productCategory'),
+            text: this.$t('report.paymentMethod'),
             align: 'left',
             sortable: false,
             value: 'name'

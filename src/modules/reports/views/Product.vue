@@ -115,7 +115,7 @@
             value: 'code'
           },
           {
-            text: this.$t('report.productCategory'),
+            text: this.$t('report.product'),
             align: 'left',
             sortable: false,
             value: 'name'

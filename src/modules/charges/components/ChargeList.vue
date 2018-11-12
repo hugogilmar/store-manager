@@ -87,8 +87,8 @@
           self.charges = [];
         });
       },
-      editCharge: function (productCategoryId) {
-        this.$router.push({ path: `/charges/${productCategoryId}` });
+      editCharge: function (chargeId) {
+        this.$router.push({ path: `/charges/${chargeId}` });
       }
     }
   };

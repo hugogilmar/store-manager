@@ -49,8 +49,8 @@
           self.stores = [];
         });
       },
-      editStore: function (productCategoryId) {
-        this.$router.push({ path: `/stores/${productCategoryId}` });
+      editStore: function (storeId) {
+        this.$router.push({ path: `/stores/${storeId}` });
       }
     }
   };

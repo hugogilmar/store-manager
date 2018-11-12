@@ -87,8 +87,8 @@
           self.employees = [];
         });
       },
-      editEmployee: function (productCategoryId) {
-        this.$router.push({ path: `/employees/${productCategoryId}` });
+      editEmployee: function (employeeId) {
+        this.$router.push({ path: `/employees/${employeeId}` });
       }
     }
   };
