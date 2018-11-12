@@ -22,6 +22,7 @@ const translations = {
         productsReport: 'Ventas por producto',
         productCategoriesReport: 'Ventas por categoría',
         paymentMethodsReport: 'Ventas por método de pago',
+        storesReport: 'Ventas por comercio',
         darkMode: 'Modo nocturno'
       },
       logout: 'Cerrar sesión'
@@ -195,7 +196,8 @@ const translations = {
       header: {
         product: 'Ventas por producto',
         productCategory: 'Ventas por categoría',
-        paymentMethod: 'Ventas por método de pago'
+        paymentMethod: 'Ventas por método de pago',
+        store: 'Ventas por comercio'
       }
     },
     session: {

@@ -1,5 +1,11 @@
 export default [
   {
+    path: "/reports/store",
+    name: "store_report",
+    component: () =>
+      import(/* webpackChunkName: "reports" */ "./views/Store.vue")
+  },
+  {
     path: "/reports/product",
     name: "product_report",
     component: () =>

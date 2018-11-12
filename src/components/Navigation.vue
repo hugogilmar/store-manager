@@ -140,6 +140,12 @@
             group: 'cruds'
           },
           {
+            icon: 'store',
+            title: this.$t('navigation.links.storesReport'),
+            path: '/reports/store',
+            group: 'reports'
+          },
+          {
             icon: 'bookmark',
             title: this.$t('navigation.links.productCategoriesReport'),
             path: '/reports/productCategory',
