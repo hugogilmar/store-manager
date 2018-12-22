@@ -1,13 +1,16 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import SecureLS from 'secure-ls';
 import router from './router';
 
 Vue.use(Vuex);
 
+let storage = new SecureLS();
+
 const store = new Vuex.Store({
   state: {
-    authenticationToken: null,
-    user: {},
+    authenticationToken: storage.get('authenticationToken'),
+    user: storage.get('user'),
     drawer: false,
     dark: false
   },
@@ -15,16 +18,19 @@ const store = new Vuex.Store({
     login (state, payload) {
       state.authenticationToken = payload.authenticationToken;
       state.user = payload.user;
+      storage.set('authenticationToken', payload.authenticationToken);
+      storage.set('user', payload.user);
     },
     logout (state) {
       state.authenticationToken = null;
       state.user = {};
+      storage.remove('authenticationToken');
+      storage.remove('user');
     },
     drawerToggle (state) {
       state.drawer = !state.drawer;
     },
     darkThemeToggle (state) {
-      state.drawer = !state.drawer;
       state.dark = !state.dark;
     }
   },
@@ -55,6 +61,7 @@ const store = new Vuex.Store({
       commit('drawerToggle');
     },
     darkThemeToggle({ commit }) {
+      commit('drawerToggle');
       commit('darkThemeToggle');
     }
   }
