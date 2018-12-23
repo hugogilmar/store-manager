@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'StoreDeleteDialog',
   data () {
@@ -56,6 +58,9 @@ export default {
     'storeId'
   ],
   methods: {
+    ...mapActions([
+      'displaySnackbar'
+    ]),
     getStoreId () {
       return this.storeId;
     },
@@ -67,11 +72,17 @@ export default {
       .then(function (response) {
         self.dialog = false;
         self.storeList();
-        self.$toasted.success(self.$t('toast.success.delete'));
+        self.displaySnackbar({
+          color: 'success',
+          message: self.$t('toast.success.delete')
+        });
       })
       .catch(function (error) {
         self.dialog = false;
-        self.$toasted.error(self.$t('toast.success.delete'));
+        self.displaySnackbar({
+          color: 'error',
+          message: self.$t('toast.failure.delete')
+        });
       });
     },
     storeList () {

@@ -24,60 +24,70 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 
-  export default {
-    name: 'SessionForm',
-    data () {
-      return {
-        valid: true,
-        session: {
-          username: null,
-          password: null
-        },
-        rules: {
-          username: [],
-          password: []
-        }
-      }
-    },
-    methods: {
-      ...mapActions([
-        'login'
-      ]),
-      submit () {
-        let self = this;
-
-        this.$axios.post('/managers/login', {
-          username: this.session.username,
-          password: this.session.password
-        })
-        .then(function (response) {
-          self.getUser(response.data.id, response.data.userId);
-        })
-        .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.session'));
-        });
+export default {
+  name: 'SessionForm',
+  data () {
+    return {
+      valid: true,
+      session: {
+        username: null,
+        password: null
       },
-      getUser (authenticationToken, userId) {
-        let self = this;
-
-        this.$axios.get(`/managers/${userId}`, {
-          headers: {
-            'Authorization': authenticationToken
-          }
-        })
-        .then(function (response) {
-          self.login({
-            authenticationToken: authenticationToken,
-            user: response.data
-          });
-          self.$toasted.success(self.$t('toast.success.session'));
-        })
-        .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.session'));
-        });
+      rules: {
+        username: [],
+        password: []
       }
     }
-  };
+  },
+  methods: {
+    ...mapActions([
+      'login',
+      'displaySnackbar'
+    ]),
+    submit () {
+      let self = this;
+
+      this.$axios.post('/managers/login', {
+        username: this.session.username,
+        password: this.session.password
+      })
+      .then(function (response) {
+        self.getUser(response.data.id, response.data.userId);
+      })
+      .catch(function (error) {
+        self.displaySnackbar({
+          color: 'error',
+          message: self.$t('toast.failure.session')
+        });
+      });
+    },
+    getUser (authenticationToken, userId) {
+      let self = this;
+
+      this.$axios.get(`/managers/${userId}`, {
+        headers: {
+          'Authorization': authenticationToken
+        }
+      })
+      .then(function (response) {
+        self.login({
+          authenticationToken: authenticationToken,
+          user: response.data
+        });
+        self.displaySnackbar({
+          color: 'success',
+          message: self.$t('toast.success.session')
+        });
+      })
+      .catch(function (error) {
+        self.displaySnackbar({
+          color: 'error',
+          message: self.$t('toast.failure.session')
+        });
+      });
+    }
+  }
+};
 </script>

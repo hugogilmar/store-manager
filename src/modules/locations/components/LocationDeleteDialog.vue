@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'LocationDeleteDialog',
   data () {
@@ -56,6 +58,9 @@ export default {
     'locationId'
   ],
   methods: {
+    ...mapActions([
+      'displaySnackbar'
+    ]),
     getLocationId () {
       return this.locationId;
     },
@@ -67,11 +72,17 @@ export default {
       .then(function (response) {
         self.dialog = false;
         self.locationList();
-        self.$toasted.success(self.$t('toast.success.delete'));
+        self.displaySnackbar({
+          color: 'success',
+          message: self.$t('toast.success.delete')
+        });
       })
       .catch(function (error) {
         self.dialog = false;
-        self.$toasted.error(self.$t('toast.failure.delete'));
+        self.displaySnackbar({
+          color: 'error',
+          message: self.$t('toast.failure.delete')
+        });
       });
     },
     locationList () {
