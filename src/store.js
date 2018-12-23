@@ -17,6 +17,12 @@ const store = new Vuex.Store({
       loading: false,
       style: 'bars',
       opacity: 0.5
+    },
+    snackbar: {
+      visible: false,
+      color: 'info',
+      message: '',
+      timeOut: 3000
     }
   },
   mutations: {
@@ -40,6 +46,14 @@ const store = new Vuex.Store({
     },
     loaderLoading (state, value) {
       state.loader.loading = value;
+    },
+    displaySnackbar (state, payload) {
+      state.snackbar.message = payload.message
+      state.snackbar.color = payload.color
+      state.snackbar.visible = true
+    },
+    dismissSnackbar (state) {
+      state.snackbar.visible = false
     }
   },
   getters: {
@@ -69,6 +83,18 @@ const store = new Vuex.Store({
     },
     loaderColor (state) {
       return state.dark ? '#333333' : '#ffffff';
+    },
+    snackbarVisible (state) {
+      return state.snackbar.visible
+    },
+    snackbarColor (state) {
+      return state.snackbar.color
+    },
+    snackbarMessage (state) {
+      return state.snackbar.message
+    },
+    snackbarTimeOut (state) {
+      return state.snackbar.timeOut
     }
   },
   actions: {
@@ -88,10 +114,16 @@ const store = new Vuex.Store({
       commit('darkThemeToggle');
     },
     showLoader ({commit}) {
-      commit('loading', true)
+      commit('loaderLoading', true)
     },
     hideLoader ({commit}) {
-      commit('loading', false)
+      commit('loaderLoading', false)
+    },
+    displaySnackbar ({commit}, payload) {
+      commit('displaySnackbar', payload)
+    },
+    dismissSnackbar ({commit}) {
+      commit('dismissSnackbar')
     }
   }
 });
