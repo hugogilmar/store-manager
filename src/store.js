@@ -12,7 +12,8 @@ const store = new Vuex.Store({
     authenticationToken: storage.get('authenticationToken'),
     user: storage.get('user'),
     drawer: false,
-    dark: false
+    dark: false,
+    loading: false
   },
   mutations: {
     login (state, payload) {
@@ -32,6 +33,9 @@ const store = new Vuex.Store({
     },
     darkThemeToggle (state) {
       state.dark = !state.dark;
+    },
+    loading (state, value) {
+      state.loading = value
     }
   },
   getters: {
@@ -46,6 +50,9 @@ const store = new Vuex.Store({
     },
     darkTheme (state) {
       return state.dark;
+    },
+    loading (state) {
+      return state.loading
     }
   },
   actions: {
@@ -63,6 +70,12 @@ const store = new Vuex.Store({
     darkThemeToggle({ commit }) {
       commit('drawerToggle');
       commit('darkThemeToggle');
+    },
+    showLoader ({commit}) {
+      commit('loading', true)
+    },
+    hideLoader ({commit}) {
+      commit('loading', false)
     }
   }
 });
