@@ -9,23 +9,15 @@
         <router-view></router-view>
       </transition>
     </v-content>
-    <loading
-      is-full-page
-      :background-color="loaderBackground"
-      :color="loaderColor"
-      :loader="loaderStyle"
-      :active="loading"
-      :opacity="loaderOpacity"
-    >
-    </loading>
+    <loading></loading>
   </v-app>
 </template>
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
-  import Loading from 'vue-loading-overlay';
   import Navitation from './components/Navigation.vue';
   import Toolbar from './components/Toolbar.vue';
+  import Loading from './components/Loading.vue';
 
   export default {
     name: 'App',
@@ -34,24 +26,11 @@
       'toolbar': Toolbar,
       'loading': Loading
     },
-    data () {
-      return {
-        loaderStyle: 'bars',
-        loaderOpacity: 0.5
-      }
-    },
     computed: {
       ...mapGetters([
         'authenticationToken',
         'darkTheme',
-        'loading'
-      ]),
-      loaderBackground () {
-        return this.darkTheme ? '#ffffff' : '#333333';
-      },
-      loaderColor () {
-        return this.darkTheme ? '#333333' : '#ffffff';
-      }
+      ])
     }
   }
 </script>

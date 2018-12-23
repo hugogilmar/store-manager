@@ -13,7 +13,11 @@ const store = new Vuex.Store({
     user: storage.get('user'),
     drawer: false,
     dark: false,
-    loading: false
+    loader: {
+      loading: false,
+      style: 'bars',
+      opacity: 0.5
+    }
   },
   mutations: {
     login (state, payload) {
@@ -34,8 +38,8 @@ const store = new Vuex.Store({
     darkThemeToggle (state) {
       state.dark = !state.dark;
     },
-    loading (state, value) {
-      state.loading = value
+    loaderLoading (state, value) {
+      state.loader.loading = value;
     }
   },
   getters: {
@@ -51,8 +55,20 @@ const store = new Vuex.Store({
     darkTheme (state) {
       return state.dark;
     },
-    loading (state) {
-      return state.loading
+    loaderLoading (state) {
+      return state.loader.loading;
+    },
+    loaderStyle (state) {
+      return state.loader.style;
+    },
+    loaderOpacity (state) {
+      return state.loader.opacity;
+    },
+    loaderBackground (state) {
+      return state.dark ? '#ffffff' : '#333333';
+    },
+    loaderColor (state) {
+      return state.dark ? '#333333' : '#ffffff';
     }
   },
   actions: {
