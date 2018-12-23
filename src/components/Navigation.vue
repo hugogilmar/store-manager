@@ -27,7 +27,7 @@
         <v-list-tile
           v-for="(item, j) in items(group.group)"
           :key="j"
-          @click="navigateTo(item)"
+          :to="item.path"
         >
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -188,9 +188,6 @@
         return this.links.filter(function (link) {
           return link.group == group
         });
-      },
-      navigateTo: function (item) {
-        this.$router.push({ path: item.path });
       }
     }
   }
