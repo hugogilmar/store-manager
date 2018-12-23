@@ -75,14 +75,14 @@ export default {
         self.productList();
         self.displaySnackbar({
           color: 'success',
-          message: self.$t('toast.success.delete')
+          message: self.$t('notification.success.delete')
         });
       })
       .catch(function (error) {
         self.dialog = false;
         self.displaySnackbar({
           color: 'error',
-          message: self.$t('toast.failure.delete')
+          message: self.$t('notification.failure.delete')
         });
       });
     },
