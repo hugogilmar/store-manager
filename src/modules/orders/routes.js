@@ -3,18 +3,18 @@ export default [
     path: "/orders",
     name: "orders",
     component: () =>
-      import(/* webpackChunkName: "orders" */ "./views/List.vue")
+      import(/* webpackChunkName: "orders-list" */ "./views/List.vue")
   },
   {
     path: "/orders/new",
     name: "new_order",
     component: () =>
-      import(/* webpackChunkName: "orders" */ "./views/New.vue")
+      import(/* webpackChunkName: "orders-new" */ "./views/New.vue")
   },
   {
     path: "/orders/:id",
     name: "order",
     component: () =>
-      import(/* webpackChunkName: "orders" */ "./views/Edit.vue")
+      import(/* webpackChunkName: "orders-edit" */ "./views/Edit.vue")
   }
 ];
