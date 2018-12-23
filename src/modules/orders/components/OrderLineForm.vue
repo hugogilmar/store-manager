@@ -46,6 +46,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   export default {
     name: 'OrderLineForm',
     data () {
@@ -98,6 +100,9 @@
       }
     },
     methods: {
+      ...mapActions([
+        'displaySnackbar'
+      ]),
       productText (product) {
         return (product.code ? product.code : '') + ' ' + (product.name ? product.name : '');
       },
@@ -150,12 +155,18 @@
           comment: this.orderLine.comment
         })
         .then(function (response) {
-          self.$toasted.success(self.$t('toast.success.create'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.create')
+          });
           self.reset();
           self.$emit('order-line-created');
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.create'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.create')
+          });
         });
       },
       updateOrderLine (orderLineId) {
@@ -170,12 +181,18 @@
           comment: this.orderLine.comment
         })
         .then(function (response) {
-          self.$toasted.success(self.$t('toast.success.update'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.update')
+          });
           self.reset();
           self.$emit('order-line-updated');
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.update'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.update')
+          });
         });
       },
       submit () {

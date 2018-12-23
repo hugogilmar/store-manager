@@ -36,6 +36,7 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
   import moment from 'moment';
 
   export default {
@@ -83,6 +84,9 @@
       }
     },
     methods: {
+      ...mapActions([
+        'displaySnackbar'
+      ]),
       paymentMethodText (paymentMethod) {
         return paymentMethod.code + ' ' + paymentMethod.name;
       },
@@ -134,11 +138,17 @@
         })
         .then(function (response) {
           self.$emit('invoice-created');
-          self.$toasted.success(self.$t('toast.success.create'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.create')
+          });
           self.resetInvoice();
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.create'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.create')
+          });
         });
       },
       updateInvoice (invoiceId) {
@@ -152,11 +162,17 @@
         })
         .then(function (response) {
           self.$emit('invoice-updated');
-          self.$toasted.success(self.$t('toast.success.update'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.update')
+          });
           self.resetInvoice();
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.update'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.update')
+          });
         });
       },
       submit () {

@@ -84,6 +84,7 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
   import moment from 'moment';
 
   export default {
@@ -115,6 +116,9 @@
       }
     },
     methods: {
+      ...mapActions([
+        'displaySnackbar'
+      ]),
       getOrderId () {
         return this.order.id;
       },
@@ -184,10 +188,16 @@
         })
         .then(function (response) {
           self.$emit('order-created', response.data);
-          self.$toasted.success(self.$t('toast.success.create'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.create')
+          });
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.create'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.create')
+          });
         });
       },
       updateOrder (orderId) {
@@ -207,10 +217,16 @@
         })
         .then(function (response) {
           self.$emit('order-updated', response.data);
-          self.$toasted.success(self.$t('toast.success.update'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.update')
+          });
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.update'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.update')
+          });
         });
       },
       submit () {

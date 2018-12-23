@@ -59,7 +59,7 @@ export default {
       .catch(function (error) {
         self.displaySnackbar({
           color: 'error',
-          message: self.$t('toast.failure.session')
+          message: self.$t('notification.failure.session')
         });
       });
     },
@@ -78,13 +78,13 @@ export default {
         });
         self.displaySnackbar({
           color: 'success',
-          message: self.$t('toast.success.session')
+          message: self.$t('notification.success.session')
         });
       })
       .catch(function (error) {
         self.displaySnackbar({
           color: 'error',
-          message: self.$t('toast.failure.session')
+          message: self.$t('notification.failure.session')
         });
       });
     }

@@ -41,7 +41,7 @@ const translations = {
     alert: {
       empty: 'No hay registros que mostrar.'
     },
-    toast: {
+    notification: {
       failure: {
         create: 'No se pudo guardar el registro',
         update: 'No se pudo actualizar el registro',

@@ -34,6 +34,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   export default {
     name: 'LocationForm',
     data () {
@@ -69,6 +71,9 @@
       }
     },
     methods: {
+      ...mapActions([
+        'displaySnackbar'
+      ]),
       getLocationId () {
         return this.locationId;
       },
@@ -105,10 +110,16 @@
         .then(function (response) {
           self.location = response.data;
           self.editLocation(self.location.id);
-          self.$toasted.success(self.$t('toast.success.create'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.create')
+          });
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.create'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.create')
+          });
         });
       },
       updateLocation (locationId) {
@@ -121,10 +132,16 @@
         })
         .then(function (response) {
           self.location = response.data;
-          self.$toasted.success(self.$t('toast.success.update'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.update')
+          });
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.update'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.update')
+          });
         });
       },
       submit () {

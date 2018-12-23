@@ -39,6 +39,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   export default {
     name: 'ChargeForm',
     data () {
@@ -75,6 +77,9 @@
       }
     },
     methods: {
+      ...mapActions([
+        'displaySnackbar'
+      ]),
       getChargeId () {
         return this.chargeId;
       },
@@ -112,10 +117,16 @@
         .then(function (response) {
           self.charge = response.data;
           self.editCharge(self.charge.id);
-          self.$toasted.success(self.$t('toast.success.create'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.create')
+          });
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.create'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.create')
+          });
         });
       },
       updateCharge (chargeId) {
@@ -129,10 +140,16 @@
         })
         .then(function (response) {
           self.charge = response.data;
-          self.$toasted.success(self.$t('toast.success.update'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.update')
+          });
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.update'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.update')
+          });
         });
       },
       submit () {
