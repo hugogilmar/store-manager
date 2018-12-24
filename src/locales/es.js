@@ -58,7 +58,8 @@ const translations = {
     header: {
       new: 'Crear %{entity}',
       edit: 'Editar %{entity}',
-      list: 'Lista de %{entity}'
+      list: 'Lista de %{entity}',
+      start: 'Iniciar %{entity}'
     },
     dialog: {
       add: {
