@@ -17,6 +17,7 @@
     "numeral": "^2.0.6",
     "roboto-fontface": "*",
     "secure-ls": "^1.2.4",
+    "vee-validate": "^2.1.4",
     "vue": "^2.5.17",
     "vue-i18n": "^8.1.0",
     "vue-loading-overlay": "^3.1.1",

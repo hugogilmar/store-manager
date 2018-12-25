@@ -3,6 +3,7 @@ import Vue from 'vue';
 import './plugins/axios';
 import './plugins/vuetify';
 import './plugins/vue-i18n';
+import './plugins/vee-validate';
 import './filters/number';
 import './filters/currency';
 import './filters/percentage';
