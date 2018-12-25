@@ -117,7 +117,9 @@ const store = new Vuex.Store({
       commit('loaderLoading', true)
     },
     hideLoader ({commit}) {
-      commit('loaderLoading', false)
+      setTimeout(function () {
+        commit('loaderLoading', false);
+      }, 1000);
     },
     displaySnackbar ({commit}, payload) {
       commit('displaySnackbar', payload);
