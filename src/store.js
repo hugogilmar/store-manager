@@ -85,16 +85,16 @@ const store = new Vuex.Store({
       return state.dark ? '#333333' : '#ffffff';
     },
     snackbarVisible (state) {
-      return state.snackbar.visible
+      return state.snackbar.visible;
     },
     snackbarColor (state) {
-      return state.snackbar.color
+      return state.snackbar.color;
     },
     snackbarMessage (state) {
-      return state.snackbar.message
+      return state.snackbar.message;
     },
     snackbarTimeOut (state) {
-      return state.snackbar.timeOut
+      return state.snackbar.timeOut;
     }
   },
   actions: {
@@ -120,10 +120,10 @@ const store = new Vuex.Store({
       commit('loaderLoading', false)
     },
     displaySnackbar ({commit}, payload) {
-      commit('displaySnackbar', payload)
+      commit('displaySnackbar', payload);
     },
     dismissSnackbar ({commit}) {
-      commit('dismissSnackbar')
+      commit('dismissSnackbar');
     }
   }
 });
