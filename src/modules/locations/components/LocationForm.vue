@@ -1,27 +1,33 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form v-model="valid" lazy-validation>
     <v-text-field
       v-model="location.name"
-      :rules="rules.name"
+      v-validate="'required|max:48'"
+      data-vv-name="name"
+      :data-vv-as="$t('location.name').toLowerCase()"
       :counter="48"
       :label="$t('location.name')"
-      required
+      :error-messages="errors.first('name')"
     ></v-text-field>
     <v-text-field
       v-model="location.code"
-      :rules="rules.code"
+      v-validate="'required|max:10'"
+      data-vv-name="code"
+      :data-vv-as="$t('location.code').toLowerCase()"
       :counter="10"
       :label="$t('location.code')"
-      required
+      :error-messages="errors.first('code')"
     ></v-text-field>
     <v-select
       v-model="location.storeId"
-      :items="stores"
-      :rules="[v => !!v || 'Item is required']"
-      :label="$t('location.store')"
+      v-validate="'required'"
+      data-vv-name="storeId"
       item-text="name"
       item-value="id"
-      required
+      :data-vv-as="$t('location.store').toLowerCase()"
+      :items="stores"
+      :label="$t('location.store')"
+      :error-messages="errors.first('storeId')"
     ></v-select>
     <v-btn
       color="primary"
@@ -45,17 +51,7 @@
         location: {
           name: null,
           code: null,
-          storeId: 0
-        },
-        rules: {
-          name: [
-            v => !!v || 'Name is required',
-            v => (v && v.length <= 48) || 'Name must be less than 48 characters'
-          ],
-          code: [
-            v => !!v || 'Code is required',
-            v => (v && v.length <= 10) || 'Code must be less than 10 characters'
-          ]
+          storeId: null
         }
       }
     },
@@ -145,17 +141,18 @@
         });
       },
       submit () {
+        let self = this;
         let locationId = this.getLocationId();
 
-        if (this.$refs.form.validate()) {
-          if (locationId) {
-            this.updateLocation(locationId);
-          } else {
-            this.createLocation();
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            if (locationId) {
+              self.updateLocation(locationId);
+            } else {
+              self.createLocation();
+            }
           }
-        } else {
-          this.valid = false;
-        }
+        });
       },
       editLocation: function (locationId) {
         this.$router.push({ path: `/locations/${locationId}` });

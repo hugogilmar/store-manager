@@ -1,14 +1,20 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form v-model="valid" lazy-validation>
     <v-text-field
       v-model="order.number"
+      v-validate="'required|numeric|min_value:1'"
+      data-vv-name="number"
+      :data-vv-as="$t('order.number').toLowerCase()"
       :label="$t('order.number')"
-      required
+      :error-messages="errors.first('number')"
     ></v-text-field>
     <v-text-field
       v-model="order.guests"
+      v-validate="'required|numeric|min_value:1'"
+      data-vv-name="guests"
+      :data-vv-as="$t('order.guests').toLowerCase()"
       :label="$t('order.guests')"
-      required
+      :error-messages="errors.first('guests')"
     ></v-text-field>
     <v-menu
       ref="menu"
@@ -21,10 +27,14 @@
       min-width="290px"
     >
       <v-text-field
+        readonly
         slot="activator"
         v-model="order.date"
+        v-validate="'required'"
+        data-vv-name="date"
+        :data-vv-as="$t('order.date').toLowerCase()"
         :label="$t('order.date')"
-        readonly
+        :error-messages="errors.first('date')"
       ></v-text-field>
       <v-date-picker
         v-model="order.date"
@@ -36,32 +46,36 @@
     </v-menu>
     <v-select
       v-model="order.storeId"
-      :items="stores"
-      :rules="[v => !!v || 'Item is required']"
-      :label="$t('order.store')"
       item-text="name"
       item-value="id"
-      required
+      v-validate="'required'"
+      data-vv-name="storeId"
+      :data-vv-as="$t('order.store').toLowerCase()"
+      :items="stores"
+      :label="$t('order.store')"
+      :error-messages="errors.first('storeId')"
     ></v-select>
     <v-select
       v-model="order.employeeId"
-      :items="employees"
-      :rules="[v => !!v || 'Item is required']"
-      :label="$t('order.employee')"
       item-text="name"
       item-value="id"
-      required
-      v-if="employees.length > 0"
+      v-validate="'required'"
+      data-vv-name="employeeId"
+      :data-vv-as="$t('order.employee').toLowerCase()"
+      :items="employees"
+      :label="$t('order.employee')"
+      :error-messages="errors.first('employeeId')"
     ></v-select>
     <v-select
       v-model="order.locationId"
-      :items="locations"
-      :rules="[v => !!v || 'Item is required']"
-      :label="$t('order.location')"
       item-text="name"
       item-value="id"
-      required
-      v-if="locations.length > 0"
+      v-validate="'required'"
+      data-vv-name="locationId"
+      :data-vv-as="$t('order.location').toLowerCase()"
+      :items="locations"
+      :label="$t('order.location')"
+      :error-messages="errors.first('locationId')"
     ></v-select>
     <v-checkbox
       :label="$t('order.billable')"
@@ -69,9 +83,12 @@
     ></v-checkbox>
     <v-text-field
       v-model="order.comment"
+      v-validate="'max:48'"
+      data-vv-name="comment"
+      :data-vv-as="$t('order.comment').toLowerCase()"
       :counter="48"
       :label="$t('order.comment')"
-      required
+      :error-messages="errors.first('comment')"
     ></v-text-field>
     <v-btn
       color="primary"
@@ -230,17 +247,18 @@
         });
       },
       submit () {
+        let self = this;
         let orderId = this.getOrderId();
 
-        if (this.$refs.form.validate()) {
-          if (orderId) {
-            this.updateOrder(orderId);
-          } else {
-            this.createOrder();
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            if (orderId) {
+              self.updateOrder(orderId);
+            } else {
+              self.createOrder();
+            }
           }
-        } else {
-          this.valid = false;
-        }
+        });
       }
     }
   };

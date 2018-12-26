@@ -1,11 +1,13 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form v-model="valid" lazy-validation>
     <v-text-field
       v-model="store.name"
-      :rules="rules.name"
+      v-validate="'required|max:48'"
+      data-vv-name="name"
+      :data-vv-as="$t('store.name').toLowerCase()"
       :counter="48"
       :label="$t('store.name')"
-      required
+      :error-messages="errors.first('name')"
     ></v-text-field>
     <v-btn
       color="primary"
@@ -27,12 +29,6 @@
         valid: true,
         store: {
           name: null
-        },
-        rules: {
-          name: [
-            v => !!v || 'Name is required',
-            v => (v && v.length <= 48) || 'Name must be less than 48 characters'
-          ]
         }
       }
     },
@@ -106,19 +102,20 @@
         });
       },
       submit () {
+        let self = this;
         let storeId = this.getStoreId();
 
-        if (this.$refs.form.validate()) {
-          if (storeId) {
-            this.updateStore(storeId);
-          } else {
-            this.createStore();
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            if (storeId) {
+              self.updateStore(storeId);
+            } else {
+              self.createStore();
+            }
           }
-        } else {
-          this.valid = false;
-        }
+        });
       },
-      editStore: function (storeId) {
+      editStore (storeId) {
         this.$router.push({ path: `/stores/${storeId}` });
       }
     }

@@ -1,13 +1,15 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form v-model="valid" lazy-validation>
     <v-select
       v-model="orderCharge.chargeId"
-      :items="charges"
-      :rules="[v => !!v || 'Item is required']"
-      :label="$t('orderCharge.charge')"
+      v-validate="'required'"
+      data-vv-name="chargeId"
       item-text="name"
       item-value="id"
-      required
+      :items="charges"
+      :data-vv-as="$t('orderCharge.charge').toLowerCase()"
+      :label="$t('orderCharge.charge')"
+      :error-messages="errors.first('chargeId')"
     ></v-select>
     <v-btn
       flat
@@ -34,8 +36,10 @@
       return {
         valid: true,
         orderCharge: {
+          chargeId: null,
+          amount: null,
           charge: {
-            id: 0
+            id: null
           }
         },
         charges: []
@@ -46,15 +50,7 @@
       'storeId',
       'orderChargeId'
     ],
-    computed: {
-      chargeId () {
-        return this.orderCharge.charge.id;
-      }
-    },
     watch: {
-      chargeId: function (value) {
-        this.orderCharge.chargeId = value;
-      },
       storeId () {
         this.getCharges();
       },
@@ -83,9 +79,6 @@
       ...mapActions([
         'displaySnackbar'
       ]),
-      chargeText (charge) {
-        return charge.code + ' ' + charge.name;
-      },
       getCharges () {
         let self = this;
         let storeId = this.storeId;
@@ -108,14 +101,8 @@
       },
       resetOrderCharge () {
         this.orderCharge = {
-          chargeId: 0,
-          amount: 0.00,
-          charge: {
-            id: 0,
-            code: null,
-            name: null,
-            amount: 0.00
-          }
+          chargeId: null,
+          amount: null
         }
       },
       getOrderCharge (orderChargeId) {
@@ -180,20 +167,22 @@
         });
       },
       submit () {
+        let self = this;
         let orderChargeId = this.orderChargeId;
 
-        if (this.$refs.form.validate()) {
-          if (orderChargeId) {
-            this.updateOrderCharge(orderChargeId);
-          } else {
-            this.createOrderCharge();
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            if (orderChargeId) {
+              self.updateOrderCharge(orderChargeId);
+            } else {
+              self.createOrderCharge();
+            }
           }
-        } else {
-          this.valid = false;
-        }
+        });
       },
       cancel () {
         this.$emit('cancel');
+        this.$validator.reset();
         this.resetOrderCharge();
       }
     }

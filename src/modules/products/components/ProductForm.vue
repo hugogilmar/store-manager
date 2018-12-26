@@ -1,48 +1,60 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form v-model="valid" lazy-validation>
     <v-text-field
       v-model="product.name"
-      :rules="rules.name"
+      v-validate="'required|max:48'"
+      data-vv-name="name"
+      :data-vv-as="$t('product.name').toLowerCase()"
       :counter="48"
       :label="$t('product.name')"
-      required
+      :error-messages="errors.first('name')"
     ></v-text-field>
     <v-text-field
       v-model="product.code"
-      :rules="rules.code"
+      v-validate="'required|max:10'"
+      data-vv-name="code"
+      :data-vv-as="$t('product.code').toLowerCase()"
       :counter="10"
       :label="$t('product.code')"
-      required
+      :error-messages="errors.first('code')"
     ></v-text-field>
     <v-text-field
       v-model="product.price"
-      :rules="rules.price"
+      v-validate="'required|numeric|min_value:1'"
+      data-vv-name="price"
+      :data-vv-as="$t('product.price').toLowerCase()"
       :label="$t('product.price')"
-      required
+      :error-messages="errors.first('price')"
     ></v-text-field>
     <v-text-field
       v-model="product.specialPrice"
-      :rules="rules.specialPrice"
+      v-validate="'required|numeric|min_value:0'"
+      data-vv-name="specialPrice"
+      :data-vv-as="$t('product.specialPrice').toLowerCase()"
       :label="$t('product.specialPrice')"
-      required
+      :error-messages="errors.first('specialPrice')"
     ></v-text-field>
     <v-select
       v-model="product.productCategoryId"
-      :items="product_categories"
-      :rules="[v => !!v || 'Item is required']"
-      :label="$t('product.productCategory')"
+      v-validate="'required'"
+      data-vv-name="productCategoryId"
       item-text="name"
       item-value="id"
-      required
+      :data-vv-as="$t('product.productCategory').toLowerCase()"
+      :items="product_categories"
+      :label="$t('product.productCategory')"
+      :error-messages="errors.first('productCategoryId')"
     ></v-select>
     <v-select
       v-model="product.storeId"
-      :items="stores"
-      :rules="[v => !!v || 'Item is required']"
-      :label="$t('product.store')"
+      v-validate="'required'"
+      data-vv-name="storeId"
       item-text="name"
       item-value="id"
-      required
+      :data-vv-as="$t('product.store').toLowerCase()"
+      :items="stores"
+      :label="$t('product.store')"
+      :error-messages="errors.first('storeId')"
     ></v-select>
     <v-btn
       color="primary"
@@ -67,22 +79,10 @@
         product: {
           name: null,
           code: null,
-          price: 0.0,
-          specialPrice: 0.0,
-          productCategoryId: 0,
-          storeId: 0
-        },
-        rules: {
-          name: [
-            v => !!v || 'Name is required',
-            v => (v && v.length <= 48) || 'Name must be less than 48 characters'
-          ],
-          code: [
-            v => !!v || 'Code is required',
-            v => (v && v.length <= 10) || 'Code must be less than 10 characters'
-          ],
-          price: [],
-          specialPrice: []
+          price: null,
+          specialPrice: null,
+          productCategoryId: null,
+          storeId: null
         }
       }
     },
@@ -194,15 +194,15 @@
         let self = this;
         let productId = this.getProductId();
 
-        if (this.$refs.form.validate()) {
-          if (productId) {
-            this.updateProduct(productId);
-          } else {
-            this.createProduct();
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            if (productId) {
+              self.updateProduct(productId);
+            } else {
+              self.createProduct();
+            }
           }
-        } else {
-          this.valid = false;
-        }
+        });
       },
       editProduct: function (productId) {
         this.$router.push({ path: `/products/${productId}` });

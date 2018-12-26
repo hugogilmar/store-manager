@@ -1,32 +1,41 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form v-model="valid" lazy-validation>
     <v-text-field
       v-model="charge.name"
-      :rules="rules.name"
+      v-validate="'required|max:48'"
+      data-vv-name="name"
+      :data-vv-as="$t('charge.name').toLowerCase()"
       :counter="48"
       :label="$t('charge.name')"
-      required
+      :error-messages="errors.first('name')"
     ></v-text-field>
     <v-text-field
       v-model="charge.code"
-      :rules="rules.code"
+      v-validate="'required|max:10'"
+      data-vv-name="code"
+      :data-vv-as="$t('charge.code').toLowerCase()"
       :counter="10"
       :label="$t('charge.code')"
-      required
+      :error-messages="errors.first('code')"
     ></v-text-field>
     <v-text-field
       v-model="charge.amount"
+      v-validate="'required|numeric|min_value:1'"
+      data-vv-name="amount"
+      :data-vv-as="$t('charge.amount').toLowerCase()"
       :label="$t('charge.amount')"
-      required
+      :error-messages="errors.first('amount')"
     ></v-text-field>
     <v-select
       v-model="charge.storeId"
-      :items="stores"
-      :rules="[v => !!v || 'Item is required']"
-      :label="$t('charge.store')"
+      v-validate="'required'"
+      data-vv-name="storeId"
       item-text="name"
       item-value="id"
-      required
+      :data-vv-as="$t('charge.store').toLowerCase()"
+      :items="stores"
+      :label="$t('charge.store')"
+      :error-messages="errors.first('storeId')"
     ></v-select>
     <v-btn
       color="primary"
@@ -50,18 +59,8 @@
         charge: {
           name: null,
           code: null,
-          amount: 0.00,
-          storeId: 0
-        },
-        rules: {
-          name: [
-            v => !!v || 'Name is required',
-            v => (v && v.length <= 48) || 'Name must be less than 48 characters'
-          ],
-          code: [
-            v => !!v || 'Code is required',
-            v => (v && v.length <= 10) || 'Code must be less than 10 characters'
-          ]
+          amount: null,
+          storeId: null
         }
       }
     },
@@ -153,17 +152,18 @@
         });
       },
       submit () {
+        let self = this;
         let chargeId = this.getChargeId();
 
-        if (this.$refs.form.validate()) {
-          if (chargeId) {
-            this.updateCharge(chargeId);
-          } else {
-            this.createCharge();
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            if (chargeId) {
+              self.updateCharge(chargeId);
+            } else {
+              self.createCharge();
+            }
           }
-        } else {
-          this.valid = false;
-        }
+        });
       },
       editCharge: function (chargeId) {
         this.$router.push({ path: `/charges/${chargeId}` });
