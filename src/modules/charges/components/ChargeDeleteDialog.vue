@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'ChargeDeleteDialog',
   data () {
@@ -56,6 +58,9 @@ export default {
     'chargeId'
   ],
   methods: {
+    ...mapActions([
+      'displaySnackbar'
+    ]),
     getChargeId () {
       return this.chargeId;
     },
@@ -67,11 +72,17 @@ export default {
       .then(function (response) {
         self.dialog = false;
         self.chargeList();
-        self.$toasted.success(self.$t('toast.success.delete'));
+        self.displaySnackbar({
+          color: 'success',
+          message: self.$t('notification.success.delete')
+        });
       })
       .catch(function (error) {
         self.dialog = false;
-        self.$toasted.error(self.$t('toast.failure.delete'));
+        self.displaySnackbar({
+          color: 'error',
+          message: self.$t('notification.failure.delete')
+        });
       });
     },
     chargeList () {

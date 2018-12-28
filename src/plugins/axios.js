@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
 import store from '../store';
-import NProgress from 'nprogress';
 
 let config = {
   baseURL: process.env.VUE_APP_API_BASE
@@ -15,12 +14,12 @@ _axios.interceptors.request.use(
       config.headers.Authorization = store.getters.authenticationToken;
     }
 
-    NProgress.start();
+    store.dispatch('showLoader');
 
     return config;
   },
   function(error) {
-    NProgress.done();
+    store.dispatch('hideLoader');
 
     return Promise.reject(error);
   }
@@ -28,12 +27,12 @@ _axios.interceptors.request.use(
 
 _axios.interceptors.response.use(
   function(response) {
-    NProgress.done();
+    store.dispatch('hideLoader');
 
     return response;
   },
   function(error) {
-    NProgress.done();
+    store.dispatch('hideLoader');
 
     if (error.response.status === 401) {
       store.dispatch('logout');

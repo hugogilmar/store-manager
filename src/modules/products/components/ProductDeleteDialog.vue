@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'ProductDeleteDialog',
   data () {
@@ -57,6 +59,9 @@ export default {
     'productId'
   ],
   methods: {
+    ...mapActions([
+      'displaySnackbar'
+    ]),
     getProductId () {
       return this.productId;
     },
@@ -68,11 +73,17 @@ export default {
       .then(function (response) {
         self.dialog = false;
         self.productList();
-        self.$toasted.success(self.$t('toast.success.delete'));
+        self.displaySnackbar({
+          color: 'success',
+          message: self.$t('notification.success.delete')
+        });
       })
       .catch(function (error) {
         self.dialog = false;
-        self.$toasted.error(self.$t('toast.failure.delete'));
+        self.displaySnackbar({
+          color: 'error',
+          message: self.$t('notification.failure.delete')
+        });
       });
     },
     productList () {

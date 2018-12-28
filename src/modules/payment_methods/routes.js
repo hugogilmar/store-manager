@@ -1,20 +1,21 @@
+import List from './views/List.vue';
+import New from './views/New.vue';
+import Edit from './views/Edit.vue';
+
 export default [
   {
     path: "/payment_methods",
     name: "payment_methods",
-    component: () =>
-      import(/* webpackChunkName: "payment_methods" */ "./views/List.vue")
+    component: List
   },
   {
     path: "/payment_methods/new",
     name: "new_payment_method",
-    component: () =>
-      import(/* webpackChunkName: "payment_methods" */ "./views/New.vue")
+    component: New
   },
   {
     path: "/payment_methods/:id",
     name: "payment_method",
-    component: () =>
-      import(/* webpackChunkName: "payment_methods" */ "./views/Edit.vue")
+    component: Edit
   }
 ];

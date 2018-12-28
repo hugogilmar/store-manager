@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import NProgress from 'nprogress';
 import Home from './views/Home.vue';
 import productsRoutes from './modules/products/routes';
 import productCategoriesRoutes from './modules/product_categories/routes';
@@ -55,15 +54,7 @@ router.beforeEach((to, from, next) => {
     return next('/login');
   }
 
-  if (to.name) {
-    NProgress.start();
-  }
-
   next();
-});
-
-router.afterEach((to, from) => {
-  NProgress.done();
 });
 
 export default router;

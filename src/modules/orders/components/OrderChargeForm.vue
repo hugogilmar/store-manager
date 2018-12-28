@@ -1,13 +1,15 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form v-model="valid" lazy-validation>
     <v-select
       v-model="orderCharge.chargeId"
-      :items="charges"
-      :rules="[v => !!v || 'Item is required']"
-      :label="$t('orderCharge.charge')"
+      v-validate="'required'"
+      data-vv-name="chargeId"
       item-text="name"
       item-value="id"
-      required
+      :items="charges"
+      :data-vv-as="$t('orderCharge.charge').toLowerCase()"
+      :label="$t('orderCharge.charge')"
+      :error-messages="errors.first('chargeId')"
     ></v-select>
     <v-btn
       flat
@@ -26,14 +28,18 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   export default {
     name: 'OrderChargeForm',
     data () {
       return {
         valid: true,
         orderCharge: {
+          chargeId: null,
+          amount: null,
           charge: {
-            id: 0
+            id: null
           }
         },
         charges: []
@@ -44,15 +50,7 @@
       'storeId',
       'orderChargeId'
     ],
-    computed: {
-      chargeId () {
-        return this.orderCharge.charge.id;
-      }
-    },
     watch: {
-      chargeId: function (value) {
-        this.orderCharge.chargeId = value;
-      },
       storeId () {
         this.getCharges();
       },
@@ -78,9 +76,9 @@
       }
     },
     methods: {
-      chargeText (charge) {
-        return charge.code + ' ' + charge.name;
-      },
+      ...mapActions([
+        'displaySnackbar'
+      ]),
       getCharges () {
         let self = this;
         let storeId = this.storeId;
@@ -103,14 +101,8 @@
       },
       resetOrderCharge () {
         this.orderCharge = {
-          chargeId: 0,
-          amount: 0.00,
-          charge: {
-            id: 0,
-            code: null,
-            name: null,
-            amount: 0.00
-          }
+          chargeId: null,
+          amount: null
         }
       },
       getOrderCharge (orderChargeId) {
@@ -139,11 +131,17 @@
         })
         .then(function (response) {
           self.$emit('order-charge-created');
-          self.$toasted.success(self.$t('toast.success.create'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.create')
+          });
           self.resetOrderCharge();
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.create'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.create')
+          });
         });
       },
       updateOrderCharge (orderChargeId) {
@@ -155,28 +153,36 @@
         })
         .then(function (response) {
           self.$emit('order-charge-updated');
-          self.$toasted.success(self.$t('toast.success.update'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.update')
+          });
           self.resetOrderCharge();
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.update'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.update')
+          });
         });
       },
       submit () {
+        let self = this;
         let orderChargeId = this.orderChargeId;
 
-        if (this.$refs.form.validate()) {
-          if (orderChargeId) {
-            this.updateOrderCharge(orderChargeId);
-          } else {
-            this.createOrderCharge();
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            if (orderChargeId) {
+              self.updateOrderCharge(orderChargeId);
+            } else {
+              self.createOrderCharge();
+            }
           }
-        } else {
-          this.valid = false;
-        }
+        });
       },
       cancel () {
         this.$emit('cancel');
+        this.$validator.reset();
         this.resetOrderCharge();
       }
     }

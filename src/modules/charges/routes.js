@@ -1,20 +1,21 @@
+import List from './views/List.vue';
+import New from './views/New.vue';
+import Edit from './views/Edit.vue';
+
 export default [
   {
     path: "/charges",
     name: "charges",
-    component: () =>
-      import(/* webpackChunkName: "charges" */ "./views/List.vue")
+    component: List
   },
   {
     path: "/charges/new",
     name: "new_charge",
-    component: () =>
-      import(/* webpackChunkName: "charges" */ "./views/New.vue")
+    component: New
   },
   {
     path: "/charges/:id",
     name: "charge",
-    component: () =>
-      import(/* webpackChunkName: "charges" */ "./views/Edit.vue")
+    component: Edit
   }
 ];

@@ -1,31 +1,59 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import SecureLS from 'secure-ls';
 import router from './router';
 
 Vue.use(Vuex);
 
+let storage = new SecureLS();
+
 const store = new Vuex.Store({
   state: {
-    authenticationToken: null,
-    user: {},
+    authenticationToken: storage.get('authenticationToken'),
+    user: storage.get('user'),
     drawer: false,
-    dark: false
+    dark: false,
+    loader: {
+      loading: false,
+      style: 'bars',
+      opacity: 0.5
+    },
+    snackbar: {
+      visible: false,
+      color: 'info',
+      message: '',
+      timeOut: 3000
+    }
   },
   mutations: {
     login (state, payload) {
       state.authenticationToken = payload.authenticationToken;
       state.user = payload.user;
+      storage.set('authenticationToken', payload.authenticationToken);
+      storage.set('user', payload.user);
     },
     logout (state) {
       state.authenticationToken = null;
       state.user = {};
+      storage.remove('authenticationToken');
+      storage.remove('user');
     },
     drawerToggle (state) {
       state.drawer = !state.drawer;
     },
     darkThemeToggle (state) {
-      state.drawer = !state.drawer;
       state.dark = !state.dark;
+    },
+    loaderLoading (state, value) {
+      state.loader.loading = value;
+    },
+    displaySnackbar (state, payload) {
+      state.snackbar.message = payload.message
+      state.snackbar.color = payload.color
+      state.snackbar.visible = true
+    },
+    dismissSnackbar (state) {
+      state.snackbar.visible = false
     }
   },
   getters: {
@@ -40,6 +68,33 @@ const store = new Vuex.Store({
     },
     darkTheme (state) {
       return state.dark;
+    },
+    loaderLoading (state) {
+      return state.loader.loading;
+    },
+    loaderStyle (state) {
+      return state.loader.style;
+    },
+    loaderOpacity (state) {
+      return state.loader.opacity;
+    },
+    loaderBackground (state) {
+      return state.dark ? '#ffffff' : '#333333';
+    },
+    loaderColor (state) {
+      return state.dark ? '#333333' : '#ffffff';
+    },
+    snackbarVisible (state) {
+      return state.snackbar.visible;
+    },
+    snackbarColor (state) {
+      return state.snackbar.color;
+    },
+    snackbarMessage (state) {
+      return state.snackbar.message;
+    },
+    snackbarTimeOut (state) {
+      return state.snackbar.timeOut;
     }
   },
   actions: {
@@ -55,7 +110,22 @@ const store = new Vuex.Store({
       commit('drawerToggle');
     },
     darkThemeToggle({ commit }) {
+      commit('drawerToggle');
       commit('darkThemeToggle');
+    },
+    showLoader ({commit}) {
+      commit('loaderLoading', true)
+    },
+    hideLoader ({commit}) {
+      setTimeout(function () {
+        commit('loaderLoading', false);
+      }, 1000);
+    },
+    displaySnackbar ({commit}, payload) {
+      commit('displaySnackbar', payload);
+    },
+    dismissSnackbar ({commit}) {
+      commit('dismissSnackbar');
     }
   }
 });

@@ -1,18 +1,23 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form v-model="valid" lazy-validation>
     <v-combobox
       v-model="product"
+      item-value="id"
+      v-validate="'required'"
+      data-vv-name="product"
       :items="products"
-      :rules="[v => !!v || 'Item is required']"
       :label="$t('orderLine.product')"
       :item-text="productText"
-      item-value="id"
-      required
+      :data-vv-as="$t('orderLine.product').toLowerCase()"
+      :error-messages="errors.first('product')"
     ></v-combobox>
     <v-text-field
       v-model="orderLine.quantity"
+      v-validate="'required|numeric|min_value:1'"
+      data-vv-name="quantity"
+      :data-vv-as="$t('orderLine.quantity').toLowerCase()"
       :label="$t('orderLine.quantity')"
-      required
+      :error-messages="errors.first('quantity')"
     ></v-text-field>
     <v-checkbox
       :label="$t('orderLine.billable')"
@@ -20,14 +25,20 @@
     ></v-checkbox>
     <v-text-field
       v-model="orderLine.discountAmount"
+      v-validate="'numeric|min_value:0'"
+      data-vv-name="discountAmount"
+      :data-vv-as="$t('orderLine.discountAmount').toLowerCase()"
       :label="$t('orderLine.discountAmount')"
-      required
+      :error-messages="errors.first('discountAmount')"
     ></v-text-field>
     <v-text-field
       v-model="orderLine.comment"
+      v-validate="'max:48'"
+      data-vv-name="comment"
+      :data-vv-as="$t('orderLine.comment').toLowerCase()"
       :counter="48"
       :label="$t('orderLine.comment')"
-      required
+      :error-messages="errors.first('comment')"
     ></v-text-field>
     <v-btn
       flat
@@ -46,13 +57,24 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   export default {
     name: 'OrderLineForm',
     data () {
       return {
         valid: true,
-        orderLine: {},
-        product: {},
+        orderLine: {
+          productId: null,
+          quantity: null,
+          discountAmount: 0,
+          billable: true,
+          comment: null,
+          price: null,
+          subtotal: null,
+          total: null
+        },
+        product: null,
         products: []
       }
     },
@@ -67,11 +89,10 @@
       }
     },
     watch: {
-      orderLine (object) {
-        this.product = object.product;
-      },
       product (object) {
-        this.orderLine.productId = object.id;
+        if (object) {
+          this.orderLine.productId = object.id;
+        }
       },
       storeId (value) {
         this.getProducts();
@@ -98,6 +119,9 @@
       }
     },
     methods: {
+      ...mapActions([
+        'displaySnackbar'
+      ]),
       productText (product) {
         return (product.code ? product.code : '') + ' ' + (product.name ? product.name : '');
       },
@@ -133,6 +157,7 @@
         })
         .then(function (response) {
           self.orderLine = response.data;
+          self.product = self.orderLine.product;
         })
         .catch(function (error) {
           self.orderLine = {};
@@ -150,12 +175,18 @@
           comment: this.orderLine.comment
         })
         .then(function (response) {
-          self.$toasted.success(self.$t('toast.success.create'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.create')
+          });
           self.reset();
           self.$emit('order-line-created');
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.create'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.create')
+          });
         });
       },
       updateOrderLine (orderLineId) {
@@ -170,41 +201,47 @@
           comment: this.orderLine.comment
         })
         .then(function (response) {
-          self.$toasted.success(self.$t('toast.success.update'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.update')
+          });
           self.reset();
           self.$emit('order-line-updated');
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.update'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.update')
+          });
         });
       },
       submit () {
+        let self = this;
         let orderLineId = this.orderLineId;
 
-        if (this.$refs.form.validate()) {
-          if (orderLineId) {
-            this.updateOrderLine(orderLineId);
-          } else {
-            this.createOrderLine();
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            if (orderLineId) {
+              self.updateOrderLine(orderLineId);
+            } else {
+              self.createOrderLine();
+            }
           }
-        } else {
-          this.valid = false;
-        }
+        });
       },
       resetProduct () {
-        this.product = {};
+        this.product = null;
       },
       resetOrderLine () {
         this.orderLine = {
           productId: null,
-          quantity: 0,
-          price: 0.00,
-          subtotal: 0.00,
-          total: 0.00,
+          quantity: null,
+          discountAmount: 0,
           billable: true,
-          discountAmount: 0.00,
           comment: null,
-          product: {}
+          price: null,
+          subtotal: null,
+          total: null
         }
       },
       reset () {
@@ -213,6 +250,7 @@
       },
       cancel () {
         this.reset();
+        this.$validator.reset();
         this.$emit('cancel');
       }
     }

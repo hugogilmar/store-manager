@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-# start server
+yarn install
 yarn serve
 
 exec "$@"

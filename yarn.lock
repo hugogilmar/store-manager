@@ -2772,6 +2772,11 @@ crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
+crypto-js@^3.1.6:
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.8.tgz#715f070bf6014f2ae992a98b3929258b713f08d5"
+  integrity sha1-cV8HC/YBTyrpkqmLOSkli3E/CNU=
+
 crypto-random-string@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-1.0.0.tgz#a230f64f568310e1498009940790ec99545bca7e"
@@ -6019,6 +6024,11 @@ lru-cache@^4.0.1, lru-cache@^4.1.1, lru-cache@^4.1.2, lru-cache@^4.1.3:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
+lz-string@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
+  integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
+
 make-dir@^1.0.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-1.3.0.tgz#79c1033b80515bd6d24ec9933e860ca75ee27f0c"
@@ -6903,11 +6913,6 @@ npm@^6.4.1:
     console-control-strings "~1.1.0"
     gauge "~2.7.3"
     set-blocking "~2.0.0"
-
-nprogress@^0.2.0:
-  version "0.2.0"
-  resolved "http://registry.npmjs.org/nprogress/-/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
-  integrity sha1-y480xTIT2JVyP8urkH6UIq28r7E=
 
 nth-check@^1.0.1, nth-check@~1.0.1:
   version "1.0.1"
@@ -8693,6 +8698,14 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
+secure-ls@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/secure-ls/-/secure-ls-1.2.4.tgz#ba40a1fd5d4478154dc3f70edd3f1186521290c9"
+  integrity sha512-aF0GsbK0G4ENBTAojCIg1/4OVYIy0WsiNNLESvEw1n1a7hfgCxU92pNaNMxoTIEIJSqPn+x2pIeOJCSHwmZmcw==
+  dependencies:
+    crypto-js "^3.1.6"
+    lz-string "^1.4.4"
+
 select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
@@ -10012,6 +10025,11 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
+vee-validate@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.1.4.tgz#dd86aab5e069e424236888a4618c2fa3c1db4386"
+  integrity sha512-71yu8floUnMEdkwswaF9WJc5Xubc5dhIG6MRc/H0egQnP34Y14WwNweK9z31Nf2Zi6JB2H/36EKt0Mqco8R/Nw==
+
 vendors@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/vendors/-/vendors-1.0.2.tgz#7fcb5eef9f5623b156bcea89ec37d63676f21801"
@@ -10097,6 +10115,11 @@ vue-loader@^15.4.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-loading-overlay@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/vue-loading-overlay/-/vue-loading-overlay-3.1.1.tgz#02f11958a42262135584591cfc959143b4e834b1"
+  integrity sha512-6Iv0V/S++/LDRR3bgIZDJwBTgMVupuj+hjDb2YzTrEXbSEygtD10eJwZdMnEenLcD3ZAFz5D30qkNUYow9W2kw==
+
 vue-router@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"
@@ -10122,11 +10145,6 @@ vue-template-es2015-compiler@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
   integrity sha512-x3LV3wdmmERhVCYy3quqA57NJW7F3i6faas++pJQWtknWT+n7k30F4TVdHvCLn48peTJFRvCpxs3UuFPqgeELg==
-
-vue-toasted@^1.1.25:
-  version "1.1.25"
-  resolved "https://registry.yarnpkg.com/vue-toasted/-/vue-toasted-1.1.25.tgz#27b1f40866d98f8bf817722869f3d97f7c0d4db1"
-  integrity sha512-EAblMFv1Bwq552vvgzd+T2r2UFDAKj0Z8z9EcJpweU7qyKU3OMIkz5S2m6aIFMM507H8VmSJPQHsA/FGbsKp5g==
 
 vue@^2.5.17:
   version "2.5.17"
