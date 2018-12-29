@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.3.1
+
+- Notifications refactored
+- Navigation refactored
+- Localizations added
+- Validations added
+- Session persistence with local storage
+- Electron builder updated
+- Night mode added
+- Loading overlay added
+
+## v0.3.0
+
+- Locations module added
+- Charges module added
+- Reports module added
+
 ## v0.2.0
 
 - Orders module added
