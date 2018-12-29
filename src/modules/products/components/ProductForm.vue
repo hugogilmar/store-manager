@@ -20,7 +20,7 @@
     ></v-text-field>
     <v-text-field
       v-model="product.price"
-      v-validate="'required|numeric|min_value:1'"
+      v-validate="'required|decimal:2|min_value:1'"
       data-vv-name="price"
       :data-vv-as="$t('product.price').toLowerCase()"
       :label="$t('product.price')"
@@ -28,7 +28,7 @@
     ></v-text-field>
     <v-text-field
       v-model="product.specialPrice"
-      v-validate="'required|numeric|min_value:0'"
+      v-validate="'required|decimal:2|min_value:0'"
       data-vv-name="specialPrice"
       :data-vv-as="$t('product.specialPrice').toLowerCase()"
       :label="$t('product.specialPrice')"

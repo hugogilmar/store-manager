@@ -22,7 +22,7 @@
     ></v-select>
     <v-text-field
       v-model="invoice.amount"
-      v-validate="'required|numeric|min_value:1'"
+      v-validate="'required|decimal:2|min_value:1'"
       data-vv-name="amount"
       :data-vv-as="$t('invoice.amount').toLowerCase()"
       :label="$t('invoice.amount')"
