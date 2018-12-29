@@ -1,8 +1,9 @@
+import New from './views/New.vue';
+
 export default [
   {
     path: "/login",
     name: "login",
-    component: () =>
-      import(/* webpackChunkName: "sessions" */ "./views/New.vue")
+    component: New
   }
 ];

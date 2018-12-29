@@ -1,23 +1,32 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form v-model="valid" lazy-validation>
     <v-text-field
       v-model="invoice.referenceNumber"
+      v-validate="'required|numeric|min_value:1'"
+      data-vv-name="referenceNumber"
+      :data-vv-as="$t('invoice.referenceNumber').toLowerCase()"
       :label="$t('invoice.referenceNumber')"
-      required
+      :error-messages="errors.first('referenceNumber')"
     ></v-text-field>
     <v-select
       v-model="invoice.paymentMethodId"
-      :items="paymentMethods"
-      :rules="[v => !!v || 'Item is required']"
-      :label="$t('invoice.paymentMethod')"
+      v-validate="'required'"
+      data-vv-name="paymentMethodId"
       item-text="name"
       item-value="id"
+      :items="paymentMethods"
+      :data-vv-as="$t('invoice.paymentMethod').toLowerCase()"
+      :label="$t('invoice.paymentMethod')"
+      :error-messages="errors.first('paymentMethodId')"
       required
     ></v-select>
     <v-text-field
       v-model="invoice.amount"
+      v-validate="'required|decimal:2|min_value:1'"
+      data-vv-name="amount"
+      :data-vv-as="$t('invoice.amount').toLowerCase()"
       :label="$t('invoice.amount')"
-      required
+      :error-messages="errors.first('amount')"
     ></v-text-field>
     <v-btn
       flat
@@ -36,6 +45,7 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
   import moment from 'moment';
 
   export default {
@@ -44,7 +54,11 @@
       return {
         valid: true,
         menu: false,
-        invoice: {},
+        invoice: {
+          referenceNumber: null,
+          paymentMethodId: null,
+          amount: null
+        },
         paymentMethods: []
       }
     },
@@ -52,15 +66,7 @@
       'orderId',
       'invoiceId'
     ],
-    computed: {
-      paymentMethodId () {
-        return this.invoice.paymentMethodId;
-      }
-    },
     watch: {
-      paymentMethodId: function (value) {
-        this.invoice.paymentMethodId = value;
-      },
       invoiceId () {
         let invoiceId = this.invoiceId;
 
@@ -83,9 +89,9 @@
       }
     },
     methods: {
-      paymentMethodText (paymentMethod) {
-        return paymentMethod.code + ' ' + paymentMethod.name;
-      },
+      ...mapActions([
+        'displaySnackbar'
+      ]),
       getPaymentMethods () {
         let self = this;
 
@@ -100,8 +106,8 @@
       resetInvoice () {
         this.invoice = {
           referenceNumber: null,
-          paymentMethodId: 0,
-          amount: 0.00
+          paymentMethodId: null,
+          amount: null
         }
       },
       getInvoice (invoiceId) {
@@ -134,11 +140,17 @@
         })
         .then(function (response) {
           self.$emit('invoice-created');
-          self.$toasted.success(self.$t('toast.success.create'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.create')
+          });
           self.resetInvoice();
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.create'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.create')
+          });
         });
       },
       updateInvoice (invoiceId) {
@@ -152,28 +164,36 @@
         })
         .then(function (response) {
           self.$emit('invoice-updated');
-          self.$toasted.success(self.$t('toast.success.update'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.update')
+          });
           self.resetInvoice();
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.update'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.update')
+          });
         });
       },
       submit () {
+        let self = this;
         let invoiceId = this.invoiceId;
 
-        if (this.$refs.form.validate()) {
-          if (invoiceId) {
-            this.updateInvoice(invoiceId);
-          } else {
-            this.createInvoice();
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            if (invoiceId) {
+              self.updateInvoice(invoiceId);
+            } else {
+              self.createInvoice();
+            }
           }
-        } else {
-          this.valid = false;
-        }
+        });
       },
       cancel () {
         this.$emit('cancel');
+        this.$validator.reset();
         this.resetInvoice();
       }
     }

@@ -1,18 +1,22 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form v-model="valid" lazy-validation>
     <v-text-field
       v-model="productCategory.name"
-      :rules="rules.name"
+      v-validate="'required|max:48'"
+      data-vv-name="name"
+      :data-vv-as="$t('productCategory.name').toLowerCase()"
       :counter="48"
       :label="$t('productCategory.name')"
-      required
+      :error-messages="errors.first('name')"
     ></v-text-field>
     <v-text-field
       v-model="productCategory.code"
-      :rules="rules.code"
+      v-validate="'required|max:10'"
+      data-vv-name="code"
+      :data-vv-as="$t('productCategory.code').toLowerCase()"
       :counter="10"
       :label="$t('productCategory.code')"
-      required
+      :error-messages="errors.first('code')"
     ></v-text-field>
     <v-btn
       color="primary"
@@ -25,23 +29,16 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   export default {
     name: 'ProductCategoryForm',
     data () {
       return {
         valid: true,
         productCategory: {
-          name: null
-        },
-        rules: {
-          name: [
-            v => !!v || 'Name is required',
-            v => (v && v.length <= 48) || 'Name must be less than 48 characters'
-          ],
-          code: [
-            v => !!v || 'Code is required',
-            v => (v && v.length <= 10) || 'Code must be less than 10 characters'
-          ]
+          name: null,
+          code: null
         }
       }
     },
@@ -56,6 +53,9 @@
       }
     },
     methods: {
+      ...mapActions([
+        'displaySnackbar'
+      ]),
       getProductCategoryId () {
         return this.productCategoryId;
       },
@@ -80,10 +80,16 @@
         .then(function (response) {
           self.productCategory = response.data;
           self.editProductCategory(self.productCategory.id);
-          self.$toasted.success(self.$t('toast.success.create'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.create')
+          });
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.create'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.create')
+          });
         });
       },
       updateProductCategory (productCategoryId) {
@@ -95,25 +101,31 @@
         })
         .then(function (response) {
           self.productCategory = response.data;
-          self.$toasted.success(self.$t('toast.success.update'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.update')
+          });
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.update'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.update')
+          });
         });
       },
       submit () {
         let self = this;
         let productCategoryId = this.getProductCategoryId();
 
-        if (this.$refs.form.validate()) {
-          if (productCategoryId) {
-            this.updateProductCategory(productCategoryId);
-          } else {
-            this.createProductCategory();
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            if (productCategoryId) {
+              self.updateProductCategory(productCategoryId);
+            } else {
+              self.createProductCategory();
+            }
           }
-        } else {
-          this.valid = false;
-        }
+        });
       },
       editProductCategory: function (productCategoryId) {
         this.$router.push({ path: `/product_categories/${productCategoryId}` });

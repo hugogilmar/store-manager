@@ -1,5 +1,8 @@
+import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import es from './locales/es';
+
+Vue.use(VueI18n);
 
 const locales = Object.assign({}, es);
 

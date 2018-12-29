@@ -25,8 +25,7 @@ const translations = {
         storesReport: 'Ingresos por comercio',
         chargesReport: 'Ingresos por cargos',
         darkMode: 'Modo nocturno'
-      },
-      logout: 'Cerrar sesión'
+      }
     },
     label: {
       save: 'Guardar',
@@ -36,12 +35,14 @@ const translations = {
       new: 'Nuevo',
       edit: 'Editar',
       delete: 'Eliminar',
-      back: 'Regresar'
+      back: 'Regresar',
+      login: 'Iniciar sesión',
+      logout: 'Cerrar sesión'
     },
     alert: {
       empty: 'No hay registros que mostrar.'
     },
-    toast: {
+    notification: {
       failure: {
         create: 'No se pudo guardar el registro',
         update: 'No se pudo actualizar el registro',
@@ -58,7 +59,8 @@ const translations = {
     header: {
       new: 'Crear %{entity}',
       edit: 'Editar %{entity}',
-      list: 'Lista de %{entity}'
+      list: 'Lista de %{entity}',
+      start: 'Iniciar %{entity}'
     },
     dialog: {
       add: {
@@ -206,6 +208,20 @@ const translations = {
     session: {
       username: 'Usuario',
       password: 'Contraseña'
+    },
+    $vuetify: {
+      dataIterator: {
+        rowsPerPageText: 'registros por página:',
+        rowsPerPageAll: 'Todos',
+        pageText: '{0}-{1} de {2}',
+        noResultsText: 'No se encontraron registros',
+        nextPage: 'Siguiente',
+        prevPage: 'Anterior'
+      },
+      dataTable: {
+        rowsPerPageText: 'Registros por página:'
+      },
+      noDataText: 'No hay registros disponibles'
     }
   }
 }

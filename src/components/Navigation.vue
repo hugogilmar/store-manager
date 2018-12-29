@@ -27,7 +27,7 @@
         <v-list-tile
           v-for="(item, j) in items(group.group)"
           :key="j"
-          @click="navigateTo(item)"
+          :to="item.path"
         >
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -64,7 +64,7 @@
           <v-icon>exit_to_app</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title>{{ $t('navigation.logout') }}</v-list-tile-title>
+          <v-list-tile-title>{{ $t('label.logout') }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
@@ -188,9 +188,6 @@
         return this.links.filter(function (link) {
           return link.group == group
         });
-      },
-      navigateTo: function (item) {
-        this.$router.push({ path: item.path });
       }
     }
   }

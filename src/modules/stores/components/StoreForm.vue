@@ -1,11 +1,13 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form v-model="valid" lazy-validation>
     <v-text-field
       v-model="store.name"
-      :rules="rules.name"
+      v-validate="'required|max:48'"
+      data-vv-name="name"
+      :data-vv-as="$t('store.name').toLowerCase()"
       :counter="48"
       :label="$t('store.name')"
-      required
+      :error-messages="errors.first('name')"
     ></v-text-field>
     <v-btn
       color="primary"
@@ -18,6 +20,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   export default {
     name: 'StoreForm',
     data () {
@@ -25,12 +29,6 @@
         valid: true,
         store: {
           name: null
-        },
-        rules: {
-          name: [
-            v => !!v || 'Name is required',
-            v => (v && v.length <= 48) || 'Name must be less than 48 characters'
-          ]
         }
       }
     },
@@ -45,6 +43,9 @@
       }
     },
     methods: {
+      ...mapActions([
+        'displaySnackbar'
+      ]),
       getStoreId () {
         return this.storeId;
       },
@@ -68,10 +69,16 @@
         .then(function (response) {
           self.store = response.data;
           self.editStore(self.store.id);
-          self.$toasted.success(self.$t('toast.success.create'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.create')
+          });
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.create'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.create')
+          });
         });
       },
       updateStore (storeId) {
@@ -82,26 +89,33 @@
         })
         .then(function (response) {
           self.store = response.data;
-          self.$toasted.success(self.$t('toast.success.update'));
+          self.displaySnackbar({
+            color: 'success',
+            message: self.$t('notification.success.update')
+          });
         })
         .catch(function (error) {
-          self.$toasted.error(self.$t('toast.failure.update'));
+          self.displaySnackbar({
+            color: 'error',
+            message: self.$t('notification.failure.update')
+          });
         });
       },
       submit () {
+        let self = this;
         let storeId = this.getStoreId();
 
-        if (this.$refs.form.validate()) {
-          if (storeId) {
-            this.updateStore(storeId);
-          } else {
-            this.createStore();
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            if (storeId) {
+              self.updateStore(storeId);
+            } else {
+              self.createStore();
+            }
           }
-        } else {
-          this.valid = false;
-        }
+        });
       },
-      editStore: function (storeId) {
+      editStore (storeId) {
         this.$router.push({ path: `/stores/${storeId}` });
       }
     }

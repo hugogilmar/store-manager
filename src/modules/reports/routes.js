@@ -1,32 +1,33 @@
+import Store from './views/Store.vue';
+import Product from './views/Product.vue';
+import ProductCategory from './views/ProductCategory.vue';
+import PaymentMethod from './views/PaymentMethod.vue';
+import Charge from './views/Charge.vue';
+
 export default [
   {
     path: "/reports/store",
     name: "store_report",
-    component: () =>
-      import(/* webpackChunkName: "reports" */ "./views/Store.vue")
+    component: Store
   },
   {
     path: "/reports/product",
     name: "product_report",
-    component: () =>
-      import(/* webpackChunkName: "reports" */ "./views/Product.vue")
+    component: Product
   },
   {
     path: "/reports/productCategory",
     name: "productCategory_report",
-    component: () =>
-      import(/* webpackChunkName: "reports" */ "./views/ProductCategory.vue")
+    component: ProductCategory
   },
   {
     path: "/reports/paymentMethod",
     name: "paymentMethod_report",
-    component: () =>
-      import(/* webpackChunkName: "reports" */ "./views/PaymentMethod.vue")
+    component: PaymentMethod
   },
   {
     path: "/reports/charge",
     name: "charge_report",
-    component: () =>
-      import(/* webpackChunkName: "reports" */ "./views/Charge.vue")
+    component: Charge
   }
 ];
