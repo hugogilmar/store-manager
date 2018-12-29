@@ -1,5 +1,9 @@
 # Changelog
 
+## WIP
+
+- Allow to print reports
+
 ## v0.3.1
 
 - Notifications refactored
