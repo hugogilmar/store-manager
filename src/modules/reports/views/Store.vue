@@ -1,4 +1,4 @@
-storesstore<template>
+<template>
   <v-card class="ma-4">
     <v-subheader>{{ $t('report.header.store') }}</v-subheader>
     <v-layout row wrap>
@@ -53,36 +53,51 @@ storesstore<template>
         </v-menu>
       </v-flex>
       <v-flex xs9 class="pa-4">
-        <v-data-table
-          hide-actions
-          :headers="headers"
-          :items="rows"
-        >
-          <template slot="no-data">
-            <v-alert
-              :value="true"
-              type="info"
-            >
-              {{ $t('alert.empty') }}
-            </v-alert>
-          </template>
-          <template slot="items" slot-scope="report">
-            <tr>
-              <td>{{ report.item.name }}</td>
-              <td class="text-xs-center" width="160">{{ report.item.quantity }}</td>
-              <td class="text-xs-right" width="160">{{ report.item.total | currency }}</td>
-            </tr>
-          </template>
-          <template slot="footer">
-            <tr>
-              <td class="text-xs-right">{{ $t('report.total') }}</td>
-              <td class="text-xs-center">{{ quantity }}</td>
-              <td class="text-xs-right">{{ total | currency }}</td>
-            </tr>
-          </template>
-        </v-data-table>
+        <div id="report">
+          <v-data-table
+            hide-actions
+            :headers="headers"
+            :items="rows"
+          >
+            <template slot="no-data">
+              <v-alert
+                :value="true"
+                type="info"
+              >
+                {{ $t('alert.empty') }}
+              </v-alert>
+            </template>
+            <template slot="items" slot-scope="report">
+              <tr>
+                <td>{{ report.item.name }}</td>
+                <td class="text-xs-center" width="160">{{ report.item.quantity }}</td>
+                <td class="text-xs-right" width="160">{{ report.item.total | currency }}</td>
+              </tr>
+            </template>
+            <template slot="footer">
+              <tr>
+                <td class="text-xs-right">{{ $t('report.total') }}</td>
+                <td class="text-xs-center">{{ quantity }}</td>
+                <td class="text-xs-right">{{ total | currency }}</td>
+              </tr>
+            </template>
+          </v-data-table>
+        </div>
       </v-flex>
     </v-layout>
+    <v-fab-transition>
+      <v-btn
+        dark
+        fab
+        fixed
+        bottom
+        right
+        color="primary"
+        v-print="'#report'"
+      >
+        <v-icon>print</v-icon>
+      </v-btn>
+    </v-fab-transition>
   </v-card>
 </template>
 

@@ -37,7 +37,8 @@ const translations = {
       delete: 'Eliminar',
       back: 'Regresar',
       login: 'Iniciar sesión',
-      logout: 'Cerrar sesión'
+      logout: 'Cerrar sesión',
+      print: 'Imprimir'
     },
     alert: {
       empty: 'No hay registros que mostrar.'
