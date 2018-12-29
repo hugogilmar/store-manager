@@ -9253,7 +9253,7 @@ vue-cli-plugin-axios@^0.0.4:
   resolved "https://registry.yarnpkg.com/vue-cli-plugin-axios/-/vue-cli-plugin-axios-0.0.4.tgz#29d4eb48275c7fe15b92e1fd5d95fbe2a966436f"
   integrity sha512-p2b/fvPJuPBnvU8027PAAuU5DiOzUn2lku8XLG/f6c8FU0N+/MXWZAlOuHhqd9e7+KIZitwe/c8qlmv7TglbTg==
 
-vue-cli-plugin-electron-builder@^1.0.0-rc.4:
+vue-cli-plugin-electron-builder@^1.0.0-rc.10:
   version "1.0.0-rc.10"
   resolved "https://registry.yarnpkg.com/vue-cli-plugin-electron-builder/-/vue-cli-plugin-electron-builder-1.0.0-rc.10.tgz#1088ff51afe2c1bd009241a984ddbc670e5df760"
   integrity sha512-iHhZLupCnjS2xxsUcL/QtqJttCeuVXZZQZ02GZPqdG2TBopObzytwDlNNzwDpRpufYflmciulFGDt8T5XObcLQ==
