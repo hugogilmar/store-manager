@@ -1,13 +1,9 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
 import SecureLS from 'secure-ls';
-import router from './router';
-
-Vue.use(Vuex);
+import router from '../router';
 
 let storage = new SecureLS();
 
-const store = new Vuex.Store({
+export default {
   state: {
     authenticationToken: storage.get('authenticationToken'),
     user: storage.get('user'),
@@ -128,6 +124,4 @@ const store = new Vuex.Store({
       commit('dismissSnackbar');
     }
   }
-});
-
-export default store;
+}

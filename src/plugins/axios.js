@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
-import store from '../store';
+import store from '../store/';
 
 let config = {
   baseURL: process.env.VUE_APP_API_BASE
