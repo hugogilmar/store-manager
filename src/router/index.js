@@ -41,7 +41,7 @@ router.beforeEach((to, from, next) => {
   ];
 
   const authenticationRequired = !publicPages.includes(to.path);
-  const authenticationToken = store.state.base.authenticationToken;
+  const authenticationToken = store.state.sessions.authenticationToken;
 
   if (authenticationRequired && !authenticationToken) {
     return next('/login');
