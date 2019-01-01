@@ -52,6 +52,8 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'ProductList',
     data () {
@@ -60,25 +62,52 @@
         productCategoryId: null,
         stores: [],
         productCategories: [],
-        products: [],
-        params: new URLSearchParams()
+        products: []
       }
     },
     watch: {
       storeId (value) {
-        this.params.set('filter[where][storeId]', value);
+        this.setProductParam({
+          param: 'filter[where][storeId]',
+          value: value
+        });
+
         this.getProducts();
       },
       productCategoryId (value) {
-        this.params.set('filter[where][productCategoryId]', value);
+        this.setProductParam({
+          param: 'filter[where][productCategoryId]',
+          value: value
+        });
+
         this.getProducts();
       }
     },
+    computed: {
+      ...mapGetters([
+        'getProductParams',
+        'getProductParam'
+      ])
+    },
     created () {
+      let storeId = this.getProductParam('filter[where][storeId]');
+      let productCategoryId = this.getProductParam('filter[where][productCategoryId]');
+
+      if (storeId) {
+        this.storeId = parseInt(storeId);
+      }
+
+      if (productCategoryId) {
+        this.productCategoryId = parseInt(productCategoryId);
+      }
+
       this.getStores();
       this.getProductCategories();
     },
     methods: {
+      ...mapActions([
+        'setProductParam'
+      ]),
       getStores () {
         let self = this;
 
@@ -105,7 +134,7 @@
         let self = this;
 
         this.$axios.get('/products', {
-          params: this.params
+          params: this.getProductParams
         })
         .then(function (response) {
           self.products = response.data;

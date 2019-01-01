@@ -43,26 +43,46 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'ChargeList',
     data () {
       return {
         storeId: null,
         stores: [],
-        charges: [],
-        params: new URLSearchParams()
+        charges: []
       }
     },
     watch: {
       storeId (value) {
-        this.params.set('filter[where][storeId]', value);
+        this.setChargeParam({
+          param: 'filter[where][storeId]',
+          value: value
+        });
+
         this.getCharges();
       }
     },
+    computed: {
+      ...mapGetters([
+        'getChargeParams',
+        'getChargeParam'
+      ])
+    },
     created () {
+      let storeId = this.getChargeParam('filter[where][storeId]');
+
+      if (storeId) {
+        this.storeId = parseInt(storeId);
+      }
+
       this.getStores();
     },
     methods: {
+      ...mapActions([
+        'setChargeParam'
+      ]),
       getStores () {
         let self = this;
 
@@ -78,7 +98,7 @@
         let self = this;
 
         this.$axios.get('/charges', {
-          params: this.params
+          params: this.getChargeParams
         })
         .then(function (response) {
           self.charges = response.data;

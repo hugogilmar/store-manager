@@ -8,7 +8,6 @@
         :label="$t('product.store')"
         item-text="name"
         item-value="id"
-        required
       ></v-select>
       <v-menu
         ref="menu"
@@ -67,6 +66,8 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'OrderList',
     data () {
@@ -75,33 +76,62 @@
         storeId: null,
         date: null,
         stores: [],
-        orders: [],
-        params: new URLSearchParams()
-      }
-    },
-    computed: {
-      valid () {
-        return this.storeId && this.date;
+        orders: []
       }
     },
     watch: {
-      date (value) {
-        this.params.set('filter[where][date]', value);
+      storeId (value) {
+        console.log(value);
+
+        this.setOrderParam({
+          param: 'filter[where][storeId]',
+          value: value
+        });
+
         if (this.valid) {
           this.getOrders();
         }
       },
-      storeId (value) {
-        this.params.set('filter[where][storeId]', value);
+      date (value) {
+        console.log(value);
+
+        this.setOrderParam({
+          param: 'filter[where][date]',
+          value: value
+        });
+
         if (this.valid) {
           this.getOrders();
         }
       }
     },
+    computed: {
+      ...mapGetters([
+        'getOrderParams',
+        'getOrderParam'
+      ]),
+      valid () {
+        return this.storeId && this.date;
+      }
+    },
     created () {
+      let storeId = this.getOrderParam('filter[where][storeId]');
+      let date = this.getOrderParam('filter[where][date]');
+
+      if (storeId) {
+        this.storeId = parseInt(storeId);
+      }
+
+      if (date) {
+        this.date = date;
+      }
+
       this.getStores();
     },
     methods: {
+      ...mapActions([
+        'setOrderParam'
+      ]),
       getStores () {
         let self = this;
 
@@ -117,7 +147,7 @@
         let self = this;
 
         this.$axios.get('/orders', {
-          params: this.params
+          params: this.getOrderParams
         })
         .then(function (response) {
           self.orders = response.data;

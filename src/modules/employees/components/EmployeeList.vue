@@ -43,26 +43,46 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'EmployeeList',
     data () {
       return {
         storeId: null,
         stores: [],
-        employees: [],
-        params: new URLSearchParams()
+        employees: []
       }
     },
     watch: {
       storeId (value) {
-        this.params.set('filter[where][storeId]', value);
+        this.setEmployeeParam({
+          param: 'filter[where][storeId]',
+          value: value
+        });
+
         this.getEmployees();
       }
     },
+    computed: {
+      ...mapGetters([
+        'getEmployeeParams',
+        'getEmployeeParam'
+      ])
+    },
     created () {
+      let storeId = this.getEmployeeParam('filter[where][storeId]');
+
+      if (storeId) {
+        this.storeId = parseInt(storeId);
+      }
+
       this.getStores();
     },
     methods: {
+      ...mapActions([
+        'setEmployeeParam'
+      ]),
       getStores () {
         let self = this;
 
@@ -78,7 +98,7 @@
         let self = this;
 
         this.$axios.get('/employees', {
-          params: this.params
+          params: this.getEmployeeParams
         })
         .then(function (response) {
           self.employees = response.data;

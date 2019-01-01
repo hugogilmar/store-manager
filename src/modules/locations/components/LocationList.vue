@@ -43,26 +43,46 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'LocationList',
     data () {
       return {
         storeId: null,
         stores: [],
-        locations: [],
-        params: new URLSearchParams()
+        locations: []
       }
     },
     watch: {
       storeId (value) {
-        this.params.set('filter[where][storeId]', value);
+        this.setLocationParam({
+          param: 'filter[where][storeId]',
+          value: value
+        });
+
         this.getLocations();
       }
     },
+    computed: {
+      ...mapGetters([
+        'getLocationParams',
+        'getLocationParam'
+      ])
+    },
     created () {
+      let storeId = this.getLocationParam('filter[where][storeId]');
+
+      if (storeId) {
+        this.storeId = parseInt(storeId);
+      }
+
       this.getStores();
     },
     methods: {
+      ...mapActions([
+        'setLocationParam'
+      ]),
       getStores () {
         let self = this;
 
@@ -78,7 +98,7 @@
         let self = this;
 
         this.$axios.get('/locations', {
-          params: this.params
+          params: this.getLocationParams
         })
         .then(function (response) {
           self.locations = response.data;
