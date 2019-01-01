@@ -9,8 +9,8 @@ import './filters/number';
 import './filters/currency';
 import './filters/percentage';
 import App from './App.vue';
-import router from './router';
 import store from './store';
+import router from './router/';
 import i18n from './i18n';
 
 Vue.config.productionTip = false;
