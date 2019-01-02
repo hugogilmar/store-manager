@@ -6,7 +6,8 @@ let storage = new SecureLS();
 export default {
   state: {
     authenticationToken: storage.get('authenticationToken'),
-    user: storage.get('user')
+    user: storage.get('user'),
+    storeId: storage.get('storeId')
   },
   mutations: {
     login (state, payload) {
@@ -20,14 +21,21 @@ export default {
       state.user = {};
       storage.remove('authenticationToken');
       storage.remove('user');
+    },
+    storeId (state, value) {
+      state.storeId = value;
+      storage.set('storeId', value);
     }
   },
   getters: {
-    authenticationToken (state) {
+    getAuthenticationToken (state) {
       return state.authenticationToken;
     },
-    user (state) {
+    getUser (state) {
       return state.user;
+    },
+    getStoreId (state) {
+      return state.storeId;
     }
   },
   actions: {
@@ -38,6 +46,9 @@ export default {
     logout ({ commit }) {
       commit('logout');
       router.push('/login');
+    },
+    setStoreId ({ commit}, value) {
+      commit('storeId', value);
     }
   }
 }

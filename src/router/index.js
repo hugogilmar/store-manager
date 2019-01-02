@@ -47,6 +47,27 @@ router.beforeEach((to, from, next) => {
     return next('/login');
   }
 
+  const storeSkipRoutes = [
+    'login',
+    'stores',
+    'store',
+    'new_store',
+    'select_store',
+    'product_categories',
+    'product_category',
+    'new_product_category',
+    'payment_methods',
+    'payment_method',
+    'new_payment_method',
+  ];
+
+  const storeRequired = !storeSkipRoutes.includes(to.name);
+  const storeId = store.state.sessions.storeId;
+
+  if (storeRequired && !storeId) {
+    return next('/stores/select');
+  }
+
   next();
 });
 

@@ -61,7 +61,8 @@ const translations = {
       new: 'Crear %{entity}',
       edit: 'Editar %{entity}',
       list: 'Lista de %{entity}',
-      start: 'Iniciar %{entity}'
+      start: 'Iniciar %{entity}',
+      select: 'Seleccionar %{entity}'
     },
     dialog: {
       add: {
