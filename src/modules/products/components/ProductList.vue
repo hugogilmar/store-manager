@@ -86,7 +86,8 @@
     computed: {
       ...mapGetters([
         'getProductParams',
-        'getProductParam'
+        'getProductParam',
+        'getStoreId'
       ])
     },
     created () {
@@ -95,6 +96,8 @@
 
       if (storeId) {
         this.storeId = parseInt(storeId);
+      } else {
+        this.storeId = this.getStoreId;
       }
 
       if (productCategoryId) {

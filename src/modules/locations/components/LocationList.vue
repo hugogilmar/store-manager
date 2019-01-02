@@ -67,7 +67,8 @@
     computed: {
       ...mapGetters([
         'getLocationParams',
-        'getLocationParam'
+        'getLocationParam',
+        'getStoreId'
       ])
     },
     created () {
@@ -75,6 +76,8 @@
 
       if (storeId) {
         this.storeId = parseInt(storeId);
+      } else {
+        this.storeId = this.getStoreId;
       }
 
       this.getStores();

@@ -81,8 +81,6 @@
     },
     watch: {
       storeId (value) {
-        console.log(value);
-
         this.setOrderParam({
           param: 'filter[where][storeId]',
           value: value
@@ -93,8 +91,6 @@
         }
       },
       date (value) {
-        console.log(value);
-
         this.setOrderParam({
           param: 'filter[where][date]',
           value: value
@@ -108,7 +104,8 @@
     computed: {
       ...mapGetters([
         'getOrderParams',
-        'getOrderParam'
+        'getOrderParam',
+        'getStoreId'
       ]),
       valid () {
         return this.storeId && this.date;
@@ -120,6 +117,8 @@
 
       if (storeId) {
         this.storeId = parseInt(storeId);
+      } else {
+        this.storeId = this.getStoreId;
       }
 
       if (date) {
