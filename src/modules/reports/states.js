@@ -1,6 +1,6 @@
 export default {
   state: {
-    reportParams: new URLSearchParams('filter[limit]=20&filter[offset]=0')
+    reportParams: new URLSearchParams()
   },
   mutations: {
     setReportParam (state, payload) {
