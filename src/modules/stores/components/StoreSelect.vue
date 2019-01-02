@@ -36,20 +36,23 @@
     name: 'StoreSelect',
     data () {
       return {
+        storeId: null,
         stores: []
       }
     },
     computed: {
       ...mapGetters([
-        'storeId'
+        'getStoreId'
       ])
     },
     created () {
+      this.storeId = this.getStoreId;
       this.getStores();
     },
     methods: {
       ...mapActions([
-        'setStoreId'
+        'setStoreId',
+        'displaySnackbar'
       ]),
       getStores () {
         let self = this;
@@ -64,6 +67,11 @@
       },
       selectStore: function (storeId) {
         this.setStoreId(storeId);
+        this.$router.push({ path: '/' });
+        this.displaySnackbar({
+          color: 'success',
+          message: this.$t('notification.success.update')
+        });
       }
     }
   };

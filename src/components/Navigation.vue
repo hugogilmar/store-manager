@@ -45,6 +45,16 @@
         <v-list-tile slot="activator">
           <v-list-tile-title>{{ $t('navigation.groups.settings') }}</v-list-tile-title>
         </v-list-tile>
+        <v-list-tile
+          @click.stop="selectStore"
+        >
+          <v-list-tile-action>
+            <v-icon>store</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ $t('navigation.links.selectStore') }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
         <v-list-tile @click="darkThemeToggle">
           <v-list-tile-action>
             <v-checkbox
@@ -192,6 +202,9 @@
         return this.links.filter(function (link) {
           return link.group == group
         });
+      },
+      selectStore () {
+        this.$router.push({ path: '/stores/select' });
       }
     }
   }

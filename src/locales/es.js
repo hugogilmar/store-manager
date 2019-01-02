@@ -24,7 +24,8 @@ const translations = {
         paymentMethodsReport: 'Ingresos por método de pago',
         storesReport: 'Ingresos por comercio',
         chargesReport: 'Ingresos por cargos',
-        darkMode: 'Modo nocturno'
+        darkMode: 'Modo nocturno',
+        selectStore: 'Seleccionar comercio'
       }
     },
     label: {
