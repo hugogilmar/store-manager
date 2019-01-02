@@ -78,6 +78,7 @@
     name: 'Navigation',
     data () {
       return {
+        user: null,
         groups: [
           {
             icon: 'menu',
@@ -174,10 +175,13 @@
     },
     computed: {
       ...mapGetters([
-        'user',
+        'getUser',
         'drawerOpen',
         'darkTheme'
       ])
+    },
+    created () {
+      this.user = this.getUser;
     },
     methods: {
       ...mapActions([

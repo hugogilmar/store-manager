@@ -10,8 +10,10 @@ const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
   function(config) {
-    if (store.getters.authenticationToken) {
-      config.headers.Authorization = store.getters.authenticationToken;
+    let authenticationToken = store.getters.getAuthenticationToken;
+
+    if (authenticationToken) {
+      config.headers.Authorization = authenticationToken;
     }
 
     store.dispatch('showLoader');

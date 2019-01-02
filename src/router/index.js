@@ -36,12 +36,12 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = [
-    '/login'
+  const publicRoutes = [
+    'login'
   ];
 
-  const authenticationRequired = !publicPages.includes(to.path);
-  const authenticationToken = store.state.sessions.authenticationToken;
+  const authenticationRequired = !publicRoutes.includes(to.name);
+  const authenticationToken = store.getters.getAuthenticationToken;
 
   if (authenticationRequired && !authenticationToken) {
     return next('/login');
