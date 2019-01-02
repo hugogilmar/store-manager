@@ -26,7 +26,7 @@ export default {
     authenticationToken (state) {
       return state.authenticationToken;
     },
-    currentUser (state) {
+    user (state) {
       return state.user;
     }
   },

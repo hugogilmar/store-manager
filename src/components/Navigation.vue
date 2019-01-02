@@ -8,8 +8,8 @@
       <v-layout pa-4 column fill-height>
         <v-spacer></v-spacer>
         <v-flex shrink>
-          <div class="subheading">{{ currentUser.name }}</div>
-          <div class="body-1">{{ currentUser.realm }}</div>
+          <div class="subheading">{{ user.name }}</div>
+          <div class="body-1">{{ user.realm }}</div>
         </v-flex>
       </v-layout>
     </v-responsive>
@@ -174,7 +174,7 @@
     },
     computed: {
       ...mapGetters([
-        'currentUser',
+        'user',
         'drawerOpen',
         'darkTheme'
       ])
