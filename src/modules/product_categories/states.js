@@ -11,10 +11,10 @@ export default {
     }
   },
   actions: {
-    setProductCategoryParam ({commit}, payload) {
+    setProductCategoryParam ({ commit }, payload) {
       commit('setProductCategoryParam', payload)
     },
-    deleteProductCategoryParam ({commit}, payload) {
+    deleteProductCategoryParam ({ commit }, payload) {
       commit('deleteProductCategoryParam', payload)
     }
   },

@@ -11,10 +11,10 @@ export default {
     }
   },
   actions: {
-    setStoreParam ({commit}, payload) {
+    setStoreParam ({ commit }, payload) {
       commit('setStoreParam', payload)
     },
-    deleteStoreParam ({commit}, payload) {
+    deleteStoreParam ({ commit }, payload) {
       commit('deleteStoreParam', payload)
     }
   },

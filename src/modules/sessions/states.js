@@ -31,11 +31,11 @@ export default {
     }
   },
   actions: {
-    login({ commit }, payload) {
+    login ({ commit }, payload) {
       commit('login', payload);
       router.push('/');
     },
-    logout({ commit }) {
+    logout ({ commit }) {
       commit('logout');
       router.push('/login');
     }

@@ -11,10 +11,10 @@ export default {
     }
   },
   actions: {
-    setReportParam ({commit}, payload) {
+    setReportParam ({ commit }, payload) {
       commit('setReportParam', payload)
     },
-    deleteReportParam ({commit}, payload) {
+    deleteReportParam ({ commit }, payload) {
       commit('deleteReportParam', payload)
     }
   },

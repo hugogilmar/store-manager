@@ -11,10 +11,10 @@ export default {
     }
   },
   actions: {
-    setPaymentMethodParam ({commit}, payload) {
+    setPaymentMethodParam ({ commit }, payload) {
       commit('setPaymentMethodParam', payload)
     },
-    deletePaymentMethodParam ({commit}, payload) {
+    deletePaymentMethodParam ({ commit }, payload) {
       commit('deletePaymentMethodParam', payload)
     }
   },

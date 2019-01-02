@@ -11,10 +11,10 @@ export default {
     }
   },
   actions: {
-    setEmployeeParam ({commit}, payload) {
+    setEmployeeParam ({ commit }, payload) {
       commit('setEmployeeParam', payload)
     },
-    deleteEmployeeParam ({commit}, payload) {
+    deleteEmployeeParam ({ commit }, payload) {
       commit('deleteEmployeeParam', payload)
     }
   },

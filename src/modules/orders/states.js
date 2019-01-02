@@ -11,10 +11,10 @@ export default {
     }
   },
   actions: {
-    setOrderParam ({commit}, payload) {
+    setOrderParam ({ commit }, payload) {
       commit('setOrderParam', payload)
     },
-    deleteOrderParam ({commit}, payload) {
+    deleteOrderParam ({ commit }, payload) {
       commit('deleteOrderParam', payload)
     }
   },

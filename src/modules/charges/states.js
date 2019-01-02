@@ -11,10 +11,10 @@ export default {
     }
   },
   actions: {
-    setChargeParam ({commit}, payload) {
+    setChargeParam ({ commit }, payload) {
       commit('setChargeParam', payload)
     },
-    deleteChargeParam ({commit}, payload) {
+    deleteChargeParam ({ commit }, payload) {
       commit('deleteChargeParam', payload)
     }
   },

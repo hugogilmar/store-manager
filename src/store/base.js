@@ -69,25 +69,25 @@ export default {
     }
   },
   actions: {
-    drawerToggle({ commit }) {
+    drawerToggle ({ commit }) {
       commit('drawerToggle');
     },
-    darkThemeToggle({ commit }) {
+    darkThemeToggle ({ commit }) {
       commit('drawerToggle');
       commit('darkThemeToggle');
     },
-    showLoader ({commit}) {
+    showLoader ({ commit }) {
       commit('loaderLoading', true)
     },
-    hideLoader ({commit}) {
+    hideLoader ({ commit }) {
       setTimeout(function () {
         commit('loaderLoading', false);
       }, 1000);
     },
-    displaySnackbar ({commit}, payload) {
+    displaySnackbar ({ commit }, payload) {
       commit('displaySnackbar', payload);
     },
-    dismissSnackbar ({commit}) {
+    dismissSnackbar ({ commit }) {
       commit('dismissSnackbar');
     }
   }

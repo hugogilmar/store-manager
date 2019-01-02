@@ -11,10 +11,10 @@ export default {
     }
   },
   actions: {
-    setLocationParam ({commit}, payload) {
+    setLocationParam ({ commit }, payload) {
       commit('setLocationParam', payload)
     },
-    deleteLocationParam ({commit}, payload) {
+    deleteLocationParam ({ commit }, payload) {
       commit('deleteLocationParam', payload)
     }
   },
