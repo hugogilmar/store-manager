@@ -16,10 +16,10 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
-  import Navitation from './components/Navigation.vue';
-  import Toolbar from './components/Toolbar.vue';
-  import Loading from './components/Loading.vue';
-  import Notification from './components/Notification.vue';
+  import Navitation from './components/layout/Navigation.vue';
+  import Toolbar from './components/layout/Toolbar.vue';
+  import Loading from './components/layout/Loading.vue';
+  import Notification from './components/layout/Notification.vue';
 
   export default {
     name: 'App',
