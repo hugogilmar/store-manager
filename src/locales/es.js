@@ -42,7 +42,9 @@ const translations = {
       print: 'Imprimir'
     },
     alert: {
-      empty: 'No hay registros que mostrar.'
+      empty: 'No hay registros que mostrar',
+      login: 'Debe iniciar sesión antes de continuar',
+      selectStore: 'Debe seleccionar un comercio antes de continuar'
     },
     notification: {
       failure: {

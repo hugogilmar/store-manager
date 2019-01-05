@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import i18n from '../i18n';
 
 import baseRoutes from './base';
 import productsRoutes from '../modules/products/routes';
@@ -44,6 +45,11 @@ router.beforeEach((to, from, next) => {
   const authenticationToken = store.getters.getAuthenticationToken;
 
   if (authenticationRequired && !authenticationToken) {
+    store.dispatch('displaySnackbar', {
+      color: 'info',
+      message: i18n.t('alert.login')
+    });
+
     return next('/login');
   }
 
@@ -65,6 +71,11 @@ router.beforeEach((to, from, next) => {
   const storeId = store.state.sessions.storeId;
 
   if (storeRequired && !storeId) {
+    store.dispatch('displaySnackbar', {
+      color: 'info',
+      message: i18n.t('alert.selectStore')
+    });
+
     return next('/stores/select');
   }
 
