@@ -1,12 +1,13 @@
 <template>
   <v-form v-model="valid" lazy-validation>
     <v-text-field
-      v-model="order.number"
-      v-validate="'required|numeric|min_value:1'"
-      data-vv-name="number"
-      :data-vv-as="$t('order.number').toLowerCase()"
-      :label="$t('order.number')"
-      :error-messages="errors.first('number')"
+      v-model="order.referenceNumber"
+      v-validate="'max:48'"
+      data-vv-name="referenceNumber"
+      :data-vv-as="$t('order.referenceNumber').toLowerCase()"
+      :counter="48"
+      :label="$t('order.referenceNumber')"
+      :error-messages="errors.first('referenceNumber')"
     ></v-text-field>
     <v-text-field
       v-model="order.guests"
@@ -192,7 +193,7 @@
         let self = this;
 
         this.$axios.post('/orders', {
-          number: this.order.number,
+          referenceNumber: this.order.referenceNumber,
           date: this.order.date,
           storeId: this.order.storeId,
           employeeId: this.order.employeeId,
@@ -221,7 +222,7 @@
         let self = this;
 
         this.$axios.patch(`/orders/${orderId}`, {
-          number: this.order.number,
+          referenceNumber: this.order.referenceNumber,
           date: this.order.date,
           storeId: this.order.storeId,
           employeeId: this.order.employeeId,

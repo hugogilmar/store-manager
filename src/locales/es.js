@@ -130,9 +130,9 @@ const translations = {
       store: 'Comercio'
     },
     order: {
-      title: 'Orden #%{number}',
+      title: 'Orden #%{referenceNumber}',
       date: 'Fecha',
-      number: 'Número',
+      referenceNumber: 'Número de referencia',
       store: 'Comercio',
       employee: 'Empleado',
       total: 'Total',

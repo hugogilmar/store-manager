@@ -141,7 +141,7 @@
           storeId: null,
           employeeId: null,
           locationId: null,
-          number: null,
+          referenceNumber: null,
           date: null,
           location: null,
           guests: null,

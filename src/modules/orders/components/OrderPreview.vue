@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title primary-title>
-      <h3 class="headline">{{ $t('order.title', { number: order.number }) }}</h3>
+      <h3 class="headline">{{ $t('order.title', { referenceNumber: order.referenceNumber }) }}</h3>
     </v-card-title>
     <v-container grid-list-md>
       <v-layout wrap>

@@ -2,9 +2,10 @@
   <v-form v-model="valid" lazy-validation>
     <v-text-field
       v-model="invoice.referenceNumber"
-      v-validate="'required|numeric|min_value:1'"
+      v-validate="'max:48'"
       data-vv-name="referenceNumber"
       :data-vv-as="$t('invoice.referenceNumber').toLowerCase()"
+      :counter="48"
       :label="$t('invoice.referenceNumber')"
       :error-messages="errors.first('referenceNumber')"
     ></v-text-field>
@@ -18,7 +19,6 @@
       :data-vv-as="$t('invoice.paymentMethod').toLowerCase()"
       :label="$t('invoice.paymentMethod')"
       :error-messages="errors.first('paymentMethodId')"
-      required
     ></v-select>
     <v-text-field
       v-model="invoice.amount"

@@ -53,7 +53,7 @@
             <v-icon>star</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{ order.number }}</v-list-tile-title>
+            <v-list-tile-title>{{ order.referenceNumber }}</v-list-tile-title>
             <v-list-tile-sub-title>{{ order.total | currency }}</v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-avatar v-if="order.avatar">
