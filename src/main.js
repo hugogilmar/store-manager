@@ -5,6 +5,7 @@ import './plugins/vuetify';
 import './plugins/vue-i18n';
 import './plugins/vue-print-nb';
 import './plugins/vee-validate';
+import './plugins/components';
 import './filters/number';
 import './filters/currency';
 import './filters/percentage';
