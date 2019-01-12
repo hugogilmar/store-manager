@@ -2,7 +2,7 @@
   <v-form v-model="valid" lazy-validation>
     <v-text-field
       v-model="invoice.referenceNumber"
-      v-validate="'max:48'"
+      v-validate="'alpha_num|max:48'"
       data-vv-name="referenceNumber"
       :data-vv-as="$t('invoice.referenceNumber').toLowerCase()"
       :counter="48"
