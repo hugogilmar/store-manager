@@ -118,6 +118,7 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
   import moment from 'moment';
   import OrderPreview from '../components/OrderPreview.vue';
   import OrderForm from '../components/OrderForm.vue';
@@ -164,6 +165,9 @@
       'orderId'
     ],
     computed: {
+      ...mapGetters([
+        'getStoreId'
+      ]),
       storeId () {
         return this.order.storeId;
       },
@@ -179,6 +183,8 @@
         this.getOrderLines(orderId);
         this.getOrderCharges(orderId);
         this.getInvoices(orderId);
+      } else {
+        this.order.storeId = this.getStoreId;
       }
     },
     methods: {

@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
     name: 'EmployeeForm',
@@ -58,12 +58,20 @@
     props: [
       'employeeId'
     ],
+    computed: {
+      ...mapGetters([
+        'getStoreId'
+      ])
+    },
     created () {
       let employeeId = this.getEmployeeId();
 
       this.getStores();
+
       if (employeeId) {
         this.getEmployee(employeeId);
+      } else {
+        this.employee.storeId = this.getStoreId;
       }
     },
     methods: {

@@ -112,6 +112,8 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
+
   export default {
     data () {
       return {
@@ -151,6 +153,9 @@
       }
     },
     computed: {
+      ...mapGetters([
+        'getStoreId'
+      ]),
       valid () {
         return this.storeId && this.dateFrom && this.dateTo;
       },
@@ -184,6 +189,8 @@
     },
     created () {
       this.getStores();
+
+      this.storeId = this.getStoreId;
     },
     methods: {
       getStores () {

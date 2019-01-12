@@ -48,7 +48,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
     name: 'ChargeForm',
@@ -67,12 +67,20 @@
     props: [
       'chargeId'
     ],
+    computed: {
+      ...mapGetters([
+        'getStoreId'
+      ])
+    },
     created () {
       let chargeId = this.getChargeId();
 
       this.getStores();
+
       if (chargeId) {
         this.getCharge(chargeId);
+      } else {
+        this.charge.storeId = this.getStoreId;
       }
     },
     methods: {

@@ -121,6 +121,11 @@
     ],
     created () {
       this.getStores();
+
+      if (this.storeId) {
+        this.getEmployees(this.storeId);
+        this.getLocations(this.storeId);
+      }
     },
     computed: {
       storeId() {
