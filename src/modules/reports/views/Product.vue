@@ -166,7 +166,8 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
+  import _ from 'lodash';
 
   export default {
     data () {
@@ -208,7 +209,9 @@
     },
     computed: {
       ...mapGetters([
-        'getStoreId'
+        'getStoreId',
+        'getReportParams',
+        'getReportParam'
       ]),
       storeName () {
         let self = this;
@@ -254,28 +257,54 @@
       }
     },
     watch: {
-      dateFrom () {
+      dateFrom (value) {
+        this.setFilter('dateFrom', value);
+
         if (this.valid) {
           this.getReport();
         }
       },
-      dateTo () {
+      dateTo (value) {
+        this.setFilter('dateTo', value);
+
         if (this.valid) {
           this.getReport();
         }
       },
-      storeId () {
+      storeId (value) {
+        this.setFilter('storeId', value);
+
         if (this.valid) {
           this.getReport();
         }
       }
     },
     created () {
-      this.getStores();
+      let storeId = this.getReportParam('storeId');
+      let dateFrom = this.getReportParam('dateFrom');
+      let dateTo = this.getReportParam('dateTo');
 
-      this.storeId = this.getStoreId;
+      if (storeId) {
+        this.storeId = parseInt(storeId);
+      } else {
+        this.storeId = this.getStoreId;
+      }
+
+      if (dateFrom) {
+        this.dateFrom = dateFrom;
+      }
+
+      if (dateTo) {
+        this.dateTo = dateTo;
+      }
+
+      this.getStores();
     },
     methods: {
+      ...mapActions([
+        'setReportParam',
+        'deleteReportParam'
+      ]),
       getStores () {
         let self = this;
 
@@ -301,6 +330,18 @@
         .catch(function (error) {
           self.rows = [];
         });
+      },
+      setFilter (filter, value) {
+        if (!_.isNil(value)) {
+          this.setReportParam({
+            param: filter,
+            value: value
+          });
+        } else {
+          this.deleteReportParam({
+            param: filter
+          });
+        }
       }
     }
   }

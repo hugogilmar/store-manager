@@ -150,6 +150,9 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+  import _ from 'lodash';
+
   export default {
     data () {
       return {
@@ -183,6 +186,10 @@
       }
     },
     computed: {
+      ...mapGetters([
+        'getReportParams',
+        'getReportParam'
+      ]),
       valid () {
         return this.dateFrom && this.dateTo;
       },
@@ -218,18 +225,38 @@
       }
     },
     watch: {
-      dateFrom () {
+      dateFrom (value) {
+        this.setFilter('dateFrom', value);
+
         if (this.valid) {
           this.getReport();
         }
       },
-      dateTo () {
+      dateTo (value) {
+        this.setFilter('dateTo', value);
+
         if (this.valid) {
           this.getReport();
         }
       }
     },
+    created () {
+      let dateFrom = this.getReportParam('dateFrom');
+      let dateTo = this.getReportParam('dateTo');
+
+      if (dateFrom) {
+        this.dateFrom = dateFrom;
+      }
+
+      if (dateTo) {
+        this.dateTo = dateTo;
+      }
+    },
     methods: {
+      ...mapActions([
+        'setReportParam',
+        'deleteReportParam'
+      ]),
       getReport () {
         let self = this;
 
@@ -244,6 +271,18 @@
         .catch(function (error) {
           self.rows = [];
         });
+      },
+      setFilter (filter, value) {
+        if (!_.isNil(value)) {
+          this.setReportParam({
+            param: filter,
+            value: value
+          });
+        } else {
+          this.deleteReportParam({
+            param: filter
+          });
+        }
       }
     }
   }
