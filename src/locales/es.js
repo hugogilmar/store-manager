@@ -207,7 +207,9 @@ const translations = {
         productCategory: 'Ingresos por categoría',
         paymentMethod: 'Ingresos por método de pago',
         store: 'Ingresos por comercio',
-        charge: 'Ingresos por cargo'
+        charge: 'Ingresos por cargo',
+        billable: 'Facturable',
+        nonBillable: 'No facturable'
       }
     },
     session: {
