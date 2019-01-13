@@ -20,8 +20,9 @@
       :error-messages="errors.first('quantity')"
     ></v-text-field>
     <v-checkbox
-      :label="$t('orderLine.billable')"
+      :label="billableLabel"
       v-model="orderLine.billable"
+      v-if="billable"
     ></v-checkbox>
     <v-text-field
       v-model="orderLine.discountAmount"
@@ -30,6 +31,7 @@
       :data-vv-as="$t('orderLine.discountAmount').toLowerCase()"
       :label="$t('orderLine.discountAmount')"
       :error-messages="errors.first('discountAmount')"
+      v-if="billable"
     ></v-text-field>
     <v-text-field
       v-model="orderLine.comment"
@@ -80,12 +82,16 @@
     },
     props: [
       'orderId',
+      'billable',
       'storeId',
       'orderLineId'
     ],
     computed: {
       productId () {
         return this.product.id;
+      },
+      billableLabel () {
+        return this.orderLine.billable ? this.$t('orderLine.billable') : this.$t('orderLine.nonBillable');
       }
     },
     watch: {

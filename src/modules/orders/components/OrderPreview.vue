@@ -57,15 +57,15 @@
           <td colspan="3" class="text-xs-right">{{ $t('order.subtotal') }}</td>
           <td class="text-xs-right">{{ order.subtotal | currency }}</td>
         </tr>
-        <tr>
+        <tr v-if="order.billable">
           <td colspan="3" class="text-xs-right">{{ $t('order.taxesTotal') }}</td>
           <td class="text-xs-right">{{ order.taxesTotal | currency }}</td>
         </tr>
-        <tr>
+        <tr v-if="order.billable">
           <td colspan="3" class="text-xs-right">{{ $t('order.discountsTotal') }}</td>
           <td class="text-xs-right">{{ order.discountsTotal | currency }}</td>
         </tr>
-        <tr>
+        <tr v-if="order.billable">
           <td colspan="3" class="text-xs-right">{{ $t('order.chargesTotal') }}</td>
           <td class="text-xs-right">{{ order.chargesTotal | currency }}</td>
         </tr>

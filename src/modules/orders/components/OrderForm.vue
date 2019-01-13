@@ -79,9 +79,17 @@
       :error-messages="errors.first('locationId')"
     ></v-select>
     <v-checkbox
-      :label="$t('order.billable')"
+      :label="billableLabel"
+      :disabled="order.id"
       v-model="order.billable"
+      v-if="!order.id"
     ></v-checkbox>
+    <v-input
+      :prepend-icon="billableIcon"
+      v-else
+    >
+      {{ billableLabel }}
+    </v-input>
     <v-text-field
       v-model="order.comment"
       v-validate="'max:48'"
@@ -130,6 +138,12 @@
     computed: {
       storeId() {
         return this.order.storeId;
+      },
+      billableLabel () {
+        return this.order.billable ? this.$t('order.billable') : this.$t('order.nonBillable');
+      },
+      billableIcon () {
+        return this.order.billable ? 'check' : 'close';
       }
     },
     watch: {

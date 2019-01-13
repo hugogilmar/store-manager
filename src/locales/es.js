@@ -142,6 +142,7 @@ const translations = {
       chargesTotal: 'Cargos adicionales',
       balance: 'Balance',
       billable: 'Facturable',
+      nonBillable: 'No facturable',
       location: 'Ubicación',
       guests: 'Personas',
       discountAmount: 'Porcentaje de descuento',
@@ -172,6 +173,7 @@ const translations = {
       price: 'Precio',
       comment: 'Comentario',
       billable: 'Facturable',
+      nonBillable: 'No facturable',
       total: 'Total',
       discountAmount: 'Porcentaje de descuento',
       header: 'Productos'

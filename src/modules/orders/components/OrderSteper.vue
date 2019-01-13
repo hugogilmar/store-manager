@@ -42,6 +42,7 @@
         <v-stepper-content step="2">
           <order-line-list
             :orderId.sync="orderId"
+            :order-billable.sync="billable"
             :storeId.sync="storeId"
             :order-lines.sync="orderLines"
             @order-line-created="orderLineCreated"
@@ -66,12 +67,16 @@
         <v-stepper-step
           :editable="stepEditable(3)"
           step="3"
+          v-if="order.billable"
         >
           {{ $t('order.steps.three.title') }}
           <small>{{ $t('order.steps.three.summary') }}</small>
         </v-stepper-step>
 
-        <v-stepper-content step="3">
+        <v-stepper-content
+          step="3"
+          v-if="order.billable"
+        >
           <order-charge-list
             :orderId.sync="orderId"
             :storeId.sync="storeId"
@@ -98,12 +103,16 @@
         <v-stepper-step
           :editable="stepEditable(4)"
           step="4"
+          v-if="order.billable"
         >
           {{ $t('order.steps.four.title') }}
           <small>{{ $t('order.steps.four.summary') }}</small>
         </v-stepper-step>
 
-        <v-stepper-content step="4">
+        <v-stepper-content
+          step="4"
+          v-if="order.billable"
+        >
           <invoice-list
             :orderId.sync="orderId"
             :balance.sync="balance"
@@ -173,6 +182,9 @@
       },
       balance () {
         return this.order.balance;
+      },
+      billable () {
+        return this.order.billable;
       }
     },
     created () {
