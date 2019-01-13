@@ -212,6 +212,13 @@ const translations = {
         charge: 'Ingresos por cargo',
         billable: 'Facturable',
         nonBillable: 'No facturable'
+      },
+      title: {
+        product: 'Reporte de ingresos por producto',
+        productCategory: 'Reporte de ingresos por categoría',
+        paymentMethod: 'Reporte de ingresos por método de pago',
+        store: 'Reporte de ingresos por comercio',
+        charge: 'Reporte de ingresos por cargo',
       }
     },
     session: {

@@ -63,6 +63,14 @@
       </v-flex>
       <v-flex xs9 class="pa-4">
         <div id="report">
+          <div class="mb-2 pa-2">
+            <h3 class="title">{{ $t('report.title.productCategory') }}</h3>
+            <p class="my-4">
+              <strong class="mr-2">{{ $t('report.store') }}:</strong> {{ storeName }}
+              <strong class="ml-4 mr-2">{{ $t('report.dateFrom') }}:</strong> {{ dateFrom }}
+              <strong class="ml-4 mr-2">{{ $t('report.dateTo') }}:</strong> {{ dateTo }}
+            </p>
+          </div>
           <v-subheader>{{ $t('report.header.billable') }}</v-subheader>
           <v-data-table
             hide-actions
@@ -187,6 +195,15 @@
       ...mapGetters([
         'getStoreId'
       ]),
+      storeName () {
+        let self = this;
+
+        let store = this.stores.find(function (store) {
+          return store.id == self.storeId;
+        });
+
+        return store ? store.name : '';
+      },
       valid () {
         return this.storeId && this.dateFrom && this.dateTo;
       },
