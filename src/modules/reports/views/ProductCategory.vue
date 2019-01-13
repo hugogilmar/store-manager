@@ -63,74 +63,89 @@
       </v-flex>
       <v-flex xs9 class="pa-4">
         <div id="report">
-          <div class="mb-2 pa-2">
-            <h3 class="title">{{ $t('report.title.productCategory') }}</h3>
-            <p class="my-4">
-              <strong class="mr-2">{{ $t('report.store') }}:</strong> {{ storeName }}
-              <strong class="ml-4 mr-2">{{ $t('report.dateFrom') }}:</strong> {{ dateFrom }}
-              <strong class="ml-4 mr-2">{{ $t('report.dateTo') }}:</strong> {{ dateTo }}
-            </p>
-          </div>
-          <v-subheader>{{ $t('report.header.billable') }}</v-subheader>
-          <v-data-table
-            hide-actions
-            :headers="headers"
-            :items="billableRows"
-          >
-            <template slot="no-data">
-              <v-alert
-                :value="true"
-                type="info"
-              >
-                {{ $t('alert.empty') }}
-              </v-alert>
-            </template>
-            <template slot="items" slot-scope="report">
-              <tr>
-                <td class="text-xs-center" width="100">{{ report.item.code }}</td>
-                <td>{{ report.item.name }}</td>
-                <td class="text-xs-center" width="160">{{ report.item.quantity }}</td>
-                <td class="text-xs-right" width="160">{{ report.item.total | currency }}</td>
-              </tr>
-            </template>
-            <template slot="footer">
-              <tr>
-                <td colspan="2" class="text-xs-right">{{ $t('report.total') }}</td>
-                <td class="text-xs-center">{{ billableQuantity }}</td>
-                <td class="text-xs-right">{{ billableTotal | currency }}</td>
-              </tr>
-            </template>
-          </v-data-table>
-          <v-subheader>{{ $t('report.header.nonBillable') }}</v-subheader>
-          <v-data-table
-            hide-actions
-            :headers="headers"
-            :items="nonBillableRows"
-          >
-            <template slot="no-data">
-              <v-alert
-                :value="true"
-                type="info"
-              >
-                {{ $t('alert.empty') }}
-              </v-alert>
-            </template>
-            <template slot="items" slot-scope="report">
-              <tr>
-                <td class="text-xs-center" width="100">{{ report.item.code }}</td>
-                <td>{{ report.item.name }}</td>
-                <td class="text-xs-center" width="160">{{ report.item.quantity }}</td>
-                <td class="text-xs-right" width="160">{{ report.item.total | currency }}</td>
-              </tr>
-            </template>
-            <template slot="footer">
-              <tr>
-                <td colspan="2" class="text-xs-right">{{ $t('report.total') }}</td>
-                <td class="text-xs-center">{{ nonBillableQuantity }}</td>
-                <td class="text-xs-right">{{ nonBillableTotal | currency }}</td>
-              </tr>
-            </template>
-          </v-data-table>
+          <v-container grid-list-md>
+            <h3 class="headline mb-4">{{ $t('report.title.productCategory') }}</h3>
+            <v-layout wrap>
+              <v-flex xs4>
+                <p class="mb-1">{{ storeName }}</p>
+                <p>
+                  <small>{{ $t('order.store') }}</small>
+                </p>
+              </v-flex>
+              <v-flex xs4>
+                <p class="mb-1">{{ dateFrom }}</p>
+                <p>
+                  <small>{{ $t('report.dateFrom') }}</small>
+                </p>
+              </v-flex>
+              <v-flex xs4>
+                <p class="mb-1">{{ dateTo }}</p>
+                <p>
+                  <small>{{ $t('report.dateTo') }}</small>
+                </p>
+              </v-flex>
+            </v-layout>
+            <v-subheader>{{ $t('report.header.billable') }}</v-subheader>
+            <v-data-table
+              hide-actions
+              :headers="headers"
+              :items="billableRows"
+            >
+              <template slot="no-data">
+                <v-alert
+                  :value="true"
+                  type="info"
+                >
+                  {{ $t('alert.empty') }}
+                </v-alert>
+              </template>
+              <template slot="items" slot-scope="report">
+                <tr>
+                  <td class="text-xs-center" width="100">{{ report.item.code }}</td>
+                  <td>{{ report.item.name }}</td>
+                  <td class="text-xs-center" width="160">{{ report.item.quantity }}</td>
+                  <td class="text-xs-right" width="160">{{ report.item.total | currency }}</td>
+                </tr>
+              </template>
+              <template slot="footer">
+                <tr>
+                  <td colspan="2" class="text-xs-right">{{ $t('report.total') }}</td>
+                  <td class="text-xs-center">{{ billableQuantity }}</td>
+                  <td class="text-xs-right">{{ billableTotal | currency }}</td>
+                </tr>
+              </template>
+            </v-data-table>
+            <v-subheader>{{ $t('report.header.nonBillable') }}</v-subheader>
+            <v-data-table
+              hide-actions
+              :headers="headers"
+              :items="nonBillableRows"
+            >
+              <template slot="no-data">
+                <v-alert
+                  :value="true"
+                  type="info"
+                >
+                  {{ $t('alert.empty') }}
+                </v-alert>
+              </template>
+              <template slot="items" slot-scope="report">
+                <tr>
+                  <td class="text-xs-center" width="100">{{ report.item.code }}</td>
+                  <td>{{ report.item.name }}</td>
+                  <td class="text-xs-center" width="160">{{ report.item.quantity }}</td>
+                  <td class="text-xs-right" width="160">{{ report.item.total | currency }}</td>
+                </tr>
+              </template>
+              <template slot="footer">
+                <tr>
+                  <td colspan="2" class="text-xs-right">{{ $t('report.total') }}</td>
+                  <td class="text-xs-center">{{ nonBillableQuantity }}</td>
+                  <td class="text-xs-right">{{ nonBillableTotal | currency }}</td>
+                </tr>
+              </template>
+            </v-data-table>
+          </v-container>
         </div>
       </v-flex>
     </v-layout>

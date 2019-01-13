@@ -2,7 +2,7 @@
   <v-card>
     <div id="report">
       <v-container grid-list-md>
-        <h3 class="headline">{{ $t('order.title', { referenceNumber: order.referenceNumber }) }}</h3>
+        <h3 class="headline mb-4">{{ $t('order.title', { referenceNumber: order.referenceNumber }) }}</h3>
         <v-layout wrap>
           <v-flex xs3>
             <p class="mb-1" v-if="order.store">{{ order.store.name }}</p>
