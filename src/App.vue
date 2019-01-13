@@ -16,7 +16,7 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
-  import Navitation from './components/layout/Navigation.vue';
+  import Navigation from './components/layout/Navigation.vue';
   import Toolbar from './components/layout/Toolbar.vue';
   import Loading from './components/layout/Loading.vue';
   import Notification from './components/layout/Notification.vue';
@@ -24,7 +24,7 @@
   export default {
     name: 'App',
     components: {
-      'navigation': Navitation,
+      'navigation': Navigation,
       'toolbar': Toolbar,
       'loading': Loading,
       'notification': Notification
