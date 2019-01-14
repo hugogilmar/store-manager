@@ -14,7 +14,6 @@
     <v-list-tile
       v-for="orderLine in orderLines"
       :key="orderLine.id"
-      avatar
       @click="editOrderLine(orderLine.id)"
     >
       <v-list-tile-action>
@@ -24,9 +23,6 @@
         <v-list-tile-title>{{ orderLine.product.name }}</v-list-tile-title>
         <v-list-tile-sub-title>{{ orderLine.quantity }} x {{ orderLine.price | currency }} - {{ orderLine.discountsTotal | currency }} ({{ orderLine.discountAmount | percentage }}) = {{ orderLine.total | currency }}</v-list-tile-sub-title>
       </v-list-tile-content>
-      <v-list-tile-avatar v-if="orderLine.avatar">
-        <img :src="orderLine.avatar">
-      </v-list-tile-avatar>
     </v-list-tile>
     <v-dialog
       v-model="dialog"

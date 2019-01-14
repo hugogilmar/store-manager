@@ -23,7 +23,6 @@
         <v-list-tile
           v-for="charge in charges"
           :key="charge.id"
-          avatar
           @click="editCharge(charge.id)"
         >
           <v-list-tile-action>
@@ -33,9 +32,6 @@
             <v-list-tile-title>{{ charge.name }}</v-list-tile-title>
             <v-list-tile-sub-title>{{ charge.code }}</v-list-tile-sub-title>
           </v-list-tile-content>
-          <v-list-tile-avatar v-if="charge.avatar">
-            <img :src="charge.avatar">
-          </v-list-tile-avatar>
         </v-list-tile>
       </v-list>
     </v-flex>

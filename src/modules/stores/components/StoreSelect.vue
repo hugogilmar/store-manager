@@ -10,7 +10,6 @@
     <v-list-tile
       v-for="store in stores"
       :key="store.id"
-      avatar
       @click="selectStore(store.id)"
     >
       <v-list-tile-action>
@@ -19,9 +18,6 @@
       <v-list-tile-content>
         <v-list-tile-title>{{ store.name }}</v-list-tile-title>
       </v-list-tile-content>
-      <v-list-tile-avatar v-if="store.avatar">
-        <img :src="store.avatar">
-      </v-list-tile-avatar>
       <v-list-tile-action v-if="store.id == storeId">
         <v-icon>check</v-icon>
       </v-list-tile-action>

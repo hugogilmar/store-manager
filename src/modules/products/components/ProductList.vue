@@ -33,7 +33,6 @@
         <v-list-tile
           v-for="product in products"
           :key="product.id"
-          avatar
           @click="editProduct(product.id)"
         >
           <v-list-tile-action>
@@ -43,9 +42,6 @@
             <v-list-tile-title>{{ product.name }}</v-list-tile-title>
             <v-list-tile-sub-title>{{ product.code }} - {{ product.price | currency }}</v-list-tile-sub-title>
           </v-list-tile-content>
-          <v-list-tile-avatar v-if="product.avatar">
-            <img :src="product.avatar">
-          </v-list-tile-avatar>
         </v-list-tile>
       </v-list>
       <pagination

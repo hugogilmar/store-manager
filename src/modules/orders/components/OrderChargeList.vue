@@ -14,7 +14,6 @@
     <v-list-tile
       v-for="orderCharge in orderCharges"
       :key="orderCharge.id"
-      avatar
       @click="editOrderCharge(orderCharge.id)"
     >
       <v-list-tile-action>
@@ -24,9 +23,6 @@
         <v-list-tile-title>{{ orderCharge.charge.name }}</v-list-tile-title>
         <v-list-tile-sub-title>{{ orderCharge.amount | percentage }}</v-list-tile-sub-title>
       </v-list-tile-content>
-      <v-list-tile-avatar v-if="orderCharge.avatar">
-        <img :src="orderCharge.avatar">
-      </v-list-tile-avatar>
     </v-list-tile>
     <v-dialog
       v-model="dialog"

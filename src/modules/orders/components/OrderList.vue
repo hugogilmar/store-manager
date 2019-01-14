@@ -46,7 +46,6 @@
         <v-list-tile
           v-for="order in orders"
           :key="order.id"
-          avatar
           @click="editOrder(order.id)"
         >
           <v-list-tile-action>
@@ -56,9 +55,6 @@
             <v-list-tile-title>{{ order.referenceNumber }}</v-list-tile-title>
             <v-list-tile-sub-title>{{ order.total | currency }}</v-list-tile-sub-title>
           </v-list-tile-content>
-          <v-list-tile-avatar v-if="order.avatar">
-            <img :src="order.avatar">
-          </v-list-tile-avatar>
         </v-list-tile>
       </v-list>
     </v-flex>

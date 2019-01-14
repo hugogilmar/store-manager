@@ -14,7 +14,6 @@
     <v-list-tile
       v-for="invoice in invoices"
       :key="invoice.id"
-      avatar
       @click="editInvoice(invoice.id)"
     >
       <v-list-tile-action>
@@ -24,9 +23,6 @@
         <v-list-tile-title>{{ invoice.paymentMethod.name }}</v-list-tile-title>
         <v-list-tile-sub-title>{{ invoice.amount | currency }}</v-list-tile-sub-title>
       </v-list-tile-content>
-      <v-list-tile-avatar v-if="invoice.avatar">
-        <img :src="invoice.avatar">
-      </v-list-tile-avatar>
     </v-list-tile>
     <v-dialog
       v-model="dialog"
