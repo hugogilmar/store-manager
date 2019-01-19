@@ -1,29 +1,46 @@
 <template>
   <v-form v-model="valid" lazy-validation>
-    <v-select
-      v-model="orderCharge.chargeId"
-      v-validate="'required'"
-      data-vv-name="chargeId"
-      item-text="name"
-      item-value="id"
-      :items="charges"
-      :data-vv-as="$t('orderCharge.charge').toLowerCase()"
-      :label="$t('orderCharge.charge')"
-      :error-messages="errors.first('chargeId')"
-    ></v-select>
-    <v-btn
-      flat
-      @click="cancel"
-    >
-      {{ $t('label.cancel') }}
-    </v-btn>
-    <v-btn
-      color="primary"
-      :disabled="!valid"
-      @click="submit"
-    >
-      {{ $t('label.save') }}
-    </v-btn>
+    <v-card>
+      <v-card-title
+        class="headline"
+      >
+        {{ $t('dialog.add.title', { entity: $tc('entities.orderLine', 1) }) }}
+      </v-card-title>
+      <v-card-text>
+        {{ $t('dialog.add.message', { entity: $tc('entities.orderLine', 1) }) }}
+      </v-card-text>
+      <v-card-text>
+        <v-select
+          v-model="orderCharge.chargeId"
+          v-validate="'required'"
+          data-vv-name="chargeId"
+          item-text="name"
+          item-value="id"
+          :items="charges"
+          :data-vv-as="$t('orderCharge.charge').toLowerCase()"
+          :label="$t('orderCharge.charge')"
+          :error-messages="errors.first('chargeId')"
+        ></v-select>
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+          flat
+          @click="closeDialog"
+        >
+          {{ $t('label.cancel') }}
+        </v-btn>
+        <v-btn
+          flat
+          color="primary"
+          :disabled="!valid"
+          @click="submit"
+        >
+          {{ $t('label.save') }}
+        </v-btn>
+      </v-card-actions>
+    </v-card>
   </v-form>
 </template>
 
@@ -130,12 +147,12 @@
           chargeId: this.orderCharge.chargeId
         })
         .then(function (response) {
-          self.$emit('order-charge-created');
           self.displaySnackbar({
             color: 'success',
             message: self.$t('notification.success.create')
           });
-          self.resetOrderCharge();
+          self.reset();
+          self.$emit('order-charge-created');
         })
         .catch(function (error) {
           self.displaySnackbar({
@@ -152,12 +169,12 @@
           chargeId: this.orderCharge.chargeId
         })
         .then(function (response) {
-          self.$emit('order-charge-updated');
           self.displaySnackbar({
             color: 'success',
             message: self.$t('notification.success.update')
           });
-          self.resetOrderCharge();
+          self.reset();
+          self.$emit('order-charge-updated');
         })
         .catch(function (error) {
           self.displaySnackbar({
@@ -180,10 +197,13 @@
           }
         });
       },
-      cancel () {
-        this.$emit('cancel');
-        this.$validator.reset();
+      reset () {
         this.resetOrderCharge();
+        this.$validator.reset();
+      },
+      closeDialog () {
+        this.reset();
+        this.$emit('close-dialog');
       }
     }
   };

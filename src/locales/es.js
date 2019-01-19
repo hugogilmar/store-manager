@@ -90,6 +90,7 @@ const translations = {
       charge: 'cargo | cargos',
       order: 'orden | ordenes',
       orderLine: 'producto | productos',
+      orderCharge: 'cargo | cargos',
       location: 'ubicación | ubicaciones',
       invoice: 'factura | facturas',
       report: 'reporte | reportes',

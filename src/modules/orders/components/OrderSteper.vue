@@ -84,6 +84,7 @@
             :order-charges.sync="orderCharges"
             @order-charge-created="orderChargeCreated"
             @order-charge-updated="orderChargeUpdated"
+            @order-charge-deleted="orderChargeDeleted"
           />
           <v-fab-transition>
             <v-btn
@@ -330,6 +331,11 @@
         this.getOrderCharges(orderId);
       },
       orderChargeUpdated () {
+        let orderId = this.orderId;
+        this.getOrder(orderId);
+        this.getOrderCharges(orderId);
+      },
+      orderChargeDeleted () {
         let orderId = this.orderId;
         this.getOrder(orderId);
         this.getOrderCharges(orderId);
