@@ -113,7 +113,7 @@
       orderChargeDeleted () {
         this.dialog = false;
         this.orderChargeId = null;
-        this.$emit('order-line-deleted');
+        this.$emit('order-charge-deleted');
       },
       editOrderCharge (orderChargeId) {
         this.orderChargeId = orderChargeId;
