@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
-import store from '../store';
+import store from '../store/';
 
 let config = {
   baseURL: process.env.VUE_APP_API_BASE
@@ -10,8 +10,10 @@ const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
   function(config) {
-    if (store.getters.authenticationToken) {
-      config.headers.Authorization = store.getters.authenticationToken;
+    let authenticationToken = store.getters.getAuthenticationToken;
+
+    if (authenticationToken) {
+      config.headers.Authorization = authenticationToken;
     }
 
     store.dispatch('showLoader');

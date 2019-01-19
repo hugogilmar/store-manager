@@ -23,7 +23,6 @@
         <v-list-tile
           v-for="location in locations"
           :key="location.id"
-          avatar
           @click="editLocation(location.id)"
         >
           <v-list-tile-action>
@@ -33,9 +32,6 @@
             <v-list-tile-title>{{ location.name }}</v-list-tile-title>
             <v-list-tile-sub-title>{{ location.code }}</v-list-tile-sub-title>
           </v-list-tile-content>
-          <v-list-tile-avatar v-if="location.avatar">
-            <img :src="location.avatar">
-          </v-list-tile-avatar>
         </v-list-tile>
       </v-list>
     </v-flex>
@@ -43,26 +39,49 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'LocationList',
     data () {
       return {
         storeId: null,
         stores: [],
-        locations: [],
-        params: new URLSearchParams()
+        locations: []
       }
     },
     watch: {
       storeId (value) {
-        this.params.set('filter[where][storeId]', value);
+        this.setLocationParam({
+          param: 'filter[where][storeId]',
+          value: value
+        });
+
         this.getLocations();
       }
     },
+    computed: {
+      ...mapGetters([
+        'getLocationParams',
+        'getLocationParam',
+        'getStoreId'
+      ])
+    },
     created () {
+      let storeId = this.getLocationParam('filter[where][storeId]');
+
+      if (storeId) {
+        this.storeId = parseInt(storeId);
+      } else {
+        this.storeId = this.getStoreId;
+      }
+
       this.getStores();
     },
     methods: {
+      ...mapActions([
+        'setLocationParam'
+      ]),
       getStores () {
         let self = this;
 
@@ -78,7 +97,7 @@
         let self = this;
 
         this.$axios.get('/locations', {
-          params: this.params
+          params: this.getLocationParams
         })
         .then(function (response) {
           self.locations = response.data;

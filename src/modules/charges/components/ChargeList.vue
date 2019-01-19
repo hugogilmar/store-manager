@@ -23,7 +23,6 @@
         <v-list-tile
           v-for="charge in charges"
           :key="charge.id"
-          avatar
           @click="editCharge(charge.id)"
         >
           <v-list-tile-action>
@@ -33,9 +32,6 @@
             <v-list-tile-title>{{ charge.name }}</v-list-tile-title>
             <v-list-tile-sub-title>{{ charge.code }}</v-list-tile-sub-title>
           </v-list-tile-content>
-          <v-list-tile-avatar v-if="charge.avatar">
-            <img :src="charge.avatar">
-          </v-list-tile-avatar>
         </v-list-tile>
       </v-list>
     </v-flex>
@@ -43,26 +39,49 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'ChargeList',
     data () {
       return {
         storeId: null,
         stores: [],
-        charges: [],
-        params: new URLSearchParams()
+        charges: []
       }
     },
     watch: {
       storeId (value) {
-        this.params.set('filter[where][storeId]', value);
+        this.setChargeParam({
+          param: 'filter[where][storeId]',
+          value: value
+        });
+
         this.getCharges();
       }
     },
+    computed: {
+      ...mapGetters([
+        'getChargeParams',
+        'getChargeParam',
+        'getStoreId'
+      ])
+    },
     created () {
+      let storeId = this.getChargeParam('filter[where][storeId]');
+
+      if (storeId) {
+        this.storeId = parseInt(storeId);
+      } else {
+        this.storeId = this.getStoreId;
+      }
+
       this.getStores();
     },
     methods: {
+      ...mapActions([
+        'setChargeParam'
+      ]),
       getStores () {
         let self = this;
 
@@ -78,7 +97,7 @@
         let self = this;
 
         this.$axios.get('/charges', {
-          params: this.params
+          params: this.getChargeParams
         })
         .then(function (response) {
           self.charges = response.data;

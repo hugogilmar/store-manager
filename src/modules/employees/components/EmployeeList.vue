@@ -23,7 +23,6 @@
         <v-list-tile
           v-for="employee in employees"
           :key="employee.id"
-          avatar
           @click="editEmployee(employee.id)"
         >
           <v-list-tile-action>
@@ -33,9 +32,6 @@
             <v-list-tile-title>{{ employee.name }}</v-list-tile-title>
             <v-list-tile-sub-title>{{ employee.code }}</v-list-tile-sub-title>
           </v-list-tile-content>
-          <v-list-tile-avatar v-if="employee.avatar">
-            <img :src="employee.avatar">
-          </v-list-tile-avatar>
         </v-list-tile>
       </v-list>
     </v-flex>
@@ -43,26 +39,49 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'EmployeeList',
     data () {
       return {
         storeId: null,
         stores: [],
-        employees: [],
-        params: new URLSearchParams()
+        employees: []
       }
     },
     watch: {
       storeId (value) {
-        this.params.set('filter[where][storeId]', value);
+        this.setEmployeeParam({
+          param: 'filter[where][storeId]',
+          value: value
+        });
+
         this.getEmployees();
       }
     },
+    computed: {
+      ...mapGetters([
+        'getEmployeeParams',
+        'getEmployeeParam',
+        'getStoreId'
+      ])
+    },
     created () {
+      let storeId = this.getEmployeeParam('filter[where][storeId]');
+
+      if (storeId) {
+        this.storeId = parseInt(storeId);
+      } else {
+        this.storeId = this.getStoreId;
+      }
+
       this.getStores();
     },
     methods: {
+      ...mapActions([
+        'setEmployeeParam'
+      ]),
       getStores () {
         let self = this;
 
@@ -78,7 +97,7 @@
         let self = this;
 
         this.$axios.get('/employees', {
-          params: this.params
+          params: this.getEmployeeParams
         })
         .then(function (response) {
           self.employees = response.data;

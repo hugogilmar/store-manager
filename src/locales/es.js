@@ -24,7 +24,9 @@ const translations = {
         paymentMethodsReport: 'Ingresos por método de pago',
         storesReport: 'Ingresos por comercio',
         chargesReport: 'Ingresos por cargos',
-        darkMode: 'Modo nocturno'
+        consolidatedReport: 'Ingresos consolidados',
+        darkMode: 'Modo nocturno',
+        selectStore: 'Seleccionar comercio'
       }
     },
     label: {
@@ -37,10 +39,13 @@ const translations = {
       delete: 'Eliminar',
       back: 'Regresar',
       login: 'Iniciar sesión',
-      logout: 'Cerrar sesión'
+      logout: 'Cerrar sesión',
+      print: 'Imprimir'
     },
     alert: {
-      empty: 'No hay registros que mostrar.'
+      empty: 'No hay registros que mostrar',
+      login: 'Debe iniciar sesión antes de continuar',
+      selectStore: 'Debe seleccionar un comercio antes de continuar'
     },
     notification: {
       failure: {
@@ -60,7 +65,8 @@ const translations = {
       new: 'Crear %{entity}',
       edit: 'Editar %{entity}',
       list: 'Lista de %{entity}',
-      start: 'Iniciar %{entity}'
+      start: 'Iniciar %{entity}',
+      select: 'Seleccionar %{entity}'
     },
     dialog: {
       add: {
@@ -84,6 +90,8 @@ const translations = {
       employee: 'empleado | empleados',
       charge: 'cargo | cargos',
       order: 'orden | ordenes',
+      orderLine: 'producto | productos',
+      orderCharge: 'cargo | cargos',
       location: 'ubicación | ubicaciones',
       invoice: 'factura | facturas',
       report: 'reporte | reportes',
@@ -125,9 +133,9 @@ const translations = {
       store: 'Comercio'
     },
     order: {
-      title: 'Orden #%{number}',
+      title: 'Orden #%{referenceNumber}',
       date: 'Fecha',
-      number: 'Número',
+      referenceNumber: 'Número de referencia',
       store: 'Comercio',
       employee: 'Empleado',
       total: 'Total',
@@ -137,6 +145,7 @@ const translations = {
       chargesTotal: 'Cargos adicionales',
       balance: 'Balance',
       billable: 'Facturable',
+      nonBillable: 'No facturable',
       location: 'Ubicación',
       guests: 'Personas',
       discountAmount: 'Porcentaje de descuento',
@@ -167,6 +176,7 @@ const translations = {
       price: 'Precio',
       comment: 'Comentario',
       billable: 'Facturable',
+      nonBillable: 'No facturable',
       total: 'Total',
       discountAmount: 'Porcentaje de descuento',
       header: 'Productos'
@@ -202,7 +212,18 @@ const translations = {
         productCategory: 'Ingresos por categoría',
         paymentMethod: 'Ingresos por método de pago',
         store: 'Ingresos por comercio',
-        charge: 'Ingresos por cargo'
+        charge: 'Ingresos por cargo',
+        consolidated: 'Ingresos consolidados',
+        billable: 'Facturable',
+        nonBillable: 'No facturable'
+      },
+      title: {
+        product: 'Reporte de ingresos por producto',
+        productCategory: 'Reporte de ingresos por categoría',
+        paymentMethod: 'Reporte de ingresos por método de pago',
+        store: 'Reporte de ingresos por comercio',
+        charge: 'Reporte de ingresos por cargo',
+        consolidated: 'Reporte de ingresos consolidados'
       }
     },
     session: {

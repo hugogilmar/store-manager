@@ -8,7 +8,6 @@
         :label="$t('product.store')"
         item-text="name"
         item-value="id"
-        required
       ></v-select>
       <v-menu
         ref="menu"
@@ -47,19 +46,15 @@
         <v-list-tile
           v-for="order in orders"
           :key="order.id"
-          avatar
           @click="editOrder(order.id)"
         >
           <v-list-tile-action>
             <v-icon>star</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{ order.number }}</v-list-tile-title>
+            <v-list-tile-title>{{ order.referenceNumber }}</v-list-tile-title>
             <v-list-tile-sub-title>{{ order.total | currency }}</v-list-tile-sub-title>
           </v-list-tile-content>
-          <v-list-tile-avatar v-if="order.avatar">
-            <img :src="order.avatar">
-          </v-list-tile-avatar>
         </v-list-tile>
       </v-list>
     </v-flex>
@@ -67,6 +62,8 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'OrderList',
     data () {
@@ -75,33 +72,61 @@
         storeId: null,
         date: null,
         stores: [],
-        orders: [],
-        params: new URLSearchParams()
-      }
-    },
-    computed: {
-      valid () {
-        return this.storeId && this.date;
+        orders: []
       }
     },
     watch: {
-      date (value) {
-        this.params.set('filter[where][date]', value);
+      storeId (value) {
+        this.setOrderParam({
+          param: 'filter[where][storeId]',
+          value: value
+        });
+
         if (this.valid) {
           this.getOrders();
         }
       },
-      storeId (value) {
-        this.params.set('filter[where][storeId]', value);
+      date (value) {
+        this.setOrderParam({
+          param: 'filter[where][date]',
+          value: value
+        });
+
         if (this.valid) {
           this.getOrders();
         }
       }
     },
+    computed: {
+      ...mapGetters([
+        'getOrderParams',
+        'getOrderParam',
+        'getStoreId'
+      ]),
+      valid () {
+        return this.storeId && this.date;
+      }
+    },
     created () {
+      let storeId = this.getOrderParam('filter[where][storeId]');
+      let date = this.getOrderParam('filter[where][date]');
+
+      if (storeId) {
+        this.storeId = parseInt(storeId);
+      } else {
+        this.storeId = this.getStoreId;
+      }
+
+      if (date) {
+        this.date = date;
+      }
+
       this.getStores();
     },
     methods: {
+      ...mapActions([
+        'setOrderParam'
+      ]),
       getStores () {
         let self = this;
 
@@ -117,7 +142,7 @@
         let self = this;
 
         this.$axios.get('/orders', {
-          params: this.params
+          params: this.getOrderParams
         })
         .then(function (response) {
           self.orders = response.data;

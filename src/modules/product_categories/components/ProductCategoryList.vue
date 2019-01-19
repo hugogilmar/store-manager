@@ -10,7 +10,6 @@
     <v-list-tile
       v-for="productCategory in productCategories"
       :key="productCategory.id"
-      avatar
       @click="editProductCategory(productCategory.id)"
     >
       <v-list-tile-action>
@@ -20,9 +19,6 @@
         <v-list-tile-title>{{ productCategory.name }}</v-list-tile-title>
         <v-list-tile-sub-title>{{ productCategory.code }}</v-list-tile-sub-title>
       </v-list-tile-content>
-      <v-list-tile-avatar v-if="productCategory.avatar">
-        <img :src="productCategory.avatar">
-      </v-list-tile-avatar>
     </v-list-tile>
   </v-list>
 </template>

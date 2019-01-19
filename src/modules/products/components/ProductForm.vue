@@ -20,7 +20,7 @@
     ></v-text-field>
     <v-text-field
       v-model="product.price"
-      v-validate="'required|decimal:2|min_value:1'"
+      v-validate="'required|decimal:2|min_value:0'"
       data-vv-name="price"
       :data-vv-as="$t('product.price').toLowerCase()"
       :label="$t('product.price')"
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
     name: 'ProductForm',
@@ -89,6 +89,11 @@
     props: [
       'productId'
     ],
+    computed: {
+      ...mapGetters([
+        'getStoreId'
+      ])
+    },
     created () {
       let productId = this.getProductId();
 
@@ -97,6 +102,8 @@
 
       if (productId) {
         this.getProduct(productId);
+      } else {
+        this.product.storeId = this.getStoreId;
       }
     },
     methods: {

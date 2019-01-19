@@ -1,16 +1,5 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import SecureLS from 'secure-ls';
-import router from './router';
-
-Vue.use(Vuex);
-
-let storage = new SecureLS();
-
-const store = new Vuex.Store({
+export default {
   state: {
-    authenticationToken: storage.get('authenticationToken'),
-    user: storage.get('user'),
     drawer: false,
     dark: false,
     loader: {
@@ -26,18 +15,6 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
-    login (state, payload) {
-      state.authenticationToken = payload.authenticationToken;
-      state.user = payload.user;
-      storage.set('authenticationToken', payload.authenticationToken);
-      storage.set('user', payload.user);
-    },
-    logout (state) {
-      state.authenticationToken = null;
-      state.user = {};
-      storage.remove('authenticationToken');
-      storage.remove('user');
-    },
     drawerToggle (state) {
       state.drawer = !state.drawer;
     },
@@ -57,12 +34,6 @@ const store = new Vuex.Store({
     }
   },
   getters: {
-    authenticationToken (state) {
-      return state.authenticationToken;
-    },
-    currentUser (state) {
-      return state.user;
-    },
     drawerOpen (state) {
       return state.drawer;
     },
@@ -98,36 +69,26 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    login({ commit }, payload) {
-      commit('login', payload);
-      router.push('/');
-    },
-    logout({ commit }) {
-      commit('logout');
-      router.push('/login');
-    },
-    drawerToggle({ commit }) {
+    drawerToggle ({ commit }) {
       commit('drawerToggle');
     },
-    darkThemeToggle({ commit }) {
+    darkThemeToggle ({ commit }) {
       commit('drawerToggle');
       commit('darkThemeToggle');
     },
-    showLoader ({commit}) {
+    showLoader ({ commit }) {
       commit('loaderLoading', true)
     },
-    hideLoader ({commit}) {
+    hideLoader ({ commit }) {
       setTimeout(function () {
         commit('loaderLoading', false);
       }, 1000);
     },
-    displaySnackbar ({commit}, payload) {
+    displaySnackbar ({ commit }, payload) {
       commit('displaySnackbar', payload);
     },
-    dismissSnackbar ({commit}) {
+    dismissSnackbar ({ commit }) {
       commit('dismissSnackbar');
     }
   }
-});
-
-export default store;
+}

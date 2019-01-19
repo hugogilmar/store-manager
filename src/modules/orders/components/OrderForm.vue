@@ -1,12 +1,13 @@
 <template>
   <v-form v-model="valid" lazy-validation>
     <v-text-field
-      v-model="order.number"
-      v-validate="'required|numeric|min_value:1'"
-      data-vv-name="number"
-      :data-vv-as="$t('order.number').toLowerCase()"
-      :label="$t('order.number')"
-      :error-messages="errors.first('number')"
+      v-model="order.referenceNumber"
+      v-validate="'alpha_num|max:48'"
+      data-vv-name="referenceNumber"
+      :data-vv-as="$t('order.referenceNumber').toLowerCase()"
+      :counter="48"
+      :label="$t('order.referenceNumber')"
+      :error-messages="errors.first('referenceNumber')"
     ></v-text-field>
     <v-text-field
       v-model="order.guests"
@@ -78,9 +79,17 @@
       :error-messages="errors.first('locationId')"
     ></v-select>
     <v-checkbox
-      :label="$t('order.billable')"
+      :label="billableLabel"
+      :disabled="order.id"
       v-model="order.billable"
+      v-if="!order.id"
     ></v-checkbox>
+    <v-input
+      :prepend-icon="billableIcon"
+      v-else
+    >
+      {{ billableLabel }}
+    </v-input>
     <v-text-field
       v-model="order.comment"
       v-validate="'max:48'"
@@ -120,10 +129,21 @@
     ],
     created () {
       this.getStores();
+
+      if (this.storeId) {
+        this.getEmployees(this.storeId);
+        this.getLocations(this.storeId);
+      }
     },
     computed: {
       storeId() {
         return this.order.storeId;
+      },
+      billableLabel () {
+        return this.order.billable ? this.$t('order.billable') : this.$t('order.nonBillable');
+      },
+      billableIcon () {
+        return this.order.billable ? 'check' : 'close';
       }
     },
     watch: {
@@ -192,7 +212,7 @@
         let self = this;
 
         this.$axios.post('/orders', {
-          number: this.order.number,
+          referenceNumber: this.order.referenceNumber,
           date: this.order.date,
           storeId: this.order.storeId,
           employeeId: this.order.employeeId,
@@ -221,7 +241,7 @@
         let self = this;
 
         this.$axios.patch(`/orders/${orderId}`, {
-          number: this.order.number,
+          referenceNumber: this.order.referenceNumber,
           date: this.order.date,
           storeId: this.order.storeId,
           employeeId: this.order.employeeId,

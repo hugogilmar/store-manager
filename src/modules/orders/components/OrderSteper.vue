@@ -42,10 +42,12 @@
         <v-stepper-content step="2">
           <order-line-list
             :orderId.sync="orderId"
+            :order-billable.sync="billable"
             :storeId.sync="storeId"
             :order-lines.sync="orderLines"
             @order-line-created="orderLineCreated"
             @order-line-updated="orderLineUpdated"
+            @order-line-deleted="orderLineDeleted"
           />
           <v-fab-transition>
             <v-btn
@@ -66,18 +68,23 @@
         <v-stepper-step
           :editable="stepEditable(3)"
           step="3"
+          v-if="order.billable"
         >
           {{ $t('order.steps.three.title') }}
           <small>{{ $t('order.steps.three.summary') }}</small>
         </v-stepper-step>
 
-        <v-stepper-content step="3">
+        <v-stepper-content
+          step="3"
+          v-if="order.billable"
+        >
           <order-charge-list
             :orderId.sync="orderId"
             :storeId.sync="storeId"
             :order-charges.sync="orderCharges"
             @order-charge-created="orderChargeCreated"
             @order-charge-updated="orderChargeUpdated"
+            @order-charge-deleted="orderChargeDeleted"
           />
           <v-fab-transition>
             <v-btn
@@ -98,18 +105,23 @@
         <v-stepper-step
           :editable="stepEditable(4)"
           step="4"
+          v-if="order.billable"
         >
           {{ $t('order.steps.four.title') }}
           <small>{{ $t('order.steps.four.summary') }}</small>
         </v-stepper-step>
 
-        <v-stepper-content step="4">
+        <v-stepper-content
+          step="4"
+          v-if="order.billable"
+        >
           <invoice-list
             :orderId.sync="orderId"
             :balance.sync="balance"
             :invoices.sync="invoices"
             @invoice-created="invoiceCreated"
             @invoice-updated="invoiceUpdated"
+            @invoice-deleted="invoiceDeleted"
           />
         </v-stepper-content>
       </v-stepper>
@@ -118,6 +130,7 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
   import moment from 'moment';
   import OrderPreview from '../components/OrderPreview.vue';
   import OrderForm from '../components/OrderForm.vue';
@@ -141,7 +154,7 @@
           storeId: null,
           employeeId: null,
           locationId: null,
-          number: null,
+          referenceNumber: null,
           date: null,
           location: null,
           guests: null,
@@ -164,11 +177,17 @@
       'orderId'
     ],
     computed: {
+      ...mapGetters([
+        'getStoreId'
+      ]),
       storeId () {
         return this.order.storeId;
       },
       balance () {
         return this.order.balance;
+      },
+      billable () {
+        return this.order.billable;
       }
     },
     created () {
@@ -179,6 +198,8 @@
         this.getOrderLines(orderId);
         this.getOrderCharges(orderId);
         this.getInvoices(orderId);
+      } else {
+        this.order.storeId = this.getStoreId;
       }
     },
     methods: {
@@ -300,6 +321,11 @@
         this.getOrder(orderId);
         this.getOrderLines(orderId);
       },
+      orderLineDeleted () {
+        let orderId = this.orderId;
+        this.getOrder(orderId);
+        this.getOrderLines(orderId);
+      },
       orderChargeCreated () {
         let orderId = this.orderId;
         this.getOrder(orderId);
@@ -310,12 +336,22 @@
         this.getOrder(orderId);
         this.getOrderCharges(orderId);
       },
+      orderChargeDeleted () {
+        let orderId = this.orderId;
+        this.getOrder(orderId);
+        this.getOrderCharges(orderId);
+      },
       invoiceCreated () {
         let orderId = this.orderId;
         this.getOrder(orderId);
         this.getInvoices(orderId);
       },
       invoiceUpdated () {
+        let orderId = this.orderId;
+        this.getOrder(orderId);
+        this.getInvoices(orderId);
+      },
+      invoiceDeleted () {
         let orderId = this.orderId;
         this.getOrder(orderId);
         this.getInvoices(orderId);

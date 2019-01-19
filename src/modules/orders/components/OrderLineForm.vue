@@ -1,58 +1,77 @@
 <template>
   <v-form v-model="valid" lazy-validation>
-    <v-combobox
-      v-model="product"
-      item-value="id"
-      v-validate="'required'"
-      data-vv-name="product"
-      :items="products"
-      :label="$t('orderLine.product')"
-      :item-text="productText"
-      :data-vv-as="$t('orderLine.product').toLowerCase()"
-      :error-messages="errors.first('product')"
-    ></v-combobox>
-    <v-text-field
-      v-model="orderLine.quantity"
-      v-validate="'required|numeric|min_value:1'"
-      data-vv-name="quantity"
-      :data-vv-as="$t('orderLine.quantity').toLowerCase()"
-      :label="$t('orderLine.quantity')"
-      :error-messages="errors.first('quantity')"
-    ></v-text-field>
-    <v-checkbox
-      :label="$t('orderLine.billable')"
-      v-model="orderLine.billable"
-    ></v-checkbox>
-    <v-text-field
-      v-model="orderLine.discountAmount"
-      v-validate="'numeric|min_value:0'"
-      data-vv-name="discountAmount"
-      :data-vv-as="$t('orderLine.discountAmount').toLowerCase()"
-      :label="$t('orderLine.discountAmount')"
-      :error-messages="errors.first('discountAmount')"
-    ></v-text-field>
-    <v-text-field
-      v-model="orderLine.comment"
-      v-validate="'max:48'"
-      data-vv-name="comment"
-      :data-vv-as="$t('orderLine.comment').toLowerCase()"
-      :counter="48"
-      :label="$t('orderLine.comment')"
-      :error-messages="errors.first('comment')"
-    ></v-text-field>
-    <v-btn
-      flat
-      @click="cancel"
-    >
-      {{ $t('label.cancel') }}
-    </v-btn>
-    <v-btn
-      color="primary"
-      :disabled="!valid"
-      @click="submit"
-    >
-      {{ $t('label.save') }}
-    </v-btn>
+    <v-card>
+      <v-card-title
+        class="headline"
+      >
+        {{ $t(dialogTitle, { entity: $tc('entities.orderLine', 1) }) }}
+      </v-card-title>
+      <v-card-text>
+        {{ $t(dialogMessage, { entity: $tc('entities.orderLine', 1) }) }}
+      </v-card-text>
+      <v-card-text>
+        <v-combobox
+          v-model="product"
+          item-value="id"
+          v-validate="'required'"
+          data-vv-name="product"
+          :items="products"
+          :label="$t('orderLine.product')"
+          :item-text="productText"
+          :data-vv-as="$t('orderLine.product').toLowerCase()"
+          :error-messages="errors.first('product')"
+        ></v-combobox>
+        <v-text-field
+          v-model="orderLine.quantity"
+          v-validate="'required|numeric|min_value:1'"
+          data-vv-name="quantity"
+          :data-vv-as="$t('orderLine.quantity').toLowerCase()"
+          :label="$t('orderLine.quantity')"
+          :error-messages="errors.first('quantity')"
+        ></v-text-field>
+        <v-checkbox
+          :label="billableLabel"
+          v-model="orderLine.billable"
+          v-if="billable"
+        ></v-checkbox>
+        <v-text-field
+          v-model="orderLine.discountAmount"
+          v-validate="'numeric|min_value:0'"
+          data-vv-name="discountAmount"
+          :data-vv-as="$t('orderLine.discountAmount').toLowerCase()"
+          :label="$t('orderLine.discountAmount')"
+          :error-messages="errors.first('discountAmount')"
+          v-if="billable"
+        ></v-text-field>
+        <v-text-field
+          v-model="orderLine.comment"
+          v-validate="'max:48'"
+          data-vv-name="comment"
+          :data-vv-as="$t('orderLine.comment').toLowerCase()"
+          :counter="48"
+          :label="$t('orderLine.comment')"
+          :error-messages="errors.first('comment')"
+        ></v-text-field>
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+          flat
+          @click="closeDialog"
+        >
+          {{ $t('label.cancel') }}
+        </v-btn>
+        <v-btn
+          flat
+          color="primary"
+          :disabled="!valid"
+          @click="submit"
+        >
+          {{ $t('label.save') }}
+        </v-btn>
+      </v-card-actions>
+    </v-card>
   </v-form>
 </template>
 
@@ -80,12 +99,22 @@
     },
     props: [
       'orderId',
+      'billable',
       'storeId',
       'orderLineId'
     ],
     computed: {
       productId () {
         return this.product.id;
+      },
+      billableLabel () {
+        return this.orderLine.billable ? this.$t('orderLine.billable') : this.$t('orderLine.nonBillable');
+      },
+      dialogTitle () {
+        return this.orderLineId ? 'dialog.edit.title' : 'dialog.add.title';
+      },
+      dialogMessage () {
+        return this.orderLineId ? 'dialog.add.message' : 'dialog.add.message';
       }
     },
     watch: {
@@ -247,11 +276,11 @@
       reset () {
         this.resetProduct();
         this.resetOrderLine();
-      },
-      cancel () {
-        this.reset();
         this.$validator.reset();
-        this.$emit('cancel');
+      },
+      closeDialog () {
+        this.reset();
+        this.$emit('close-dialog');
       }
     }
   };

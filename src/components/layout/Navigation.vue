@@ -8,8 +8,8 @@
       <v-layout pa-4 column fill-height>
         <v-spacer></v-spacer>
         <v-flex shrink>
-          <div class="subheading">{{ currentUser.name }}</div>
-          <div class="body-1">{{ currentUser.realm }}</div>
+          <div class="subheading">{{ user.name }}</div>
+          <div class="body-1">{{ user.realm }}</div>
         </v-flex>
       </v-layout>
     </v-responsive>
@@ -45,6 +45,16 @@
         <v-list-tile slot="activator">
           <v-list-tile-title>{{ $t('navigation.groups.settings') }}</v-list-tile-title>
         </v-list-tile>
+        <v-list-tile
+          @click.stop="selectStore"
+        >
+          <v-list-tile-action>
+            <v-icon>store</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ $t('navigation.links.selectStore') }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
         <v-list-tile @click="darkThemeToggle">
           <v-list-tile-action>
             <v-checkbox
@@ -78,6 +88,7 @@
     name: 'Navigation',
     data () {
       return {
+        user: null,
         groups: [
           {
             icon: 'menu',
@@ -168,16 +179,25 @@
             title: this.$t('navigation.links.productsReport'),
             path: '/reports/product',
             group: 'reports'
+          },
+          {
+            icon: 'date_range',
+            title: this.$t('navigation.links.consolidatedReport'),
+            path: '/reports/consolidated',
+            group: 'reports'
           }
         ]
       }
     },
     computed: {
       ...mapGetters([
-        'currentUser',
+        'getUser',
         'drawerOpen',
         'darkTheme'
       ])
+    },
+    created () {
+      this.user = this.getUser;
     },
     methods: {
       ...mapActions([
@@ -188,6 +208,9 @@
         return this.links.filter(function (link) {
           return link.group == group
         });
+      },
+      selectStore () {
+        this.$router.push({ path: '/stores/select' });
       }
     }
   }

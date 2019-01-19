@@ -3,13 +3,15 @@ import Vue from 'vue';
 import './plugins/axios';
 import './plugins/vuetify';
 import './plugins/vue-i18n';
+import './plugins/vue-print-nb';
 import './plugins/vee-validate';
+import './plugins/components';
 import './filters/number';
 import './filters/currency';
 import './filters/percentage';
 import App from './App.vue';
-import router from './router';
-import store from './store';
+import router from './router/';
+import store from './store/';
 import i18n from './i18n';
 
 Vue.config.productionTip = false;

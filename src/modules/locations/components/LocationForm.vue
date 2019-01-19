@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
     name: 'LocationForm',
@@ -58,12 +58,20 @@
     props: [
       'locationId'
     ],
+    computed: {
+      ...mapGetters([
+        'getStoreId'
+      ])
+    },
     created () {
       let locationId = this.getLocationId();
 
       this.getStores();
+
       if (locationId) {
         this.getLocation(locationId);
+      } else {
+        this.location.storeId = this.getStoreId;
       }
     },
     methods: {

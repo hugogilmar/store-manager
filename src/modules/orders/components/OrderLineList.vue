@@ -14,8 +14,6 @@
     <v-list-tile
       v-for="orderLine in orderLines"
       :key="orderLine.id"
-      avatar
-      @click="editOrderLine(orderLine.id)"
     >
       <v-list-tile-action>
         <v-icon>star</v-icon>
@@ -24,86 +22,120 @@
         <v-list-tile-title>{{ orderLine.product.name }}</v-list-tile-title>
         <v-list-tile-sub-title>{{ orderLine.quantity }} x {{ orderLine.price | currency }} - {{ orderLine.discountsTotal | currency }} ({{ orderLine.discountAmount | percentage }}) = {{ orderLine.total | currency }}</v-list-tile-sub-title>
       </v-list-tile-content>
-      <v-list-tile-avatar v-if="orderLine.avatar">
-        <img :src="orderLine.avatar">
-      </v-list-tile-avatar>
+      <v-list-tile-action>
+        <v-btn
+          icon
+          ripple
+          @click="editOrderLine(orderLine.id)"
+        >
+          <v-icon color="grey">edit</v-icon>
+        </v-btn>
+      </v-list-tile-action>
+      <v-list-tile-action>
+        <v-btn
+          icon
+          ripple
+          @click="deleteOrderLine(orderLine.id)"
+        >
+          <v-icon color="red">delete</v-icon>
+        </v-btn>
+      </v-list-tile-action>
     </v-list-tile>
     <v-dialog
       v-model="dialog"
       width="500"
     >
-      <v-btn
-        color="primary"
-        slot="activator"
-        dark
-        small
-        fab
-        bottom
-        right
-        absolute
-      >
-        <v-icon>add</v-icon>
-      </v-btn>
-      <v-card>
-        <v-card-title
-          class="headline"
-        >
-          {{ $t('dialog.add.title', { entity: $tc('entities.product', 1) }) }}
-        </v-card-title>
-        <v-card-text>
-          {{ $t('dialog.add.message', { entity: $tc('entities.product', 1) }) }}
-        </v-card-text>
-        <v-card-text>
-          <order-line-form
-            :order-id.sync="orderId"
-            :store-id.sync="storeId"
-            :order-line-id.sync="orderLineId"
-            @order-line-created="orderLineCreated"
-            @order-line-updated="orderLineUpdated"
-            @cancel="cancel"
-          />
-        </v-card-text>
-      </v-card>
+      <order-line-form
+        :order-id.sync="orderId"
+        :order-billable.sync="billable"
+        :store-id.sync="storeId"
+        :order-line-id.sync="orderLineId"
+        @order-line-created="orderLineCreated"
+        @order-line-updated="orderLineUpdated"
+        @close-dialog="closeDialog"
+        v-if="formDialog"
+      />
+      <order-line-delete-dialog
+        :order-line-id.sync="orderLineId"
+        @order-line-deleted="orderLineDeleted"
+        @close-dialog="closeDialog"
+        v-if="deleteDialog"
+      />
     </v-dialog>
+    <v-btn
+      color="primary"
+      dark
+      small
+      fab
+      bottom
+      right
+      absolute
+      @click="newOrderLine"
+    >
+      <v-icon>add</v-icon>
+    </v-btn>
   </v-list>
 </template>
 
 <script>
   import OrderLineForm from './OrderLineForm.vue';
+  import OrderLineDeleteDialog from './OrderLineDeleteDialog.vue';
 
   export default {
     name: 'OrderLineList',
     components: {
-      'order-line-form': OrderLineForm
+      'order-line-form': OrderLineForm,
+      'order-line-delete-dialog': OrderLineDeleteDialog
     },
     data () {
       return {
         dialog: false,
+        formDialog: true,
+        deleteDialog: false,
         orderLineId: null
       }
     },
     props: [
       'orderId',
+      'billable',
       'storeId',
       'orderLines'
     ],
     methods: {
       orderLineCreated () {
-        this.dialog = false;
-        this.orderLineId = null;
+        this.closeDialog();
         this.$emit('order-line-created');
       },
       orderLineUpdated () {
-        this.dialog = false;
-        this.orderLineId = null;
+        this.closeDialog();
         this.$emit('order-line-updated');
+      },
+      orderLineDeleted () {
+        this.closeDialog();
+        this.$emit('order-line-deleted');
+      },
+      newOrderLine () {
+        this.orderLineId = null;
+        this.formDialog = true;
+        this.deleteDialog = false;
+        this.dialog = true;
       },
       editOrderLine (orderLineId) {
         this.orderLineId = orderLineId;
+        this.formDialog = true;
+        this.deleteDialog = false;
         this.dialog = true;
       },
-      cancel () {
+      deleteOrderLine (orderLineId) {
+        this.orderLineId = orderLineId;
+        this.formDialog = false;
+        this.deleteDialog = true;
+        this.dialog = true;
+      },
+      closeDialog () {
         this.orderLineId = null;
+        this.formDialog = true;
+        this.deleteDialog = false;
         this.dialog = false;
       }
     }
