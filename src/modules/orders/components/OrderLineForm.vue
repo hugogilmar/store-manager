@@ -270,10 +270,10 @@
       reset () {
         this.resetProduct();
         this.resetOrderLine();
+        this.$validator.reset();
       },
       closeDialog () {
         this.reset();
-        this.$validator.reset();
         this.$emit('closeDialog');
       }
     }
