@@ -101,18 +101,15 @@
     ],
     methods: {
       orderChargeCreated () {
-        this.dialog = false;
-        this.orderChargeId = null;
+        this.closeDialog();
         this.$emit('order-charge-created');
       },
       orderChargeUpdated () {
-        this.dialog = false;
-        this.orderChargeId = null;
+        this.closeDialog();
         this.$emit('order-charge-updated');
       },
       orderChargeDeleted () {
-        this.dialog = false;
-        this.orderChargeId = null;
+        this.closeDialog();
         this.$emit('order-charge-deleted');
       },
       editOrderCharge (orderChargeId) {
