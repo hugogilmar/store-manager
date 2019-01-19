@@ -24,6 +24,7 @@ const translations = {
         paymentMethodsReport: 'Ingresos por método de pago',
         storesReport: 'Ingresos por comercio',
         chargesReport: 'Ingresos por cargos',
+        consolidatedReport: 'Ingresos consolidados',
         darkMode: 'Modo nocturno',
         selectStore: 'Seleccionar comercio'
       }
@@ -212,6 +213,7 @@ const translations = {
         paymentMethod: 'Ingresos por método de pago',
         store: 'Ingresos por comercio',
         charge: 'Ingresos por cargo',
+        consolidated: 'Ingresos consolidados',
         billable: 'Facturable',
         nonBillable: 'No facturable'
       },
@@ -221,6 +223,7 @@ const translations = {
         paymentMethod: 'Reporte de ingresos por método de pago',
         store: 'Reporte de ingresos por comercio',
         charge: 'Reporte de ingresos por cargo',
+        consolidated: 'Reporte de ingresos consolidados'
       }
     },
     session: {

@@ -179,6 +179,12 @@
             title: this.$t('navigation.links.productsReport'),
             path: '/reports/product',
             group: 'reports'
+          },
+          {
+            icon: 'date_range',
+            title: this.$t('navigation.links.consolidatedReport'),
+            path: '/reports/consolidated',
+            group: 'reports'
           }
         ]
       }

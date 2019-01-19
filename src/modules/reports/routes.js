@@ -3,6 +3,7 @@ import Product from './views/Product.vue';
 import ProductCategory from './views/ProductCategory.vue';
 import PaymentMethod from './views/PaymentMethod.vue';
 import Charge from './views/Charge.vue';
+import Consolidated from './views/Consolidated.vue';
 
 export default [
   {
@@ -29,5 +30,10 @@ export default [
     path: "/reports/charge",
     name: "charge_report",
     component: Charge
+  },
+  {
+    path: "/reports/consolidated",
+    name: "consolidated_report",
+    component: Consolidated
   }
 ];
