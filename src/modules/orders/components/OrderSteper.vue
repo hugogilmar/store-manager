@@ -47,6 +47,7 @@
             :order-lines.sync="orderLines"
             @order-line-created="orderLineCreated"
             @order-line-updated="orderLineUpdated"
+            @order-line-deleted="orderLineDeleted"
           />
           <v-fab-transition>
             <v-btn
@@ -314,6 +315,11 @@
         this.getOrderLines(orderId);
       },
       orderLineUpdated () {
+        let orderId = this.orderId;
+        this.getOrder(orderId);
+        this.getOrderLines(orderId);
+      },
+      orderLineDeleted () {
         let orderId = this.orderId;
         this.getOrder(orderId);
         this.getOrderLines(orderId);
