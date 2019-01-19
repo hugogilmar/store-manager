@@ -45,18 +45,6 @@
       v-model="dialog"
       width="500"
     >
-      <v-btn
-        color="primary"
-        slot="activator"
-        dark
-        small
-        fab
-        bottom
-        right
-        absolute
-      >
-        <v-icon>add</v-icon>
-      </v-btn>
       <invoice-form
         :order-id.sync="orderId"
         :invoice-id.sync="invoiceId"
@@ -73,6 +61,18 @@
         v-if="deleteDialog"
       />
     </v-dialog>
+    <v-btn
+      color="primary"
+      dark
+      small
+      fab
+      bottom
+      right
+      absolute
+      @click="newInvoice"
+    >
+      <v-icon>add</v-icon>
+    </v-btn>
   </v-list>
 </template>
 
@@ -111,6 +111,12 @@
       invoiceDeleted () {
         this.closeDialog();
         this.$emit('invoice-deleted');
+      },
+      newInvoice () {
+        this.invoiceId = null;
+        this.formDialog = true;
+        this.deleteDialog = false;
+        this.dialog = true;
       },
       editInvoice (invoiceId) {
         this.invoiceId = invoiceId;

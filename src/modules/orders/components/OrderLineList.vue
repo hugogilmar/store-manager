@@ -45,18 +45,6 @@
       v-model="dialog"
       width="500"
     >
-      <v-btn
-        color="primary"
-        slot="activator"
-        dark
-        small
-        fab
-        bottom
-        right
-        absolute
-      >
-        <v-icon>add</v-icon>
-      </v-btn>
       <order-line-form
         :order-id.sync="orderId"
         :order-billable.sync="billable"
@@ -74,6 +62,18 @@
         v-if="deleteDialog"
       />
     </v-dialog>
+    <v-btn
+      color="primary"
+      dark
+      small
+      fab
+      bottom
+      right
+      absolute
+      @click="newOrderLine"
+    >
+      <v-icon>add</v-icon>
+    </v-btn>
   </v-list>
 </template>
 
@@ -113,6 +113,12 @@
       orderLineDeleted () {
         this.closeDialog();
         this.$emit('order-line-deleted');
+      },
+      newOrderLine () {
+        this.orderLineId = null;
+        this.formDialog = true;
+        this.deleteDialog = false;
+        this.dialog = true;
       },
       editOrderLine (orderLineId) {
         this.orderLineId = orderLineId;

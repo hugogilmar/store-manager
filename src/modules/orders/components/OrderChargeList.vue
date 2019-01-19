@@ -45,18 +45,6 @@
       v-model="dialog"
       width="500"
     >
-      <v-btn
-        color="primary"
-        slot="activator"
-        dark
-        small
-        fab
-        bottom
-        right
-        absolute
-      >
-        <v-icon>add</v-icon>
-      </v-btn>
       <order-charge-form
         :order-id.sync="orderId"
         :store-id.sync="storeId"
@@ -73,6 +61,18 @@
         v-if="deleteDialog"
       />
     </v-dialog>
+    <v-btn
+      color="primary"
+      dark
+      small
+      fab
+      bottom
+      right
+      absolute
+      @click="newOrderCharge"
+    >
+      <v-icon>add</v-icon>
+    </v-btn>
   </v-list>
 </template>
 
@@ -111,6 +111,12 @@
       orderChargeDeleted () {
         this.closeDialog();
         this.$emit('order-charge-deleted');
+      },
+      newOrderCharge () {
+        this.orderChargeId = null;
+        this.formDialog = true;
+        this.deleteDialog = false;
+        this.dialog = true;
       },
       editOrderCharge (orderChargeId) {
         this.orderChargeId = orderChargeId;
