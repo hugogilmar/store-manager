@@ -1,8 +1,20 @@
 # Changelog
 
-## WIP
+## v0.4.0
 
-- Allow to print reports
+- Consolidated report
+- Allow delete order nested dependencies
+- Persistence on reports filters
+- Print order
+- Report title and criteria for print
+- Billable / non billable behavior
+- Split not billable products and orders
+- Persistence global store on dependent forms
+- Alphanumerical invoice number
+- Alphanumerical order number
+- Pagination component
+- Global store selector
+- Persistence of search criteria
 
 ## v0.3.1
 
