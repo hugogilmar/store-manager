@@ -70,7 +70,7 @@ export default {
       });
     },
     closeDialog () {
-      this.$emit('closeDialog');
+      this.$emit('close-dialog');
     }
   }
 };

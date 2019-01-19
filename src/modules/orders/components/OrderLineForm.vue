@@ -274,7 +274,7 @@
       },
       closeDialog () {
         this.reset();
-        this.$emit('closeDialog');
+        this.$emit('close-dialog');
       }
     }
   };

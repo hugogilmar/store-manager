@@ -64,13 +64,13 @@
         :order-line-id.sync="orderLineId"
         @order-line-created="orderLineCreated"
         @order-line-updated="orderLineUpdated"
-        @closeDialog="closeDialog"
+        @close-dialog="closeDialog"
         v-if="formDialog"
       />
       <order-line-delete-dialog
         :order-line-id.sync="orderLineId"
         @order-line-deleted="orderLineDeleted"
-        @closeDialog="closeDialog"
+        @close-dialog="closeDialog"
         v-if="deleteDialog"
       />
     </v-dialog>
