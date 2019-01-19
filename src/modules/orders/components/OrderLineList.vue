@@ -14,7 +14,6 @@
     <v-list-tile
       v-for="orderLine in orderLines"
       :key="orderLine.id"
-      @click="editOrderLine(orderLine.id)"
     >
       <v-list-tile-action>
         <v-icon>star</v-icon>
@@ -23,6 +22,16 @@
         <v-list-tile-title>{{ orderLine.product.name }}</v-list-tile-title>
         <v-list-tile-sub-title>{{ orderLine.quantity }} x {{ orderLine.price | currency }} - {{ orderLine.discountsTotal | currency }} ({{ orderLine.discountAmount | percentage }}) = {{ orderLine.total | currency }}</v-list-tile-sub-title>
       </v-list-tile-content>
+      <v-list-tile-action
+        @click="editOrderLine(orderLine.id)"
+      >
+        <v-icon>edit</v-icon>
+      </v-list-tile-action>
+      <v-list-tile-action
+        @click="deleteOrderLine(orderLine.id)"
+      >
+        <v-icon>delete</v-icon>
+      </v-list-tile-action>
     </v-list-tile>
     <v-dialog
       v-model="dialog"
@@ -40,42 +49,41 @@
       >
         <v-icon>add</v-icon>
       </v-btn>
-      <v-card>
-        <v-card-title
-          class="headline"
-        >
-          {{ $t('dialog.add.title', { entity: $tc('entities.product', 1) }) }}
-        </v-card-title>
-        <v-card-text>
-          {{ $t('dialog.add.message', { entity: $tc('entities.product', 1) }) }}
-        </v-card-text>
-        <v-card-text>
-          <order-line-form
-            :order-id.sync="orderId"
-            :order-billable.sync="billable"
-            :store-id.sync="storeId"
-            :order-line-id.sync="orderLineId"
-            @order-line-created="orderLineCreated"
-            @order-line-updated="orderLineUpdated"
-            @cancel="cancel"
-          />
-        </v-card-text>
-      </v-card>
+      <order-line-form
+        :order-id.sync="orderId"
+        :order-billable.sync="billable"
+        :store-id.sync="storeId"
+        :order-line-id.sync="orderLineId"
+        @order-line-created="orderLineCreated"
+        @order-line-updated="orderLineUpdated"
+        @closeDialog="closeDialog"
+        v-if="formDialog"
+      />
+      <order-line-delete-dialog
+        :order-line-id.sync="orderLineId"
+        @order-line-deleted="orderLineDeleted"
+        @closeDialog="closeDialog"
+        v-if="deleteDialog"
+      />
     </v-dialog>
   </v-list>
 </template>
 
 <script>
   import OrderLineForm from './OrderLineForm.vue';
+  import OrderLineDeleteDialog from './OrderLineDeleteDialog.vue';
 
   export default {
     name: 'OrderLineList',
     components: {
-      'order-line-form': OrderLineForm
+      'order-line-form': OrderLineForm,
+      'order-line-delete-dialog': OrderLineDeleteDialog
     },
     data () {
       return {
         dialog: false,
+        formDialog: true,
+        deleteDialog: false,
         orderLineId: null
       }
     },
@@ -96,12 +104,27 @@
         this.orderLineId = null;
         this.$emit('order-line-updated');
       },
+      orderLineDeleted () {
+        this.dialog = false;
+        this.orderLineId = null;
+        this.$emit('order-line-deleted');
+      },
       editOrderLine (orderLineId) {
         this.orderLineId = orderLineId;
+        this.formDialog = true;
+        this.deleteDialog = false;
         this.dialog = true;
       },
-      cancel () {
+      deleteOrderLine (orderLineId) {
+        this.orderLineId = orderLineId;
+        this.formDialog = false;
+        this.deleteDialog = true;
+        this.dialog = true;
+      },
+      closeDialog () {
         this.orderLineId = null;
+        this.formDialog = true;
+        this.deleteDialog = false;
         this.dialog = false;
       }
     }

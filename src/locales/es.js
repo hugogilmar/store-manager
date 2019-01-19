@@ -89,6 +89,7 @@ const translations = {
       employee: 'empleado | empleados',
       charge: 'cargo | cargos',
       order: 'orden | ordenes',
+      orderLine: 'producto | productos',
       location: 'ubicación | ubicaciones',
       invoice: 'factura | facturas',
       report: 'reporte | reportes',
