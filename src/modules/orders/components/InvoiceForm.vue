@@ -4,10 +4,10 @@
       <v-card-title
         class="headline"
       >
-        {{ $t('dialog.add.title', { entity: $tc('entities.invoice', 1) }) }}
+        {{ $t(dialogTitle, { entity: $tc('entities.invoice', 1) }) }}
       </v-card-title>
       <v-card-text>
-        {{ $t('dialog.add.message', { entity: $tc('entities.invoice', 1) }) }}
+        {{ $t(dialogMessage, { entity: $tc('entities.invoice', 1) }) }}
       </v-card-text>
       <v-card-text>
         <v-text-field
@@ -83,6 +83,14 @@
       'orderId',
       'invoiceId'
     ],
+    computed: {
+      dialogTitle () {
+        return this.invoiceId ? 'dialog.edit.title' : 'dialog.add.title';
+      },
+      dialogMessage () {
+        return this.invoiceId ? 'dialog.add.message' : 'dialog.add.message';
+      }
+    },
     watch: {
       invoiceId () {
         let invoiceId = this.invoiceId;

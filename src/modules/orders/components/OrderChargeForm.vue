@@ -4,10 +4,10 @@
       <v-card-title
         class="headline"
       >
-        {{ $t('dialog.add.title', { entity: $tc('entities.orderCharge', 1) }) }}
+        {{ $t(dialogTitle, { entity: $tc('entities.orderCharge', 1) }) }}
       </v-card-title>
       <v-card-text>
-        {{ $t('dialog.add.message', { entity: $tc('entities.orderCharge', 1) }) }}
+        {{ $t(dialogMessage, { entity: $tc('entities.orderCharge', 1) }) }}
       </v-card-text>
       <v-card-text>
         <v-select
@@ -67,6 +67,14 @@
       'storeId',
       'orderChargeId'
     ],
+    computed: {
+      dialogTitle () {
+        return this.orderChargeId ? 'dialog.edit.title' : 'dialog.add.title';
+      },
+      dialogMessage () {
+        return this.orderChargeId ? 'dialog.add.message' : 'dialog.add.message';
+      }
+    },
     watch: {
       storeId () {
         this.getCharges();

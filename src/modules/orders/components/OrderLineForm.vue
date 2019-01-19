@@ -4,10 +4,10 @@
       <v-card-title
         class="headline"
       >
-        {{ $t('dialog.add.title', { entity: $tc('entities.orderLine', 1) }) }}
+        {{ $t(dialogTitle, { entity: $tc('entities.orderLine', 1) }) }}
       </v-card-title>
       <v-card-text>
-        {{ $t('dialog.add.message', { entity: $tc('entities.orderLine', 1) }) }}
+        {{ $t(dialogMessage, { entity: $tc('entities.orderLine', 1) }) }}
       </v-card-text>
       <v-card-text>
         <v-combobox
@@ -109,6 +109,12 @@
       },
       billableLabel () {
         return this.orderLine.billable ? this.$t('orderLine.billable') : this.$t('orderLine.nonBillable');
+      },
+      dialogTitle () {
+        return this.orderLineId ? 'dialog.edit.title' : 'dialog.add.title';
+      },
+      dialogMessage () {
+        return this.orderLineId ? 'dialog.add.message' : 'dialog.add.message';
       }
     },
     watch: {
