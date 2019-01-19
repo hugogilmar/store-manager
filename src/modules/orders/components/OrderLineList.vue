@@ -22,15 +22,23 @@
         <v-list-tile-title>{{ orderLine.product.name }}</v-list-tile-title>
         <v-list-tile-sub-title>{{ orderLine.quantity }} x {{ orderLine.price | currency }} - {{ orderLine.discountsTotal | currency }} ({{ orderLine.discountAmount | percentage }}) = {{ orderLine.total | currency }}</v-list-tile-sub-title>
       </v-list-tile-content>
-      <v-list-tile-action
-        @click="editOrderLine(orderLine.id)"
-      >
-        <v-icon>edit</v-icon>
+      <v-list-tile-action>
+        <v-btn
+          icon
+          ripple
+          @click="editOrderLine(orderLine.id)"
+        >
+          <v-icon color="grey">edit</v-icon>
+        </v-btn>
       </v-list-tile-action>
-      <v-list-tile-action
-        @click="deleteOrderLine(orderLine.id)"
-      >
-        <v-icon>delete</v-icon>
+      <v-list-tile-action>
+        <v-btn
+          icon
+          ripple
+          @click="deleteOrderLine(orderLine.id)"
+        >
+          <v-icon color="red">delete</v-icon>
+        </v-btn>
       </v-list-tile-action>
     </v-list-tile>
     <v-dialog
