@@ -4,10 +4,10 @@
       <v-card-title
         class="headline"
       >
-        {{ $t('dialog.add.title', { entity: $tc('entities.orderLine', 1) }) }}
+        {{ $t('dialog.add.title', { entity: $tc('entities.invoice', 1) }) }}
       </v-card-title>
       <v-card-text>
-        {{ $t('dialog.add.message', { entity: $tc('entities.orderLine', 1) }) }}
+        {{ $t('dialog.add.message', { entity: $tc('entities.invoice', 1) }) }}
       </v-card-text>
       <v-card-text>
         <v-text-field
