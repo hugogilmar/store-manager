@@ -121,6 +121,7 @@
             :invoices.sync="invoices"
             @invoice-created="invoiceCreated"
             @invoice-updated="invoiceUpdated"
+            @invoice-deleted="invoiceDeleted"
           />
         </v-stepper-content>
       </v-stepper>
@@ -346,6 +347,11 @@
         this.getInvoices(orderId);
       },
       invoiceUpdated () {
+        let orderId = this.orderId;
+        this.getOrder(orderId);
+        this.getInvoices(orderId);
+      },
+      invoiceDeleted () {
         let orderId = this.orderId;
         this.getOrder(orderId);
         this.getInvoices(orderId);

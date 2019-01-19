@@ -1,46 +1,63 @@
 <template>
   <v-form v-model="valid" lazy-validation>
-    <v-text-field
-      v-model="invoice.referenceNumber"
-      v-validate="'alpha_num|max:48'"
-      data-vv-name="referenceNumber"
-      :data-vv-as="$t('invoice.referenceNumber').toLowerCase()"
-      :counter="48"
-      :label="$t('invoice.referenceNumber')"
-      :error-messages="errors.first('referenceNumber')"
-    ></v-text-field>
-    <v-select
-      v-model="invoice.paymentMethodId"
-      v-validate="'required'"
-      data-vv-name="paymentMethodId"
-      item-text="name"
-      item-value="id"
-      :items="paymentMethods"
-      :data-vv-as="$t('invoice.paymentMethod').toLowerCase()"
-      :label="$t('invoice.paymentMethod')"
-      :error-messages="errors.first('paymentMethodId')"
-    ></v-select>
-    <v-text-field
-      v-model="invoice.amount"
-      v-validate="'required|decimal:2|min_value:1'"
-      data-vv-name="amount"
-      :data-vv-as="$t('invoice.amount').toLowerCase()"
-      :label="$t('invoice.amount')"
-      :error-messages="errors.first('amount')"
-    ></v-text-field>
-    <v-btn
-      flat
-      @click="cancel"
-    >
-      {{ $t('label.cancel') }}
-    </v-btn>
-    <v-btn
-      color="primary"
-      :disabled="!valid"
-      @click="submit"
-    >
-      {{ $t('label.save') }}
-    </v-btn>
+    <v-card>
+      <v-card-title
+        class="headline"
+      >
+        {{ $t('dialog.add.title', { entity: $tc('entities.orderLine', 1) }) }}
+      </v-card-title>
+      <v-card-text>
+        {{ $t('dialog.add.message', { entity: $tc('entities.orderLine', 1) }) }}
+      </v-card-text>
+      <v-card-text>
+        <v-text-field
+          v-model="invoice.referenceNumber"
+          v-validate="'alpha_num|max:48'"
+          data-vv-name="referenceNumber"
+          :data-vv-as="$t('invoice.referenceNumber').toLowerCase()"
+          :counter="48"
+          :label="$t('invoice.referenceNumber')"
+          :error-messages="errors.first('referenceNumber')"
+        ></v-text-field>
+        <v-select
+          v-model="invoice.paymentMethodId"
+          v-validate="'required'"
+          data-vv-name="paymentMethodId"
+          item-text="name"
+          item-value="id"
+          :items="paymentMethods"
+          :data-vv-as="$t('invoice.paymentMethod').toLowerCase()"
+          :label="$t('invoice.paymentMethod')"
+          :error-messages="errors.first('paymentMethodId')"
+        ></v-select>
+        <v-text-field
+          v-model="invoice.amount"
+          v-validate="'required|decimal:2|min_value:1'"
+          data-vv-name="amount"
+          :data-vv-as="$t('invoice.amount').toLowerCase()"
+          :label="$t('invoice.amount')"
+          :error-messages="errors.first('amount')"
+        ></v-text-field>
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+          flat
+          @click="closeDialog"
+        >
+          {{ $t('label.cancel') }}
+        </v-btn>
+        <v-btn
+          flat
+          color="primary"
+          :disabled="!valid"
+          @click="submit"
+        >
+          {{ $t('label.save') }}
+        </v-btn>
+      </v-card-actions>
+    </v-card>
   </v-form>
 </template>
 
@@ -139,12 +156,12 @@
           paymentMethodId: this.invoice.paymentMethodId
         })
         .then(function (response) {
-          self.$emit('invoice-created');
           self.displaySnackbar({
             color: 'success',
             message: self.$t('notification.success.create')
           });
-          self.resetInvoice();
+          self.reset();
+          self.$emit('invoice-created');
         })
         .catch(function (error) {
           self.displaySnackbar({
@@ -163,12 +180,12 @@
           paymentMethodId: this.invoice.paymentMethodId
         })
         .then(function (response) {
-          self.$emit('invoice-updated');
           self.displaySnackbar({
             color: 'success',
             message: self.$t('notification.success.update')
           });
-          self.resetInvoice();
+          self.reset();
+          self.$emit('invoice-updated');
         })
         .catch(function (error) {
           self.displaySnackbar({
@@ -191,10 +208,13 @@
           }
         });
       },
-      cancel () {
-        this.$emit('cancel');
-        this.$validator.reset();
+      reset () {
         this.resetInvoice();
+        this.$validator.reset();
+      },
+      closeDialog () {
+        this.reset();
+        this.$emit('close-dialog');
       }
     }
   };
