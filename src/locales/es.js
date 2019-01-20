@@ -40,7 +40,8 @@ const translations = {
       back: 'Regresar',
       login: 'Iniciar sesión',
       logout: 'Cerrar sesión',
-      print: 'Imprimir'
+      print: 'Imprimir',
+      filter: 'Filtrar'
     },
     alert: {
       empty: 'No hay registros que mostrar',

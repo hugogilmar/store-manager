@@ -1,17 +1,29 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs3 class="pa-2">
-      <v-select
-        v-model="storeId"
-        :items="stores"
-        :rules="[v => !!v || 'Item is required']"
-        :label="$t('product.store')"
-        item-text="name"
-        item-value="id"
-        required
-      ></v-select>
+    <v-flex xs2 class="pa-2">
+      <v-form v-model="valid" lazy-validation>
+        <v-select
+          v-model="storeId"
+          v-validate="'required'"
+          data-vv-name="storeId"
+          item-text="name"
+          item-value="id"
+          :data-vv-as="$t('employee.store').toLowerCase()"
+          :items="stores"
+          :label="$t('employee.store')"
+          :error-messages="errors.first('storeId')"
+        ></v-select>
+        <v-btn
+          right
+          color="primary"
+          :disabled="!valid"
+          @click="submit"
+        >
+          {{ $t('label.filter') }}
+        </v-btn>
+      </v-form>
     </v-flex>
-    <v-flex xs9 class="pa-2">
+    <v-flex xs10 class="pa-2">
       <v-list two-line>
         <v-alert
           :value="true"
@@ -45,6 +57,7 @@
     name: 'EmployeeList',
     data () {
       return {
+        valid: false,
         storeId: null,
         stores: [],
         employees: []
@@ -57,7 +70,7 @@
           value: value
         });
 
-        this.getEmployees();
+        this.submit();
       }
     },
     computed: {
@@ -98,12 +111,19 @@
 
         this.$axios.get('/employees', {
           params: this.getEmployeeParams
-        })
-        .then(function (response) {
+        }).then(function (response) {
           self.employees = response.data;
-        })
-        .catch(function (error) {
+        }).catch(function (error) {
           self.employees = [];
+        });
+      },
+      submit () {
+        let self = this;
+
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            self.getEmployees();
+          }
         });
       },
       editEmployee: function (employeeId) {

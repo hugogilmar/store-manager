@@ -1,25 +1,35 @@
 <template>
   <v-layout row wrap>
     <v-flex xs3 class="pa-2">
-      <v-select
+      <v-form v-model="valid" lazy-validation>
+        <v-select
         v-model="storeId"
         v-validate="'required'"
         data-vv-name="storeId"
         item-text="name"
         item-value="id"
-        :items="stores"
         :data-vv-as="$t('product.store').toLowerCase()"
+        :items="stores"
         :label="$t('product.store')"
         :error-messages="errors.first('storeId')"
-      ></v-select>
-      <v-select
-        clearable
-        v-model="productCategoryId"
-        item-text="name"
-        item-value="id"
-        :items="productCategories"
-        :label="$t('product.productCategory')"
-      ></v-select>
+        ></v-select>
+        <v-select
+          clearable
+          v-model="productCategoryId"
+          item-text="name"
+          item-value="id"
+          :items="productCategories"
+          :label="$t('product.productCategory')"
+        ></v-select>
+        <v-btn
+          right
+          color="primary"
+          :disabled="!valid"
+          @click="submit"
+        >
+          {{ $t('label.filter') }}
+        </v-btn>
+      </v-form>
     </v-flex>
     <v-flex xs9 class="pa-2">
       <v-list two-line>
@@ -62,6 +72,7 @@
     name: 'ProductList',
     data () {
       return {
+        valid: false,
         storeId: null,
         productCategoryId: null,
         stores: [],
@@ -84,7 +95,7 @@
         });
 
         this.resetPagination();
-        this.getProducts();
+        this.submit();
       },
       productCategoryId (value) {
         const filters = [
@@ -99,7 +110,7 @@
         });
 
         this.resetPagination();
-        this.getProducts();
+        this.submit();
       }
     },
     computed: {
@@ -191,9 +202,18 @@
           self.products = [];
         });
       },
+      submit () {
+        let self = this;
+
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            self.getProducts();
+          }
+        });
+      },
       paginate (pagination) {
         this.resetPagination(pagination.offset);
-        this.getProducts();
+        this.submit();
       },
       setFilter (filter, value) {
         if (!_.isNil(value)) {
