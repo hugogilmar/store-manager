@@ -41,7 +41,7 @@
           :data-vv-as="$t('orderLine.discountAmount').toLowerCase()"
           :label="$t('orderLine.discountAmount')"
           :error-messages="errors.first('discountAmount')"
-          v-if="billable"
+          v-if="orderBillable"
         ></v-text-field>
         <v-text-field
           v-model="orderLine.comment"
@@ -99,7 +99,7 @@
     },
     props: [
       'orderId',
-      'billable',
+      'orderBillable',
       'storeId',
       'orderLineId'
     ],
