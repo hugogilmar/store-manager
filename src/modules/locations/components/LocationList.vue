@@ -1,15 +1,27 @@
 <template>
   <v-layout row wrap>
     <v-flex xs3 class="pa-2">
-      <v-select
-        v-model="storeId"
-        :items="stores"
-        :rules="[v => !!v || 'Item is required']"
-        :label="$t('product.store')"
-        item-text="name"
-        item-value="id"
-        required
-      ></v-select>
+      <v-form v-model="valid" lazy-validation>
+        <v-select
+          v-model="storeId"
+          v-validate="'required'"
+          data-vv-name="storeId"
+          item-text="name"
+          item-value="id"
+          :data-vv-as="$t('location.store').toLowerCase()"
+          :items="stores"
+          :label="$t('location.store')"
+          :error-messages="errors.first('storeId')"
+        ></v-select>
+        <v-btn
+          right
+          color="primary"
+          :disabled="!valid"
+          @click="submit"
+        >
+          {{ $t('label.filter') }}
+        </v-btn>
+      </v-form>
     </v-flex>
     <v-flex xs9 class="pa-2">
       <v-list two-line>
@@ -45,6 +57,7 @@
     name: 'LocationList',
     data () {
       return {
+        valid: false,
         storeId: null,
         stores: [],
         locations: []
@@ -57,7 +70,7 @@
           value: value
         });
 
-        this.getLocations();
+        this.submit();
       }
     },
     computed: {
@@ -104,6 +117,15 @@
         })
         .catch(function (error) {
           self.locations = [];
+        });
+      },
+      submit () {
+        let self = this;
+
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            self.getLocations();
+          }
         });
       },
       editLocation: function (locationId) {

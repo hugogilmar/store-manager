@@ -47,7 +47,7 @@
     >
       <order-line-form
         :order-id.sync="orderId"
-        :order-billable.sync="billable"
+        :order-billable.sync="orderBillable"
         :store-id.sync="storeId"
         :order-line-id.sync="orderLineId"
         @order-line-created="orderLineCreated"
@@ -97,7 +97,7 @@
     },
     props: [
       'orderId',
-      'billable',
+      'orderBillable',
       'storeId',
       'orderLines'
     ],

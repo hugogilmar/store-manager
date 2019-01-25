@@ -1,38 +1,55 @@
 <template>
   <v-layout row wrap>
     <v-flex xs3 class="pa-2">
-      <v-select
-        v-model="storeId"
-        :items="stores"
-        :rules="[v => !!v || 'Item is required']"
-        :label="$t('product.store')"
-        item-text="name"
-        item-value="id"
-      ></v-select>
-      <v-menu
-        ref="menu"
-        v-model="menu"
-        :nudge-right="40"
-        lazy
-        transition="scale-transition"
-        offset-y
-        full-width
-        min-width="290px"
-      >
-        <v-text-field
-          slot="activator"
-          v-model="date"
-          :label="$t('order.date')"
-          readonly
-        ></v-text-field>
-        <v-date-picker
-          v-model="date"
-          scrollable
-          locale="es-MX"
-          @input="menu = false"
+      <v-form v-model="valid" lazy-validation>
+        <v-select
+          v-model="storeId"
+          v-validate="'required'"
+          data-vv-name="storeId"
+          item-text="name"
+          item-value="id"
+          :data-vv-as="$t('order.store').toLowerCase()"
+          :items="stores"
+          :label="$t('order.store')"
+          :error-messages="errors.first('storeId')"
+        ></v-select>
+        <v-menu
+          ref="menu"
+          v-model="menu"
+          :nudge-right="40"
+          lazy
+          transition="scale-transition"
+          offset-y
+          full-width
+          min-width="290px"
         >
-        </v-date-picker>
-      </v-menu>
+          <v-text-field
+            readonly
+            slot="activator"
+            v-model="date"
+            v-validate="'required'"
+            data-vv-name="date"
+            :data-vv-as="$t('order.date').toLowerCase()"
+            :label="$t('order.date')"
+            :error-messages="errors.first('date')"
+          ></v-text-field>
+          <v-date-picker
+            scrollable
+            v-model="date"
+            locale="es-MX"
+            @input="menu = false"
+          >
+          </v-date-picker>
+        </v-menu>
+        <v-btn
+          right
+          color="primary"
+          :disabled="!valid"
+          @click="submit"
+        >
+          {{ $t('label.filter') }}
+        </v-btn>
+      </v-form>
     </v-flex>
     <v-flex xs9 class="pa-2">
       <v-list two-line>
@@ -68,6 +85,7 @@
     name: 'OrderList',
     data () {
       return {
+        valid: false,
         menu: false,
         storeId: null,
         date: null,
@@ -82,9 +100,7 @@
           value: value
         });
 
-        if (this.valid) {
-          this.getOrders();
-        }
+        this.submit();
       },
       date (value) {
         this.setOrderParam({
@@ -92,9 +108,7 @@
           value: value
         });
 
-        if (this.valid) {
-          this.getOrders();
-        }
+        this.submit();
       }
     },
     computed: {
@@ -102,10 +116,7 @@
         'getOrderParams',
         'getOrderParam',
         'getStoreId'
-      ]),
-      valid () {
-        return this.storeId && this.date;
-      }
+      ])
     },
     created () {
       let storeId = this.getOrderParam('filter[where][storeId]');
@@ -149,6 +160,15 @@
         })
         .catch(function (error) {
           self.orders = [];
+        });
+      },
+      submit () {
+        let self = this;
+
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            self.getOrders();
+          }
         });
       },
       editOrder: function (orderId) {

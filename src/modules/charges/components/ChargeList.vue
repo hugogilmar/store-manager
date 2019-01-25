@@ -1,15 +1,27 @@
 <template>
   <v-layout row wrap>
     <v-flex xs3 class="pa-2">
-      <v-select
-        v-model="storeId"
-        :items="stores"
-        :rules="[v => !!v || 'Item is required']"
-        :label="$t('product.store')"
-        item-text="name"
-        item-value="id"
-        required
-      ></v-select>
+      <v-form v-model="valid" lazy-validation>
+        <v-select
+          v-model="storeId"
+          v-validate="'required'"
+          data-vv-name="storeId"
+          item-text="name"
+          item-value="id"
+          :data-vv-as="$t('charge.store').toLowerCase()"
+          :items="stores"
+          :label="$t('charge.store')"
+          :error-messages="errors.first('storeId')"
+        ></v-select>
+        <v-btn
+          right
+          color="primary"
+          :disabled="!valid"
+          @click="submit"
+        >
+          {{ $t('label.filter') }}
+        </v-btn>
+      </v-form>
     </v-flex>
     <v-flex xs9 class="pa-2">
       <v-list two-line>
@@ -45,6 +57,7 @@
     name: 'ChargeList',
     data () {
       return {
+        valid: false,
         storeId: null,
         stores: [],
         charges: []
@@ -57,7 +70,7 @@
           value: value
         });
 
-        this.getCharges();
+        this.submit();
       }
     },
     computed: {
@@ -98,12 +111,19 @@
 
         this.$axios.get('/charges', {
           params: this.getChargeParams
-        })
-        .then(function (response) {
+        }).then(function (response) {
           self.charges = response.data;
-        })
-        .catch(function (error) {
+        }).catch(function (error) {
           self.charges = [];
+        });
+      },
+      submit () {
+        let self = this;
+
+        this.$validator.validate().then(function (valid) {
+          if (valid) {
+            self.getCharges();
+          }
         });
       },
       editCharge: function (chargeId) {
