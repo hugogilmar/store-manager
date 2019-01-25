@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.1
+
+- Add guests column on stores report
+- Allow discounts on billable orders
+
 ## v0.4.0
 
 - Consolidated report
