@@ -207,6 +207,7 @@ const translations = {
       paymentMethod: 'Método de pago',
       charge: 'Cargo',
       quantity: 'Cantidad',
+      guests: 'Personas',
       total: 'Total',
       header: {
         product: 'Ingresos por producto',

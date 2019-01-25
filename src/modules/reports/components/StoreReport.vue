@@ -19,6 +19,7 @@
           <tr>
             <td>{{ report.item.name }}</td>
             <td class="text-xs-center" width="160">{{ report.item.quantity }}</td>
+            <td class="text-xs-center" width="160">{{ report.item.guests }}</td>
             <td class="text-xs-right" width="160">{{ report.item.total | currency }}</td>
           </tr>
         </template>
@@ -26,6 +27,7 @@
           <tr>
             <td class="text-xs-right">{{ $t('report.total') }}</td>
             <td class="text-xs-center">{{ billableQuantity }}</td>
+            <td class="text-xs-center">{{ billableGuests }}</td>
             <td class="text-xs-right">{{ billableTotal | currency }}</td>
           </tr>
         </template>
@@ -50,6 +52,7 @@
           <tr>
             <td>{{ report.item.name }}</td>
             <td class="text-xs-center" width="160">{{ report.item.quantity }}</td>
+            <td class="text-xs-center" width="160">{{ report.item.guests }}</td>
             <td class="text-xs-right" width="160">{{ report.item.total | currency }}</td>
           </tr>
         </template>
@@ -57,6 +60,7 @@
           <tr>
             <td class="text-xs-right">{{ $t('report.total') }}</td>
             <td class="text-xs-center">{{ nonBillableQuantity }}</td>
+            <td class="text-xs-center">{{ nonBillableGuests }}</td>
             <td class="text-xs-right">{{ nonBillableTotal | currency }}</td>
           </tr>
         </template>
@@ -81,6 +85,12 @@
             align: 'center',
             sortable: false,
             value: 'quantity'
+          },
+          {
+            text: this.$t('report.guests'),
+            align: 'center',
+            sortable: false,
+            value: 'guests'
           },
           {
             text: this.$t('report.total'),
@@ -113,6 +123,16 @@
       nonBillableQuantity () {
         return this.nonBillableRows.reduce(function (sum, row) {
           return sum += row.quantity;
+        }, 0);
+      },
+      billableGuests () {
+        return this.billableRows.reduce(function (sum, row) {
+          return sum += row.guests;
+        }, 0);
+      },
+      nonBillableGuests () {
+        return this.nonBillableRows.reduce(function (sum, row) {
+          return sum += row.guests;
         }, 0);
       },
       billableTotal () {
