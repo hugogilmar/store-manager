@@ -207,6 +207,7 @@
 
         this.$validator.validate().then(function (valid) {
           if (valid) {
+            self.resetPagination();
             self.getProducts();
           }
         });
