@@ -95,7 +95,6 @@
         });
 
         this.resetPagination();
-        this.submit();
       },
       productCategoryId (value) {
         const filters = [
@@ -110,7 +109,6 @@
         });
 
         this.resetPagination();
-        this.submit();
       }
     },
     computed: {
@@ -207,7 +205,6 @@
 
         this.$validator.validate().then(function (valid) {
           if (valid) {
-            self.resetPagination();
             self.getProducts();
           }
         });
