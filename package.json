@@ -32,7 +32,7 @@
     "@vue/cli-service": "^3.0.0-rc.12",
     "@vue/eslint-config-prettier": "^3.0.4",
     "axios": "^0.21.1",
-    "electron": "^9.4.0",
+    "electron": "^15.5.5",
     "vue-cli-plugin-axios": "^0.0.4",
     "vue-cli-plugin-electron-builder": "^1.0.0-rc.10",
     "vue-cli-plugin-vuetify": "^0.2.1",
